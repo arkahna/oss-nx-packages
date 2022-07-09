@@ -1,0 +1,55 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "cli": "nx",
+    "$id": "NxTerraform",
+    "title": "",
+    "type": "object",
+    "properties": {
+        "stateType": {
+            "type": "string",
+            "x-prompt": {
+                "message": "Where will terraform state be stored?",
+                "type": "list",
+                "items": [
+                    {
+                        "value": "terraform-cloud",
+                        "label": "Terraform Cloud"
+                    },
+                    {
+                        "value": "azure-storage",
+                        "label": "Azure Storage"
+                    }
+                ]
+            }
+        },
+        "terraformCloudOrganization": {
+            "type": "string",
+            "description": "Terraform Cloud Organization (if stateType is terraform-cloud)"
+        },
+        "azureResourcePrefix": {
+            "type": "string",
+            "description": "Azure resource name prefix, normally a shortened version of the client + repository name"
+        },
+        "azureWorkloadName": {
+            "type": "string",
+            "description": "Each tf project can override the workload name, if not specified, this will be used"
+        },
+        "azureWorkloadCode": {
+            "type": "string",
+            "description": "The short code of the workload (should be 2-4 chars with no spaces)"
+        },
+        "author": {
+            "type": "string",
+            "description": "Author of the repository, used in Azure tagging"
+        },
+        "owner": {
+            "type": "string",
+            "description": "Owner of the Azure resources this repository deploys"
+        },
+        "costCentre": {
+            "type": "string",
+            "description": "Cost centre of the Azure resources this repository deploys"
+        }
+    },
+    "required": []
+}

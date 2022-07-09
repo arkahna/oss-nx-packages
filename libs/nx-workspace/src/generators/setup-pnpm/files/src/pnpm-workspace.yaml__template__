@@ -1,0 +1,6 @@
+packages:
+    - 'apps/**'
+    - 'libs/**'
+    # exclude packages that are inside dist directories
+    - '!**/dist/**'
+    - '!**/tsc-out/**'

@@ -1,0 +1,5 @@
+tsc-dist
+bundle.js
+dist
+node_modules
+tsc-out

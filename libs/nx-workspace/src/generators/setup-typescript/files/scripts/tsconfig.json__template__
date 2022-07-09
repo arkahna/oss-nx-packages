@@ -1,0 +1,13 @@
+{
+    "extends": "../tsconfig.base.json",
+    "compilerOptions": {
+        "rootDir": ".",
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "target": "es2020",
+        "types": ["node"],
+        "importHelpers": false,
+        "noEmit": true
+    },
+    "include": ["**/*.ts"]
+}

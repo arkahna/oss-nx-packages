@@ -1,0 +1,13 @@
+locals {
+  prefixWithDash = "%{if var.resource_prefix != ""}%{else}${var.resource_prefix}-%{endif}"
+
+  tags = merge({
+    Environment = var.environment_tag
+    CostCentre  = var.cost_centre_tag
+    Owner       = var.owner_tag
+    Author      = var.author_tag
+    Project     = var.project_name_tag
+    Workload    = var.workload_tag
+    CreatedDate = timestamp()
+  }, local.customTags)
+}

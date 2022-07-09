@@ -1,0 +1,106 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "cli": "nx",
+    "$id": "AddProjectEnvironment",
+    "title": "",
+    "type": "object",
+    "properties": {
+        "environmentName": {
+            "type": "string",
+            "description": "The name of the environment to add.",
+            "alias": "e",
+            "x-prompt": "What is the name of the environment you want to add?"
+        },
+        "subscriptionId": {
+            "type": "string",
+            "description": "The Azure subscription this environment will use.",
+            "alias": "s"
+        },
+        "resourceGroupName": {
+            "type": "string",
+            "description": "The Azure resource group this environment will use (defaults to `${prefix}-rg-${environment}-${workloadName}`)."
+        },
+        "skipEnvironmentCreation": {
+            "type": "boolean",
+            "description": "Opts out of workload environment creation in Azure (rg, vnet, snet, kv), note rg will still be created if storage type is azure storage",
+            "default": false
+        },
+        "keyVaultName": {
+            "type": "string",
+            "description": "The name of the key vault containing this environment's secrets (defaults to `${prefix}-kv-${environment}-${workloadName}`)."
+        },
+        "vnetName": {
+            "type": "string",
+            "description": "The name of the virtual network to create (defaults to `${prefix}-vnet-${environment}-${workloadName}`)."
+        },
+        "subnetName": {
+            "type": "string",
+            "metadata": {
+                "description": "Specifies the name of the subnet for the environment (defaults to `${prefix}-snet-${environment}-${workloadName}`)."
+            }
+        },
+        "virtualNetworkAddressPrefix": {
+            "default": "10.0.0.0/16",
+            "type": "string",
+            "metadata": {
+                "description": "Specifies the address prefix of the virtual network for the environment."
+            }
+        },
+        "subnetAddressPrefix": {
+            "default": "10.0.0.0/24",
+            "type": "string",
+            "metadata": {
+                "description": "Specifies the address prefix of the subnet for the environment."
+            }
+        },
+        "keyVaultPrivateEndpointName": {
+            "type": "string",
+            "default": "KeyVaultPrivateEndpoint",
+            "metadata": {
+                "description": "Specifies the name of the private link to key vault."
+            }
+        },
+        "location": {
+            "type": "string",
+            "description": "The Azure location to use for the environment.",
+            "default": "australiaeast"
+        },
+        "tenantId": {
+            "type": "string",
+            "description": "The Azure tenant ID to use for the environment (for RBAC)."
+        },
+        "azureLogLevel": {
+            "type": "string",
+            "enum": [
+                "verbose",
+                "info",
+                "warning",
+                "error"
+            ],
+            "description": "The Azure ARM log level to use when executing the generator."
+        },
+        "tfStorageAccountName": {
+            "type": "string",
+            "description": "The storage account to store the state in (defaults to `${prefix}${environment}tfstore${workloadName}`) if workload configured to use azure storage."
+        },
+        "containerName": {
+            "type": "string",
+            "description": "The storage account container to store the state in if using azure storage for tf state.",
+            "default": "tfstate"
+        },
+        "tfWorkspaceName": {
+            "type": "string",
+            "description": "The Hashicorp Cloud Hosted Terraform workspace name (defaults to `${workloadName}-${environmentName}`) if workload configured to use terraform cloud."
+        }
+    },
+    "required": [
+        "environmentName",
+        "subscriptionId",
+        "tenantId",
+        "containerName",
+        "location",
+        "keyVaultPrivateEndpointName",
+        "virtualNetworkAddressPrefix",
+        "subnetAddressPrefix"
+    ]
+}

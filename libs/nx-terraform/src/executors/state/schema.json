@@ -1,0 +1,70 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "cli": "nx",
+    "title": "Terraform State executor",
+    "description": "Runs terragrunt state commands",
+    "type": "object",
+    "properties": {
+        "command": {
+            "type": "string",
+            "description": "The state command to run (list, show etc, run `terraform state help` for more info)",
+            "alias": "cmd"
+        },
+        "address": {
+            "type": "string",
+            "description": "The address of the resource",
+            "aliases": [
+                "r",
+                "p"
+            ]
+        },
+        "environment": {
+            "type": "string",
+            "description": "The environment to deploy",
+            "alias": "env"
+        },
+        "addIpToDefaultKeyVault": {
+            "type": "boolean",
+            "description": "Adds a firewall exception for the current ip to the environment keyvault",
+            "default": false
+        },
+        "addIpToDefaultStorage": {
+            "type": "boolean",
+            "description": "Adds a firewall exception for the current ip to the environment keyvault",
+            "default": true
+        },
+        "addIpToKeyVaults": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "Adds a firewall exception for the current ip to specified keyvaults. Specify as a semicolon-delimited list of resource names, e.g. 'ark-dev-akv-system1;ark-dev-akv-system2'."
+        },
+        "addIpToStorage": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "Adds a firewall exception for the current ip to specified storage accounts. Specify as a semicolon-delimited list of resource names, e.g. 'arkdevsta001;arkdevsta001'."
+        },
+        "firewallRetryAttempts": {
+            "type": "integer",
+            "description": "Number of times to retry adding the firewall exception for the current ip to the environment keyvault",
+            "default": 5
+        },
+        "firewallRetryDelay": {
+            "type": "integer",
+            "description": "Delay in seconds between firewall retry attempts",
+            "default": 5
+        },
+        "json": {
+            "type": "boolean",
+            "description": "Outputs the state in json format",
+            "default": false
+        }
+    },
+    "required": [
+        "environment",
+        "command"
+    ]
+}

@@ -1,0 +1,63 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "cli": "nx",
+    "title": "Terraform Apply executor",
+    "description": "",
+    "type": "object",
+    "properties": {
+        "environment": {
+            "type": "string",
+            "description": "The environment to deploy",
+            "alias": "env"
+        },
+        "addIpToDefaultKeyVault": {
+            "type": "boolean",
+            "description": "Adds a firewall exception for the current ip to the environment keyvault",
+            "default": false
+        },
+        "addIpToDefaultStorage": {
+            "type": "boolean",
+            "description": "Adds a firewall exception for the current ip to the environment keyvault",
+            "default": true
+        },
+        "addIpToKeyVaults": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "Adds a firewall exception for the current ip to specified keyvaults. Specify as a semicolon-delimited list of resource names, e.g. 'ark-dev-akv-system1;ark-dev-akv-system2'."
+        },
+        "addIpToStorage": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "Adds a firewall exception for the current ip to specified storage accounts. Specify as a semicolon-delimited list of resource names, e.g. 'arkdevsta001;arkdevsta001'."
+        },
+        "var": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "alias": "v",
+            "description": "Terraform variable to pass to the apply call, format 'foo=bar'."
+        },
+        "firewallRetryAttempts": {
+            "type": "integer",
+            "description": "Number of times to retry adding the firewall exception for the current ip to the environment keyvault",
+            "default": 5
+        },
+        "firewallRetryDelay": {
+            "type": "integer",
+            "description": "Delay in seconds between firewall retry attempts",
+            "default": 5
+        },
+        "tfTarget": {
+            "type": "string",
+            "description": "The target resource to deploy"
+        }
+    },
+    "required": [
+        "environment"
+    ]
+}

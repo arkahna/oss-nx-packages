@@ -1,0 +1,10 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "executors": {
+        "run-command": {
+            "implementation": "./src/executors/run-command/executor",
+            "schema": "./src/executors/run-command/schema.json",
+            "description": "Run CLI Command"
+        }
+    }
+}
