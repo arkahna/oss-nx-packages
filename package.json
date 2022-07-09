@@ -10,7 +10,7 @@
         "test": "nx run-many --target=test --all",
         "e2e": "nx run-many --target=e2e --all",
         "update": "nx migrate latest",
-        "release": "pnpm run build && node -r esbuild-register scripts/remove-directory.ts && pnpm publish -r"
+        "release": "pnpm run build && node -r esbuild-register scripts/remove-directory.ts && pnpm publish -r --access public"
     },
     "dependencies": {
         "@azure/arm-resources": "^5.0.1",
