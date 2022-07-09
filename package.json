@@ -17,6 +17,8 @@
         "@azure/identity": "^2.1.0",
         "@azure/logger": "^1.0.3",
         "@swc/helpers": "~0.3.3",
+        "esbuild": "^0.14.48",
+        "esbuild-register": "^3.3.3",
         "tslib": "^2.3.0"
     },
     "devDependencies": {
