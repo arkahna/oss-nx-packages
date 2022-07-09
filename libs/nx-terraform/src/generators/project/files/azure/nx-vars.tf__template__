@@ -1,0 +1,91 @@
+# This file contains parameters passed by nx-terraform, it should be considered managed by the plugin
+
+variable "subscription_id" {
+  description = "The Azure Subscription ID"
+  type        = string
+}
+
+variable "tenant_id" {
+  description = "The AAD Tenant for the environment."
+  type        = string
+}
+
+variable "resource_location" {
+  description = "The Azure Region being deployed to."
+  type        = string
+}
+
+variable "resource_location_short" {
+  description = "The Azure Region being deployed to."
+  type        = string
+}
+
+variable "resource_group_name" {
+  description = "The Resource Group for the environment."
+  type        = string
+}
+
+variable "storage_account_name" {
+  description = "The TF State Storage Account for the environment."
+  type        = string
+}
+
+variable "storage_container_name" {
+    description = "The TF State Storage Container for the environment."
+    type        = string
+}
+
+variable "resource_prefix" {
+  description = "The prefix for resources"
+  type        = string
+}
+
+variable "keyvault_name" {
+  description = "The default Key Vault for the environment."
+  type        = string
+}
+
+variable "vnet_name" {
+  description = "The default vnet for the environment."
+  type        = string
+}
+
+variable "subnet_name" {
+  description = "The default subnet for the environment."
+  type        = string
+}
+
+variable "owner_tag" {
+  description = "The tags to apply to resources."
+  type        = string
+}
+
+variable "author_tag" {
+  description = "The tags to apply to resources."
+  type        = string
+}
+
+variable "workload_code" {
+  description = "The workload short code"
+  type        = string
+}
+
+variable "workload_tag" {
+  description = "The workload name."
+  type        = string
+}
+
+variable "project_name_tag" {
+  description = "The project name."
+  type        = string
+}
+
+variable "environment_tag" {
+  description = "The name of the environment."
+  type        = string
+}
+
+variable "cost_centre_tag" {
+  description = "The cost centre of the environment."
+  type        = string
+}

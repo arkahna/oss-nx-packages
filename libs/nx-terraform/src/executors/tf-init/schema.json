@@ -1,0 +1,44 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "cli": "nx",
+    "title": "Terraform Init executor",
+    "description": "Runs terraform init",
+    "type": "object",
+    "properties": {
+        "upgrade": {
+            "type": "boolean",
+            "description": "Run with the -upgrade flag"
+        },
+        "reconfigure": {
+            "type": "boolean",
+            "description": "Run with the -reconfigure flag"
+        },
+        "migrateState": {
+            "type": "boolean",
+            "description": "Run with the -migrate-state flag"
+        },
+        "environment": {
+            "type": "string",
+            "description": "The environment to deploy",
+            "alias": "env"
+        },
+        "addIpToDefaultStorage": {
+            "type": "boolean",
+            "description": "Adds a firewall exception for the current ip to the environment keyvault",
+            "default": true
+        },
+        "firewallRetryAttempts": {
+            "type": "integer",
+            "description": "Number of times to retry adding the firewall exception for the current ip to the environment keyvault",
+            "default": 5
+        },
+        "firewallRetryDelay": {
+            "type": "integer",
+            "description": "Delay in seconds between firewall retry attempts",
+            "default": 5
+        }
+    },
+    "required": [
+        "environment"
+    ]
+}

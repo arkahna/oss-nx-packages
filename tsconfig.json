@@ -1,0 +1,17 @@
+{
+    "files": [],
+    "compilerOptions": {
+        "disableSourceOfProjectReferenceRedirect": true
+    },
+    "references": [
+        {
+            "path": "./scripts"
+        },
+        {
+            "path": "./libs/nx-terraform"
+        },
+        {
+            "path": "./libs/nx-workspace"
+        }
+    ]
+}

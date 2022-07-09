@@ -1,0 +1,23 @@
+variable "tags" {
+  description = "Resource tags"
+  type        = map(string)
+  nullable    = false
+}
+
+variable "project_name" {
+  description = "The project name."
+  type        = string
+  nullable    = false
+}
+
+variable "environment_tag" {
+  description = "The name of the environment. Don't use spaces"
+  type        = string
+  nullable    = false
+}
+
+variable "prefix" {
+  description = "The prefix for resources"
+  type        = string
+  nullable    = false
+}

@@ -1,0 +1,12 @@
+# resource "type" "name" {
+    # See https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-abbreviations
+    name     = "${var.prefix}-${var.environment_tag}-<<resource short id>>-${lower(var.project_name)}"
+    location = var.resource_location
+
+    tags = local.tags
+    lifecycle {
+        ignore_changes = [
+            tags["CreatedDate"]
+        ]
+    }
+}

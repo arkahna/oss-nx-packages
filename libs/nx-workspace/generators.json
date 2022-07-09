@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "name": "nx-workspace",
+    "version": "0.0.1",
+    "generators": {
+        "setup-pnpm": {
+            "factory": "./src/generators/setup-pnpm/generator",
+            "schema": "./src/generators/setup-pnpm/schema.json",
+            "description": "PNPM Setup Generator"
+        },
+        "setup-changesets": {
+            "factory": "./src/generators/setup-changesets/generator",
+            "schema": "./src/generators/setup-changesets/schema.json",
+            "description": "Changesets Setup Generator"
+        },
+        "setup-typescript": {
+            "factory": "./src/generators/setup-typescript/generator",
+            "schema": "./src/generators/setup-typescript/schema.json",
+            "description": "TypeScript Setup Generator"
+        },
+        "setup-dotnet": {
+            "factory": "./src/generators/setup-dotnet/generator",
+            "schema": "./src/generators/setup-dotnet/schema.json",
+            "description": "dotnet Setup Generator"
+        }
+    }
+}

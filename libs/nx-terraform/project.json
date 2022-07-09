@@ -1,0 +1,53 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/nx-terraform/src",
+    "projectType": "library",
+    "targets": {
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["libs/nx-terraform/**/*.ts"]
+            }
+        },
+        "build": {
+            "executor": "@nrwl/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/libs/nx-terraform",
+                "tsConfig": "libs/nx-terraform/tsconfig.lib.json",
+                "packageJson": "libs/nx-terraform/package.json",
+                "main": "libs/nx-terraform/src/index.ts",
+                "assets": [
+                    "libs/nx-terraform/*.md",
+                    {
+                        "input": "./libs/nx-terraform/src",
+                        "glob": "**/!(*.ts)",
+                        "output": "./src"
+                    },
+                    {
+                        "input": "./libs/nx-terraform/src",
+                        "glob": "**/*.d.ts",
+                        "output": "./src"
+                    },
+                    {
+                        "input": "./libs/nx-terraform",
+                        "glob": "generators.json",
+                        "output": "."
+                    },
+                    {
+                        "input": "./libs/nx-terraform",
+                        "glob": "executors.json",
+                        "output": "."
+                    },
+                    {
+                        "input": "./libs/nx-terraform",
+                        "glob": "migrations.json",
+                        "output": "."
+                    }
+                ]
+            }
+        }
+    },
+    "tags": []
+}

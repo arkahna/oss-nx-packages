@@ -1,0 +1,35 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "cli": "nx",
+    "$id": "AddProject",
+    "title": "",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Recommend using suffox of -infra, ie app-infra, core-infra etc",
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            },
+            "x-prompt": "What name would you like to use?"
+        },
+        "azureWorkloadOverride": {
+            "type": "string",
+            "description": "Override the Azure Workload type defined at the repository level"
+        },
+        "tags": {
+            "type": "string",
+            "description": "Add tags to the project (used for linting)",
+            "alias": "t"
+        },
+        "directory": {
+            "type": "string",
+            "description": "A directory where the project is placed",
+            "alias": "d"
+        }
+    },
+    "required": [
+        "name"
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "name": "@arkahna/nx-workspace",
+    "version": "0.2.0",
+    "main": "src/index.js",
+    "generators": "./generators.json",
+    "executors": "./executors.json",
+    "dependencies": {
+        "execa": "^5",
+        "node-fetch": "^3.2.1"
+    },
+    "publishConfig": {
+        "directory": "../../dist/libs/nx-workspace"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/arkahna/oss-nx-packages.git"
+    }
+}

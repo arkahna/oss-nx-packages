@@ -1,0 +1,19 @@
+# <%= projectName %>
+
+This project is a terraform project using terragrunt to reduce boilerplace for multiple workspaces (environments).
+
+## Deploying
+
+Run `pnpm exec nx apply <%= projectName %> --environment <environmentname>` from the root of the repo
+
+## Environments
+
+Add a new environment run the following command from the root of the repo
+
+`pnpm exec nx generate @arkahna/nx-terraform:add-project-environment --environmentName=dev --projectName=<%= projectName %> --subscriptionId=<azure sub id>`
+
+There will be a terragrunt file per environment in /tfprojects/<%= projectName %>/var/<environmentname>/terragrunt.hcl
+
+## Other commands
+
+Change directories into the project then run your terraform/terragrunt commands from there

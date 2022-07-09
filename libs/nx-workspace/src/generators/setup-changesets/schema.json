@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "cli": "nx",
+    "$id": "NxTerraform",
+    "title": "",
+    "type": "object",
+    "properties": {
+        "setupReleaseAction": {
+            "type": "boolean",
+            "description": "When true, a 'release' GitHub action will be configured"
+        }
+    },
+    "required": []
+}

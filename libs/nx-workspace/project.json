@@ -1,0 +1,48 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/nx-workspace/src",
+    "projectType": "library",
+    "targets": {
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["libs/nx-workspace/**/*.ts"]
+            }
+        },
+        "build": {
+            "executor": "@nrwl/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/libs/nx-workspace",
+                "tsConfig": "libs/nx-workspace/tsconfig.lib.json",
+                "packageJson": "libs/nx-workspace/package.json",
+                "main": "libs/nx-workspace/src/index.ts",
+                "assets": [
+                    "libs/nx-workspace/*.md",
+                    {
+                        "input": "./libs/nx-workspace/src",
+                        "glob": "**/!(*.ts)",
+                        "output": "./src"
+                    },
+                    {
+                        "input": "./libs/nx-workspace/src",
+                        "glob": "**/*.d.ts",
+                        "output": "./src"
+                    },
+                    {
+                        "input": "./libs/nx-workspace",
+                        "glob": "generators.json",
+                        "output": "."
+                    },
+                    {
+                        "input": "./libs/nx-workspace",
+                        "glob": "executors.json",
+                        "output": "."
+                    }
+                ]
+            }
+        }
+    },
+    "tags": []
+}
