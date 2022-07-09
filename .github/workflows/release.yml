@@ -5,6 +5,8 @@ on:
     branches:
       - main
 
+concurrency: main
+
 jobs:
   release:
     name: Release
