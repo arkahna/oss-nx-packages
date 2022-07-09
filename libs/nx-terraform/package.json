@@ -1,6 +1,6 @@
 {
     "name": "@arkahna/nx-terraform",
-    "version": "0.30.0",
+    "version": "0.31.0",
     "main": "src/index.js",
     "generators": "./generators.json",
     "executors": "./executors.json",
@@ -12,7 +12,7 @@
         "url": "https://github.com/arkahna/oss-nx-packages.git"
     },
     "dependencies": {
-        "@arkahna/nx-workspace": "0.2.0",
+        "@arkahna/nx-workspace": "0.3.0",
         "execa": "5.1.1",
         "front-matter": "^4.0.2",
         "node-fetch": "^2.6.7",
