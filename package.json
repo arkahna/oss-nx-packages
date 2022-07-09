@@ -7,7 +7,8 @@
         "start": "nx serve",
         "build": "nx run-many --target=build --all",
         "lint": "nx run-many --target=lint --all",
-        "test": "nx test",
+        "test": "nx run-many --target=test --all",
+        "e2e": "nx run-many --target=e2e --all",
         "update": "nx migrate latest",
         "release": "pnpm run build && node -r esbuild-register scripts/remove-directory.ts && pnpm publish -r"
     },
