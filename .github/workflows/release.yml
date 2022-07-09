@@ -81,7 +81,7 @@ jobs:
         run: pnpm e2e
 
       - name: Release packages
-        uses: changesets/action@main
+        uses: changesets/action@v1
         with:
           publish: pnpm changeset publish
         env:
