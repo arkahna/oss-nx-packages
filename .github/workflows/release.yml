@@ -55,7 +55,7 @@ jobs:
 
       - name: pnpm install
         run: |
-          pnpm install
+          pnpm install --no-frozen-lockfile
 
       - name: Push changes
         run: |
