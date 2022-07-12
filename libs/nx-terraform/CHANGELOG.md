@@ -4,16 +4,7 @@
 
 ### Patch Changes
 
-- [`629cab7`](https://github.com/arkahna/oss-nx-packages/commit/629cab7cd90b425d02d4a532ca6d6e942c9acb69) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - improved dry run logging
-
-## 0.31.1
-
-### Patch Changes
-
-- [`6911e2b`](https://github.com/arkahna/oss-nx-packages/commit/6911e2bfff8640ab549d8995b8a3c0fb452e0f6f) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Test publish
-
-- Updated dependencies [[`6911e2b`](https://github.com/arkahna/oss-nx-packages/commit/6911e2bfff8640ab549d8995b8a3c0fb452e0f6f)]:
-  - @arkahna/nx-workspace@0.3.1
+- Improved dry run logging
 
 ## 0.31.0
 
