@@ -1,4 +1,4 @@
-name: Release
+name: Main
 
 on:
   push:
@@ -46,25 +46,6 @@ jobs:
         run: |
           pnpm install --frozen-lockfile
 
-      - name: Version command
-        id: version
-        run: |
-          pnpm changeset version
-        env:
-          GITHUB_TOKEN: ${{ secrets.CI_GITHUB_PAT }}
-
-      - name: pnpm install
-        run: |
-          pnpm install --no-frozen-lockfile
-
-      - name: Push changes
-        run: |
-          git config user.email "github.serviceaccount@wanews.com.au"
-          git config user.name "SWM GitHub Service Account"
-          git add -A
-          git commit -m "Version packages" || echo "No changes to commit"
-          git push
-
       - name: typecheck
         run: pnpm tsc -b
 
@@ -83,7 +64,7 @@ jobs:
       - name: Release packages
         uses: changesets/action@v1
         with:
-          publish: pnpm changeset publish
+          publish: pnpm release
         env:
           GITHUB_TOKEN: ${{ secrets.CI_GITHUB_PAT }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

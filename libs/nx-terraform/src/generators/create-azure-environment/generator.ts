@@ -12,10 +12,7 @@ import { ensureResourceNameDefaults } from './ensureResourceNameDefaults'
 import { ensureTfStorageAccountExists } from './ensureTfStorageAccountExists'
 import { NxTerraformAddEnvironmentSchema } from './schema'
 
-export default async function (
-    tree: Tree,
-    options: NxTerraformAddEnvironmentSchema
-) {
+export default async function (tree: Tree, options: NxTerraformAddEnvironmentSchema) {
     const {
         azureResourcePrefix,
         azureWorkloadName,
@@ -46,6 +43,13 @@ tfstate_container: ${options.containerName}`
             : `tf_workspace: ${tfWorkspaceName}
 tf_workspace_link: https://app.terraform.io/app/${terraformCloudOrganization}/workspaces/${tfWorkspaceName}`
 
+    const networkingInfo = options.skipEnvironmentCreation
+        ? ''
+        : `## Networking
+
+Workload base VNet CDIR: ${options.virtualNetworkAddressPrefix}
+Workload base Subnet CDIR: ${options.subnetAddressPrefix}`
+
     tree.write(
         `docs/environments/${options.environmentName}.md`,
         `---
@@ -59,37 +63,41 @@ subnet_name: ${subnetName}
 ${tfStoreDetails}
 ---
 
-# ${azureWorkloadName} ${options.environmentName} Environment`
+# ${azureWorkloadName} ${options.environmentName} Environment
+${networkingInfo}`,
     )
     await formatFiles(tree)
 
+    if (isDryRun()) {
+        if (options.skipEnvironmentCreation) {
+            console.log('Environment creation will be skipped')
+        } else {
+            console.log(`The following resources will be created in ${options.location}:
+
+resource_group_name: ${resourceGroupName}
+keyvault_name: ${keyVaultName}
+vnet_name: ${vnetName} (${options.virtualNetworkAddressPrefix})
+subnet_name: ${subnetName} (${options.subnetAddressPrefix})
+${tfStoreDetails}
+`)
+        }
+    }
+
     return async () => {
         if (!options.location) {
-            throw new Error(
-                'location is not defined to create specified resources'
-            )
+            throw new Error('location is not defined to create specified resources')
         }
 
         const credentials = new DefaultAzureCredential()
         const currentPrincipal = await getCurrentPrincipal(credentials)
 
-        const rm = new ResourceManagementClient(
-            credentials,
-            options.subscriptionId
-        )
+        const rm = new ResourceManagementClient(credentials, options.subscriptionId)
         const tags = {
             environment: options.environmentName,
         }
 
-        if (
-            !options.skipEnvironmentCreation ||
-            terraformStateType === 'azure-storage'
-        ) {
-            await ensureResourceGroupExists(
-                resourceGroupName,
-                rm,
-                options.location
-            )
+        if (!options.skipEnvironmentCreation || terraformStateType === 'azure-storage') {
+            await ensureResourceGroupExists(resourceGroupName, rm, options.location)
         }
 
         // First setup TF state store
@@ -100,7 +108,7 @@ ${tfStoreDetails}
             resourceGroupName,
             tfStorageAccountName,
             currentPrincipal,
-            tags
+            tags,
         )
 
         if (options.skipEnvironmentCreation) {
@@ -116,7 +124,7 @@ ${tfStoreDetails}
             options.virtualNetworkAddressPrefix,
             options.subnetAddressPrefix,
             options.location,
-            tags
+            tags,
         )
         await ensureKeyvaultExists(
             rm,
@@ -130,27 +138,16 @@ ${tfStoreDetails}
             options.location,
             currentPrincipal,
             options.environmentName,
-            tags
+            tags,
         )
 
         console.log()
         console.log()
-        console.log(
-            'Resource group for environment is',
-            options.resourceGroupName
-        )
-        console.log(
-            'Default VNet for workload environment is',
-            options.vnetName
-        )
-        console.log(
-            'Default Subnet for workload environment is',
-            options.subnetName
-        )
-        console.log(
-            'KeyVault account for workload environment is',
-            options.keyVaultName
-        )
+        console.log('Resource group for environment is', options.resourceGroupName)
+        console.log('Default VNet for workload environment is', options.vnetName)
+        console.log('Default Subnet for workload environment is', options.subnetName)
+        console.log('KeyVault account for workload environment is', options.keyVaultName)
+        console.log('🎉 Success 🎉')
     }
 }
 
@@ -161,7 +158,7 @@ async function createWorkloadEnvironmentStorage(
     resourceGroupName: string,
     tfStorageAccountName: string,
     currentPrincipal: string,
-    tags: Record<string, string>
+    tags: Record<string, string>,
 ) {
     if (terraformStateType === 'azure-storage') {
         await ensureTfStorageAccountExists(
@@ -173,7 +170,11 @@ async function createWorkloadEnvironmentStorage(
             resourceGroupName,
             options.location,
             currentPrincipal,
-            tags
+            tags,
         )
     }
+}
+
+export function isDryRun(): boolean {
+    return process.argv.some((x) => x === '--dry-run')
 }

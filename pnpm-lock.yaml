@@ -79,7 +79,7 @@ importers:
 
   libs/nx-terraform:
     specifiers:
-      '@arkahna/nx-workspace': 0.3.0
+      '@arkahna/nx-workspace': 0.3.1
       '@azure/arm-resources': ^5.0.0
       '@azure/identity': ^2.0.4
       '@azure/logger': ^1.0.3

@@ -17,9 +17,7 @@ interface NormalizedSchema extends NxTerraformGeneratorSchema {
     parsedTags: string[]
 }
 
-function normalizeOptions(
-    options: NxTerraformGeneratorSchema
-): NormalizedSchema {
+function normalizeOptions(options: NxTerraformGeneratorSchema): NormalizedSchema {
     // NX default is to kebab case, we will take the name verbatim in terraform
     // original: projectsnames(options.name).fileName
     const name = options.name
@@ -28,9 +26,7 @@ function normalizeOptions(
         : name
     const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-')
     const projectRoot = `tfprojects/${projectDirectory}`
-    const parsedTags = options.tags
-        ? options.tags.split(',').map((s) => s.trim())
-        : []
+    const parsedTags = options.tags ? options.tags.split(',').map((s) => s.trim()) : []
 
     return {
         ...options,
@@ -45,7 +41,7 @@ function addFiles(
     tree: Tree,
     terraformCloudOrganization: string,
     azureResourcePrefix: string,
-    options: NormalizedSchema
+    options: NormalizedSchema,
 ) {
     const templateOptions = {
         ...options,
@@ -61,16 +57,12 @@ function addFiles(
         // TODO can have different presets for differnt types of terraform projects
         path.join(__dirname, 'files/azure'),
         options.projectRoot,
-        templateOptions
+        templateOptions,
     )
 }
 
-export default async function (
-    tree: Tree,
-    options: NxTerraformGeneratorSchema
-) {
-    const { azureResourcePrefix, terraformCloudOrganization } =
-        readRepoSettings()
+export default async function (tree: Tree, options: NxTerraformGeneratorSchema) {
+    const { azureResourcePrefix, terraformCloudOrganization } = readRepoSettings()
 
     const normalizedOptions = normalizeOptions(options)
     addProjectConfiguration(tree, normalizedOptions.projectName, {
@@ -107,12 +99,7 @@ export default async function (
         implicitDependencies: [],
         ...{ azureWorkloadOverride: normalizedOptions.azureWorkloadOverride },
     })
-    addFiles(
-        tree,
-        terraformCloudOrganization,
-        azureResourcePrefix,
-        normalizedOptions
-    )
+    addFiles(tree, terraformCloudOrganization, azureResourcePrefix, normalizedOptions)
 
     const existingTfProjectsReadme =
         tree.read('tfprojects/README.md')?.toString() ||
@@ -124,21 +111,20 @@ The projects should be run in the following order:
     tree.write(
         'tfprojects/README.md',
         existingTfProjectsReadme +
-            `\n* [${normalizedOptions.projectName}](${normalizedOptions.projectRoot})`
+            `\n* [${normalizedOptions.projectName}](${normalizedOptions.projectRoot})`,
     )
 
-    tree.write(
-        `${normalizedOptions.projectRoot}/.gitignore`,
-        terraformProjectGitIgnore
-    )
+    tree.write(`${normalizedOptions.projectRoot}/.gitignore`, terraformProjectGitIgnore)
     await formatFiles(tree)
 
     return () => {
         console.log()
         console.log()
+
+        console.log('🎉 Success 🎉')
         console.log(
             '\x1b[33m%s\x1b[0m',
-            'Remember to update the implicitDependencies for this terraform project'
+            'Remember to update the implicitDependencies for this terraform project',
         )
     }
 }

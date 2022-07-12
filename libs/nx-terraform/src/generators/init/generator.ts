@@ -37,6 +37,7 @@ export default async function (tree: Tree, options: NxTerraformInitSchema) {
             azureCostCentre,
             ...rest
         }) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const newPackageJson: any = {
                 name,
                 version,
@@ -47,19 +48,19 @@ export default async function (tree: Tree, options: NxTerraformInitSchema) {
 
                 terraformStateType: options.stateType || terraformStateType,
                 terraformCloudOrganization:
-                    options.terraformCloudOrganization ||
-                    terraformCloudOrganization,
-                azureResourcePrefix:
-                    options.azureResourcePrefix || azureResourcePrefix,
-                azureWorkloadName:
-                    options.azureWorkloadName || azureWorkloadName,
-                azureWorkloadCode:
-                    options.azureWorkloadCode || azureWorkloadCode,
+                    options.terraformCloudOrganization || terraformCloudOrganization,
+                azureResourcePrefix: options.azureResourcePrefix || azureResourcePrefix,
+                azureWorkloadName: options.azureWorkloadName || azureWorkloadName,
+                azureWorkloadCode: options.azureWorkloadCode || azureWorkloadCode,
                 azureCostCentre: options.costCentre || azureCostCentre,
 
                 ...rest,
             }
             return newPackageJson
-        }
+        },
     )
+
+    return () => {
+        console.log('🎉 Success 🎉')
+    }
 }

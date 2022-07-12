@@ -1,5 +1,11 @@
 # @arkahna/nx-workspace
 
+## 0.3.1
+
+### Patch Changes
+
+- [`6911e2b`](https://github.com/arkahna/oss-nx-packages/commit/6911e2bfff8640ab549d8995b8a3c0fb452e0f6f) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Test publish
+
 ## 0.3.0
 
 ### Minor Changes

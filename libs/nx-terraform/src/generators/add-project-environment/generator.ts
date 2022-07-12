@@ -9,10 +9,7 @@ import fetch from 'node-fetch'
 import { readFile } from 'node:fs/promises'
 import * as path from 'path'
 import { readRepoSettings, RepoSettings } from '../../common/read-repo-settings'
-import {
-    EnvConfig,
-    readConfigFromEnvFile,
-} from '../../common/readConfigFromEnvFile'
+import { EnvConfig, readConfigFromEnvFile } from '../../common/readConfigFromEnvFile'
 import { NxTerraformAddEnvironmentSchema } from './schema'
 
 function addFiles(
@@ -32,7 +29,7 @@ function addFiles(
         resourceLocation,
     }: EnvConfig,
     repoSettings: RepoSettings,
-    { environmentName }: NxTerraformAddEnvironmentSchema
+    { environmentName }: NxTerraformAddEnvironmentSchema,
 ) {
     const templateOptions = {
         subscriptionId,
@@ -54,34 +51,21 @@ function addFiles(
         tree,
         path.join(__dirname, 'state-type', repoSettings.terraformStateType),
         path.join(targetProjectConfig.root, 'vars', environmentName),
-        templateOptions
+        templateOptions,
     )
 }
 
-export default async function (
-    tree: Tree,
-    options: NxTerraformAddEnvironmentSchema
-) {
+export default async function (tree: Tree, options: NxTerraformAddEnvironmentSchema) {
     const repoSettings = readRepoSettings()
-    const targetProjectConfig = readProjectConfiguration(
-        tree,
-        options.projectName
-    )
+    const targetProjectConfig = readProjectConfiguration(tree, options.projectName)
     const environmentConfig = await readConfigFromEnvFile(
         repoSettings.terraformStateType,
-        options.environmentName
+        options.environmentName,
     )
 
     const tfProjectName = `${options.projectName.replace(`-infra`, '')}.tfstate`
 
-    addFiles(
-        tree,
-        tfProjectName,
-        targetProjectConfig,
-        environmentConfig,
-        repoSettings,
-        options
-    )
+    addFiles(tree, tfProjectName, targetProjectConfig, environmentConfig, repoSettings, options)
     await formatFiles(tree)
 
     return async () => {
@@ -89,33 +73,27 @@ export default async function (
             const workspaceName = `${tfProjectName}-${options.environmentName}`
             console.log(`Creating Terraform Cloud workspace ${workspaceName}`)
 
-            await createTerraformWorkspace(
-                repoSettings.terraformCloudOrganization,
-                workspaceName
-            )
+            await createTerraformWorkspace(repoSettings.terraformCloudOrganization, workspaceName)
         }
+        console.log('🎉 Success 🎉')
     }
 }
 
 async function createTerraformWorkspace(
     terraformCloudOrganization: string,
-    tfWorkspaceName: string
+    tfWorkspaceName: string,
 ) {
     const homeDir = process.env.APPDATA || process.env.HOME
     if (!homeDir) {
         throw new Error('Could not find home directory')
     }
-    const terraformCredentials = path.join(
-        homeDir,
-        '.terraform.d',
-        'credentials.tfrc.json'
-    )
+    const terraformCredentials = path.join(homeDir, '.terraform.d', 'credentials.tfrc.json')
     const credFile = await readFile(terraformCredentials)
     const creds = JSON.parse(credFile.toString())
     const token = creds?.credentials['app.terraform.io']?.token
     if (!token) {
         throw new Error(
-            `Cannot locate credentials at ${terraformCredentials}, ensure you have run 'terraform login'`
+            `Cannot locate credentials at ${terraformCredentials}, ensure you have run 'terraform login'`,
         )
     }
 
@@ -136,13 +114,11 @@ async function createTerraformWorkspace(
                     },
                 },
             }),
-        }
+        },
     )
 
     if (!createWorkspaceResponse.ok) {
         const response = await createWorkspaceResponse.text()
-        throw new Error(
-            `Failed to create workspace ${tfWorkspaceName}: ${response}`
-        )
+        throw new Error(`Failed to create workspace ${tfWorkspaceName}: ${response}`)
     }
 }

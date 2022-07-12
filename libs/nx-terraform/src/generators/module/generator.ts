@@ -16,9 +16,7 @@ interface NormalizedSchema extends NxTerraformGeneratorSchema {
     parsedTags: string[]
 }
 
-function normalizeOptions(
-    options: NxTerraformGeneratorSchema
-): NormalizedSchema {
+function normalizeOptions(options: NxTerraformGeneratorSchema): NormalizedSchema {
     // NX default is to kebab case, we will take the name verbatim in terraform
     // original: projectsnames(options.name).fileName
     const name = options.name
@@ -27,9 +25,7 @@ function normalizeOptions(
         : name
     const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-')
     const projectRoot = `tfmodules/${projectDirectory}`
-    const parsedTags = options.tags
-        ? options.tags.split(',').map((s) => s.trim())
-        : []
+    const parsedTags = options.tags ? options.tags.split(',').map((s) => s.trim()) : []
 
     return {
         ...options,
@@ -47,18 +43,10 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
         offsetFromRoot: offsetFromRoot(options.projectRoot),
         template: '',
     }
-    generateFiles(
-        tree,
-        path.join(__dirname, 'files'),
-        options.projectRoot,
-        templateOptions
-    )
+    generateFiles(tree, path.join(__dirname, 'files'), options.projectRoot, templateOptions)
 }
 
-export default async function (
-    tree: Tree,
-    options: NxTerraformGeneratorSchema
-) {
+export default async function (tree: Tree, options: NxTerraformGeneratorSchema) {
     const normalizedOptions = normalizeOptions(options)
     addProjectConfiguration(tree, normalizedOptions.projectName, {
         root: normalizedOptions.projectRoot,
@@ -77,4 +65,8 @@ export default async function (
     })
     addFiles(tree, normalizedOptions)
     await formatFiles(tree)
+
+    return () => {
+        console.log('🎉 Success 🎉')
+    }
 }
