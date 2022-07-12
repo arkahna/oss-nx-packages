@@ -1,4 +1,11 @@
 {
     "editor.formatOnSave": true,
-    "eslint.validate": ["json"]
+    "typescript.preferences.importModuleSpecifier": "project-relative",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    "eslint.validate": [
+        "json"
+    ]
 }

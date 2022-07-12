@@ -10,6 +10,7 @@ import { ensureNetworkingExists } from './ensureNetworkingExists'
 import { ensureResourceGroupExists } from './ensureResourceGroupExists'
 import { ensureResourceNameDefaults } from './ensureResourceNameDefaults'
 import { ensureTfStorageAccountExists } from './ensureTfStorageAccountExists'
+import { isDryRun } from '../../common/isDryRun'
 import { NxTerraformAddEnvironmentSchema } from './schema'
 
 export default async function (tree: Tree, options: NxTerraformAddEnvironmentSchema) {
@@ -186,8 +187,4 @@ async function createWorkloadEnvironmentStorage(
             tags,
         )
     }
-}
-
-export function isDryRun(): boolean {
-    return process.argv.some((x) => x === '--dry-run')
 }

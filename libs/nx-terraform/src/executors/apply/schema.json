@@ -55,6 +55,14 @@
         "tfTarget": {
             "type": "string",
             "description": "The target resource to deploy"
+        },
+        "quick": {
+            "type": "boolean",
+            "description": "Quick apply, skips adding firewall exceptions, init and doesn't refresh the tf state"
+        },
+        "leaveFirewallExceptions": {
+            "type": "boolean",
+            "description": "Leave firewall exceptions in place after apply"
         }
     },
     "required": [

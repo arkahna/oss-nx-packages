@@ -27,6 +27,11 @@
             "factory": "./src/generators/create-azure-environment/generator",
             "schema": "./src/generators/create-azure-environment/schema.json",
             "description": "Creates an environment for an Azure workload"
+        },
+        "add-firewall-exceptions": {
+            "factory": "./src/generators/add-firewall-exceptions/generator",
+            "schema": "./src/generators/add-firewall-exceptions/schema.json",
+            "description": "Adds a firewall rule for the current IP to azure resources"
         }
     }
 }
