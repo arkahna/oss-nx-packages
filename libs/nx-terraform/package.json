@@ -1,6 +1,6 @@
 {
     "name": "@arkahna/nx-terraform",
-    "version": "0.31.2",
+    "version": "0.31.3",
     "main": "src/index.js",
     "generators": "./generators.json",
     "executors": "./executors.json",
