@@ -70,7 +70,15 @@ ${networkingInfo}`,
 
     if (isDryRun()) {
         if (options.skipEnvironmentCreation) {
-            console.log('Environment creation will be skipped')
+            if (terraformStateType === 'azure-storage') {
+                console.log(`The following resources will be created in ${options.location} for terraform storage:
+
+                resource_group_name: ${resourceGroupName}
+                ${tfStoreDetails}
+                `)
+            } else {
+                console.log('Environment creation will be skipped')
+            }
         } else {
             console.log(`The following resources will be created in ${options.location}:
 
@@ -143,11 +151,16 @@ ${tfStoreDetails}
 
         console.log()
         console.log()
+        console.log(
+            `🎉 Successfully created environment ${options.environmentName} for workload ${azureWorkloadCode} 🎉`,
+        )
+        console.log('Subscription is', options.subscriptionId)
+        console.log('AAD Tenant ID is', options.tenantId)
+
         console.log('Resource group for environment is', options.resourceGroupName)
         console.log('Default VNet for workload environment is', options.vnetName)
         console.log('Default Subnet for workload environment is', options.subnetName)
         console.log('KeyVault account for workload environment is', options.keyVaultName)
-        console.log('🎉 Success 🎉')
     }
 }
 
