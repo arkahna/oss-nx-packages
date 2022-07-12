@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.31.3
+
+### Patch Changes
+
+- [`dda9400`](https://github.com/arkahna/oss-nx-packages/commit/dda9400de14e8347db67e28da2c6b3e6868ad1b0) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Further improved the dry run messages
+
 ## 0.31.2
 
 ### Patch Changes
