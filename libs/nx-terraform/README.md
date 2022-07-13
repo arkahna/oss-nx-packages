@@ -89,3 +89,11 @@ pnpm nx g \
   --environment <environmentname>
 
 ```
+
+## Executors
+
+### Apply
+
+`nx apply <tf-project> --environment <env>`
+
+If you are running apply multiple times locally, run with `--leaveFirewallExceptions` to leave the firewall exceptions intact, then run with `--quick` to skip adding firewall rules, running init and skipping refresh during the plan phase.
