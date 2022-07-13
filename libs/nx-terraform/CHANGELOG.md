@@ -1,5 +1,13 @@
 # @arkahna/nx-terraform
 
+## 0.32.0
+
+### Minor Changes
+
+- [#1](https://github.com/arkahna/oss-nx-packages/pull/1) [`c0dd855`](https://github.com/arkahna/oss-nx-packages/commit/c0dd855e6cd8d6260692b63a75bd895445554c92) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Introduce --quick mode for terraform apply
+
+* [#1](https://github.com/arkahna/oss-nx-packages/pull/1) [`c0dd855`](https://github.com/arkahna/oss-nx-packages/commit/c0dd855e6cd8d6260692b63a75bd895445554c92) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Added add-firewall-exceptions generator
+
 ## 0.31.3
 
 ### Patch Changes
