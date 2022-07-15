@@ -13,11 +13,6 @@ export interface NxTerraformAddEnvironmentSchema {
 
     resourceGroupName?: string
     keyVaultName?: string
-    vnetName?: string
-    subnetName?: string
-    keyVaultPrivateEndpointName: string
 
-    virtualNetworkAddressPrefix: string
-    subnetAddressPrefix: string
     azureLogLevel?: AzureLogLevel
 }

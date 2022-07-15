@@ -3,14 +3,13 @@ import { DefaultAzureCredential } from '@azure/identity'
 import { setLogLevel } from '@azure/logger'
 import { formatFiles, Tree } from '@nrwl/devkit'
 import { getCurrentPrincipal } from '../../common/getCurrentPrincipal'
+import { isDryRun } from '../../common/isDryRun'
 import { readRepoSettings } from '../../common/read-repo-settings'
 import { TerraformStateType } from '../../common/tf-state-types'
 import { ensureKeyvaultExists } from './ensureKeyvaultExists'
-import { ensureNetworkingExists } from './ensureNetworkingExists'
 import { ensureResourceGroupExists } from './ensureResourceGroupExists'
 import { ensureResourceNameDefaults } from './ensureResourceNameDefaults'
 import { ensureTfStorageAccountExists } from './ensureTfStorageAccountExists'
-import { isDryRun } from '../../common/isDryRun'
 import { NxTerraformAddEnvironmentSchema } from './schema'
 
 export default async function (tree: Tree, options: NxTerraformAddEnvironmentSchema) {
@@ -32,8 +31,6 @@ export default async function (tree: Tree, options: NxTerraformAddEnvironmentSch
     const tfStorageAccountName = options.tfStorageAccountName!
     const tfWorkspaceName = options.tfWorkspaceName!
     const keyVaultName = options.keyVaultName!
-    const vnetName = options.vnetName!
-    const subnetName = options.subnetName!
     /* eslint-enable @typescript-eslint/no-non-null-assertion */
 
     const tfStoreDetails =
@@ -44,13 +41,6 @@ tfstate_container: ${options.containerName}`
             : `tf_workspace: ${tfWorkspaceName}
 tf_workspace_link: https://app.terraform.io/app/${terraformCloudOrganization}/workspaces/${tfWorkspaceName}`
 
-    const networkingInfo = options.skipEnvironmentCreation
-        ? ''
-        : `## Networking
-
-Workload base VNet CDIR: ${options.virtualNetworkAddressPrefix}
-Workload base Subnet CDIR: ${options.subnetAddressPrefix}`
-
     tree.write(
         `docs/environments/${options.environmentName}.md`,
         `---
@@ -59,13 +49,11 @@ tenant_id: ${options.tenantId}
 resource_location: ${options.location}
 resource_group_name: ${resourceGroupName}
 keyvault_name: ${keyVaultName}
-vnet_name: ${vnetName}
-subnet_name: ${subnetName}
 ${tfStoreDetails}
 ---
 
 # ${azureWorkloadName} ${options.environmentName} Environment
-${networkingInfo}`,
+`,
     )
     await formatFiles(tree)
 
@@ -85,8 +73,6 @@ ${networkingInfo}`,
 
 resource_group_name: ${resourceGroupName}
 keyvault_name: ${keyVaultName}
-vnet_name: ${vnetName} (${options.virtualNetworkAddressPrefix})
-subnet_name: ${subnetName} (${options.subnetAddressPrefix})
 ${tfStoreDetails}
 `)
         }
@@ -124,25 +110,11 @@ ${tfStoreDetails}
             return
         }
 
-        await ensureNetworkingExists(
-            options.subscriptionId,
-            vnetName,
-            subnetName,
-            rm,
-            resourceGroupName,
-            options.virtualNetworkAddressPrefix,
-            options.subnetAddressPrefix,
-            options.location,
-            tags,
-        )
         await ensureKeyvaultExists(
             rm,
             options.subscriptionId,
             resourceGroupName,
             keyVaultName,
-            options.keyVaultPrivateEndpointName,
-            vnetName,
-            subnetName,
             options.tenantId,
             options.location,
             currentPrincipal,
@@ -159,8 +131,6 @@ ${tfStoreDetails}
         console.log('AAD Tenant ID is', options.tenantId)
 
         console.log('Resource group for environment is', options.resourceGroupName)
-        console.log('Default VNet for workload environment is', options.vnetName)
-        console.log('Default Subnet for workload environment is', options.subnetName)
         console.log('KeyVault account for workload environment is', options.keyVaultName)
     }
 }
