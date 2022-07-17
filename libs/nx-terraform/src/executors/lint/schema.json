@@ -4,6 +4,12 @@
     "title": "Terraform Lint executor",
     "description": "Runs terraform format check and validation",
     "type": "object",
-    "properties": {},
+    "properties": {
+        "tfsec": {
+            "type": "boolean",
+            "default": true,
+            "description": "Runs tfsec lint"
+        }
+    },
     "required": []
 }

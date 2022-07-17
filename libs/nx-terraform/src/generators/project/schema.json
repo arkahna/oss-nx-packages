@@ -27,6 +27,10 @@
             "type": "string",
             "description": "A directory where the project is placed",
             "alias": "d"
+        },
+        "tfsec": {
+            "type": "boolean",
+            "description": "Run with the tfsec tool on the project"
         }
     },
     "required": [

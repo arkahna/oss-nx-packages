@@ -2,10 +2,7 @@ import { ExecutorContext } from '@nrwl/devkit'
 import execa from 'execa'
 import { LintExecutorSchema } from './schema'
 
-export default async function runExecutor(
-    _options: LintExecutorSchema,
-    context: ExecutorContext
-) {
+export default async function runExecutor(options: LintExecutorSchema, context: ExecutorContext) {
     if (!context.projectName) {
         throw new Error('No projectName')
     }
@@ -21,18 +18,20 @@ export default async function runExecutor(
 
     await execa(
         'terragrunt',
-        [
-            'init',
-            '--terragrunt-config',
-            'vars/local/terragrunt.hcl',
-            '-reconfigure',
-        ],
+        ['init', '--terragrunt-config', 'vars/local/terragrunt.hcl', '-reconfigure'],
         {
             stdio: [process.stdin, process.stdout, 'pipe'],
             cwd: projectRoot,
             env: {},
-        }
+        },
     )
+
+    if (options.tfsec) {
+        await execa('tfsec', [projectRoot], {
+            stdio: [process.stdin, process.stdout, 'pipe'],
+            env: {},
+        })
+    }
 
     await execa('terraform', ['fmt', '-check'], {
         stdio: [process.stdin, process.stdout, 'pipe'],
