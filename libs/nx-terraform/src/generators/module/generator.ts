@@ -53,12 +53,13 @@ export default async function (tree: Tree, options: NxTerraformGeneratorSchema) 
         projectType: 'library',
         sourceRoot: `${normalizedOptions.projectRoot}`,
         targets: {
+            tfinit: {
+                executor: '@arkahna/nx-terraform:tf-init',
+                options: {},
+            },
             lint: {
-                executor: '@arkahna/nx-workspace:run-command',
-                options: {
-                    command: 'terraform fmt -check',
-                    cwd: normalizedOptions.projectRoot,
-                },
+                executor: '@arkahna/nx-terraform:lint',
+                options: {},
             },
         },
         tags: normalizedOptions.parsedTags,

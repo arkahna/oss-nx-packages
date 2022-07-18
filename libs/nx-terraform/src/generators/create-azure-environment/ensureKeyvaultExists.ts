@@ -6,16 +6,13 @@ export async function ensureKeyvaultExists(
     subscriptionId: string,
     resourceGroupName: string,
     keyVaultName: string,
-    keyVaultPrivateEndpointName: string,
-    vnetName: string,
-    subnetName: string,
     tenantId: string,
     location: string,
     currentPrincipal: string,
     environmentName: string,
     tags: {
         [propertyName: string]: string
-    }
+    },
 ) {
     console.log(`Ensuring keyvault ${keyVaultName} exists`)
     const keyvaultRequest = await rm.resources.beginCreateOrUpdate(
@@ -42,7 +39,7 @@ export async function ensureKeyvaultExists(
             },
             tags,
             location,
-        }
+        },
     )
     await keyvaultRequest.pollUntilDone()
 
@@ -63,96 +60,11 @@ export async function ensureKeyvaultExists(
             },
             tags,
             location: 'global',
-        }
+        },
     )
     await privateDnsZoneRequest.pollUntilDone()
 
-    console.log(`Ensuring keyvault dns zone virtual link`)
-    const privateDnsZoneVirtualNetworkLinksRequest =
-        await rm.resources.beginCreateOrUpdate(
-            resourceGroupName,
-            'Microsoft.Network',
-            'privateDnsZones',
-            `${privateDnsZoneName}/virtualNetworkLinks`,
-            `link_to_${vnetName}`,
-            '2020-01-01',
-            {
-                properties: {
-                    registrationEnabled: false,
-                    virtualNetwork: {
-                        id: `/subscriptions/${subscriptionId}/resourceGroups/${resourceGroupName}/providers/Microsoft.Network/virtualNetworks/${vnetName}`,
-                    },
-                    dependencies: [privateDnsZoneName],
-                },
-                tags,
-                location: 'global',
-            }
-        )
-    await privateDnsZoneVirtualNetworkLinksRequest.pollUntilDone()
-
-    console.log(`Ensuring keyvault private endpoint for ${keyVaultName} exists`)
-    const privateEndpointRequest = await rm.resources.beginCreateOrUpdate(
-        resourceGroupName,
-        'Microsoft.Network',
-        '',
-        'privateEndpoints',
-        keyVaultPrivateEndpointName,
-        '2021-03-01',
-        {
-            properties: {
-                privateLinkServiceConnections: [
-                    {
-                        name: keyVaultPrivateEndpointName,
-                        properties: {
-                            privateLinkServiceId: `/subscriptions/${subscriptionId}/resourceGroups/${resourceGroupName}/providers/Microsoft.KeyVault/vaults/${keyVaultName}`,
-                            groupIds: ['vault'],
-                        },
-                    },
-                ],
-                subnet: {
-                    id: `/subscriptions/${subscriptionId}/resourceGroups/${resourceGroupName}/providers/Microsoft.Network/virtualNetworks/${vnetName}/subnets/${subnetName}`,
-                },
-                customDnsConfigs: [
-                    {
-                        fqdn: `${keyVaultName}.vaultcore.azure.net`,
-                    },
-                ],
-            },
-            tags,
-            location,
-        }
-    )
-    await privateEndpointRequest.pollUntilDone()
-
-    console.log(
-        `Ensuring keyvault private endpoint dns for ${keyVaultName} exists`
-    )
-    const zoneGroupRequest = await rm.resources.beginCreateOrUpdate(
-        resourceGroupName,
-        'Microsoft.Network',
-        'privateEndpoints',
-        `${keyVaultPrivateEndpointName}/privateDnsZoneGroups`,
-        `vaultPrivateDnsZoneGroup`,
-        '2020-06-01',
-        {
-            properties: {
-                privateDnsZoneConfigs: [
-                    {
-                        name: 'dnsConfig',
-                        properties: {
-                            privateDnsZoneId: `subscriptions/${subscriptionId}/resourceGroups/${resourceGroupName}/providers/Microsoft.Network/privateDnsZones/${privateDnsZoneName}`,
-                        },
-                    },
-                ],
-            },
-            location,
-        }
-    )
-    await zoneGroupRequest.pollUntilDone()
-
-    console.log(
-        `Ensuring current user has secrets officier role on ${keyVaultName}`
-    )
+    console.log(`Ensuring current user has secrets officier role on ${keyVaultName}`)
     const storageContributorRole = await rm.resources.beginCreateOrUpdate(
         resourceGroupName,
         'Microsoft.KeyVault',
@@ -166,7 +78,7 @@ export async function ensureKeyvaultExists(
                 roleDefinitionId: `/subscriptions/${subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/b86a8fe4-44ce-4948-aee5-eccb2c155cd7`,
                 principalId: currentPrincipal,
             },
-        }
+        },
     )
     await storageContributorRole.pollUntilDone()
 }

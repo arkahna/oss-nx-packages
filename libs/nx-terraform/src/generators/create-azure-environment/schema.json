@@ -22,43 +22,12 @@
         },
         "skipEnvironmentCreation": {
             "type": "boolean",
-            "description": "Opts out of workload environment creation in Azure (rg, vnet, snet, kv), note rg will still be created if storage type is azure storage",
+            "description": "Opts out of workload environment creation in Azure (rg, kv), note rg will still be created if storage type is azure storage",
             "default": false
         },
         "keyVaultName": {
             "type": "string",
             "description": "The name of the key vault containing this environment's secrets (defaults to `${prefix}-kv-${environment}-${workloadName}`)."
-        },
-        "vnetName": {
-            "type": "string",
-            "description": "The name of the virtual network to create (defaults to `${prefix}-vnet-${environment}-${workloadName}`)."
-        },
-        "subnetName": {
-            "type": "string",
-            "metadata": {
-                "description": "Specifies the name of the subnet for the environment (defaults to `${prefix}-snet-${environment}-${workloadName}`)."
-            }
-        },
-        "virtualNetworkAddressPrefix": {
-            "default": "10.0.0.0/16",
-            "type": "string",
-            "metadata": {
-                "description": "Specifies the address prefix of the virtual network for the environment."
-            }
-        },
-        "subnetAddressPrefix": {
-            "default": "10.0.0.0/24",
-            "type": "string",
-            "metadata": {
-                "description": "Specifies the address prefix of the subnet for the environment."
-            }
-        },
-        "keyVaultPrivateEndpointName": {
-            "type": "string",
-            "default": "KeyVaultPrivateEndpoint",
-            "metadata": {
-                "description": "Specifies the name of the private link to key vault."
-            }
         },
         "location": {
             "type": "string",
