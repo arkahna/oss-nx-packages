@@ -67,9 +67,6 @@
         "subscriptionId",
         "tenantId",
         "containerName",
-        "location",
-        "keyVaultPrivateEndpointName",
-        "virtualNetworkAddressPrefix",
-        "subnetAddressPrefix"
+        "location"
     ]
 }
