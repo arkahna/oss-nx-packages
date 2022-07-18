@@ -1,5 +1,17 @@
 # @arkahna/nx-terraform
 
+## 0.33.0
+
+### Minor Changes
+
+- [#3](https://github.com/arkahna/oss-nx-packages/pull/3) [`1b05e0f`](https://github.com/arkahna/oss-nx-packages/commit/1b05e0ffc3483ebc4ecb72661cbd00d35b927c6e) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Add tfsec into terraform linting
+
+* [#3](https://github.com/arkahna/oss-nx-packages/pull/3) [`b008ec9`](https://github.com/arkahna/oss-nx-packages/commit/b008ec9983df08419679eb78b12cd4f3f972ac10) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - BREAKING: No longer provisions any networking resources, they should be created in terraform if required
+
+### Patch Changes
+
+- [#3](https://github.com/arkahna/oss-nx-packages/pull/3) [`b008ec9`](https://github.com/arkahna/oss-nx-packages/commit/b008ec9983df08419679eb78b12cd4f3f972ac10) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Fixed modules project.json having old targets
+
 ## 0.32.0
 
 ### Minor Changes
