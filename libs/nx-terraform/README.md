@@ -97,3 +97,7 @@ pnpm nx g \
 `nx apply <tf-project> --environment <env>`
 
 If you are running apply multiple times locally, run with `--leaveFirewallExceptions` to leave the firewall exceptions intact, then run with `--quick` to skip adding firewall rules, running init and skipping refresh during the plan phase.
+
+### Lint
+
+Needs tfsec installed, or set tfsec command to false. See https://github.com/aquasecurity/tfsec#installation

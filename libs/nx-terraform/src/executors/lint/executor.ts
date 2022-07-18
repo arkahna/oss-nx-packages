@@ -26,13 +26,6 @@ export default async function runExecutor(options: LintExecutorSchema, context: 
         },
     )
 
-    if (options.tfsec) {
-        await execa('tfsec', [projectRoot], {
-            stdio: [process.stdin, process.stdout, 'pipe'],
-            env: {},
-        })
-    }
-
     await execa('terraform', ['fmt', '-check'], {
         stdio: [process.stdin, process.stdout, 'pipe'],
         cwd: projectRoot,
@@ -42,6 +35,13 @@ export default async function runExecutor(options: LintExecutorSchema, context: 
         stdio: [process.stdin, process.stdout, 'pipe'],
         cwd: projectRoot,
     })
+
+    if (options.tfsec) {
+        await execa('tfsec', [projectRoot], {
+            stdio: [process.stdin, process.stdout, 'pipe'],
+            env: {},
+        })
+    }
 
     return {
         success: true,
