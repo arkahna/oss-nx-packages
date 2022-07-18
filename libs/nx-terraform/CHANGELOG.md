@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.33.1
+
+### Patch Changes
+
+- [#5](https://github.com/arkahna/oss-nx-packages/pull/5) [`9162fa3`](https://github.com/arkahna/oss-nx-packages/commit/9162fa33d28cc39fa874832844dc11d53767eb0b) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Fixed some left over required props
+
 ## 0.33.0
 
 ### Minor Changes
