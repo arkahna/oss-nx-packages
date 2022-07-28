@@ -43,27 +43,6 @@ export async function ensureKeyvaultExists(
     )
     await keyvaultRequest.pollUntilDone()
 
-    const privateDnsZoneName = `privatelink.vaultcore.azure.net`
-    console.log(`Ensuring keyvault dns zone for ${keyVaultName} exists`)
-    const privateDnsZoneRequest = await rm.resources.beginCreateOrUpdate(
-        resourceGroupName,
-        'Microsoft.Network',
-        '',
-        'privateDnsZones',
-        privateDnsZoneName,
-        '2018-09-01',
-        {
-            properties: {
-                maxNumberOfRecordSets: 25000,
-                maxNumberOfVirtualNetworkLinks: 1000,
-                maxNumberOfVirtualNetworkLinksWithRegistration: 100,
-            },
-            tags,
-            location: 'global',
-        },
-    )
-    await privateDnsZoneRequest.pollUntilDone()
-
     console.log(`Ensuring current user has secrets officier role on ${keyVaultName}`)
     const storageContributorRole = await rm.resources.beginCreateOrUpdate(
         resourceGroupName,
