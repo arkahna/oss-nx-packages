@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.33.2
+
+### Patch Changes
+
+- [#7](https://github.com/arkahna/oss-nx-packages/pull/7) [`36af57c`](https://github.com/arkahna/oss-nx-packages/commit/36af57c1d57d222c7f04ac3ad6daed9d827e556c) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Fixed private dns for keyvault being created by generator
+
 ## 0.33.1
 
 ### Patch Changes
