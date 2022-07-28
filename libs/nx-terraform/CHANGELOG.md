@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.33.3
+
+### Patch Changes
+
+- [#9](https://github.com/arkahna/oss-nx-packages/pull/9) [`61ed46e`](https://github.com/arkahna/oss-nx-packages/commit/61ed46ef2ee8ba6aa3874bbaa1cc846c19f6f854) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Removed tfsec option from generators where it isn't used
+
 ## 0.33.2
 
 ### Patch Changes
