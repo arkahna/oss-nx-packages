@@ -21,6 +21,15 @@ provider "azurerm" {
   use_oidc         = true
 }
 
+module "naming" {
+  source  = "Azure/naming/azurerm"
+  version = "0.1.1"
+  prefix  = var.resource_prefix != "" ? [var.resource_prefix] : []
+  suffix = [
+    var.workload_code
+  ]
+}
+
 data "azurerm_client_config" "current" {
 }
 
