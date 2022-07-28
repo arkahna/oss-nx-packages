@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.34.0
+
+### Minor Changes
+
+- [#11](https://github.com/arkahna/oss-nx-packages/pull/11) [`5bff4af`](https://github.com/arkahna/oss-nx-packages/commit/5bff4af24ee9a10ac2f2adaef16fb72be29b996b) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Use azure terraform naming module for naming
+
 ## 0.33.3
 
 ### Patch Changes
