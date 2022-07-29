@@ -11,10 +11,7 @@ import { readConfigFromEnvFile } from '../../common/readConfigFromEnvFile'
 import { removeFirewallRules } from '../../common/removeFirewallRules'
 import { OutputExecutorSchema } from './schema'
 
-export default async function runExecutor(
-    options: OutputExecutorSchema,
-    context: ExecutorContext
-) {
+export default async function runExecutor(options: OutputExecutorSchema, context: ExecutorContext) {
     const publicIpv4 = await publicIp.v4()
     if (!context.projectName) {
         throw new Error('No projectName')
@@ -29,33 +26,27 @@ export default async function runExecutor(
             success: false,
         }
     }
-    const config = await readConfigFromEnvFile(
-        repoConfig.terraformStateType,
-        options.environment
-    )
+    const config = await readConfigFromEnvFile(repoConfig.terraformStateType, options.environment)
     if (!config) {
         console.warn('Skipped apply, no terragrunt file for environment')
         return {
             success: true,
         }
     }
-    const { resourceGroupName, terraformStorageAccount, terragruntConfigFile } =
-        config
+    const { resourceGroupName, terraformStorageAccount, terragruntConfigFile } = config
 
-    const {
-        keyVaultsToRemoveFirewallRules,
-        storageAccountsToRemoveFirewallRules,
-    } = await addFirewallRules({
-        resourceGroupName,
-        addIpToKeyVaults: [],
-        addIpToStorageAccounts:
-            options.addIpToDefaultStorage && terraformStorageAccount
-                ? [terraformStorageAccount]
-                : [],
-        publicIpv4,
-        terragruntConfigFile,
-        projectRoot,
-    })
+    const { keyVaultsToRemoveFirewallRules, storageAccountsToRemoveFirewallRules } =
+        await addFirewallRules({
+            resourceGroupName,
+            addIpToKeyVaults: [],
+            addIpToStorageAccounts:
+                options.addIpToDefaultStorage && terraformStorageAccount
+                    ? [terraformStorageAccount]
+                    : [],
+            publicIpv4,
+            terragruntConfigFile,
+            projectRoot,
+        })
 
     try {
         const terragruntCliArgs = createTerragruntCliArgs([
@@ -78,14 +69,9 @@ export default async function runExecutor(
             ...(options.json ? ['-json'] : []),
         ]
 
-        console.log(
-            `${projectRoot}> ${getEscapedCommand(
-                `terragrunt`,
-                terragruntOutputArgs
-            )}`
-        )
+        console.log(`${projectRoot}> ${getEscapedCommand(`terragrunt`, terragruntOutputArgs)}`)
         await execa('terragrunt', terragruntOutputArgs, {
-            stdio: [process.stdin, process.stdout, 'pipe'],
+            stdio: [process.stdin, 'pipe', 'pipe'],
             cwd: projectRoot,
         })
     } finally {

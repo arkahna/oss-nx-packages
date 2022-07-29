@@ -3,7 +3,7 @@ import execa from 'execa'
 export async function getTfResourceName(
     terragruntConfigFile: string,
     resourceAddress: string,
-    projectRoot: string
+    projectRoot: string,
 ) {
     try {
         const outputJson = await execa(
@@ -17,9 +17,9 @@ export async function getTfResourceName(
                 '-json',
             ],
             {
-                stdio: [process.stdin, process.stdout, 'pipe'],
+                stdio: [process.stdin, 'pipe', 'pipe'],
                 cwd: projectRoot,
-            }
+            },
         )
 
         const output = JSON.parse(outputJson.stdout)

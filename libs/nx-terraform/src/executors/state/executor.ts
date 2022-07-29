@@ -11,10 +11,7 @@ import { readConfigFromEnvFile } from '../../common/readConfigFromEnvFile'
 import { removeFirewallRules } from '../../common/removeFirewallRules'
 import { StateExecutorSchema } from './schema'
 
-export default async function runExecutor(
-    options: StateExecutorSchema,
-    context: ExecutorContext
-) {
+export default async function runExecutor(options: StateExecutorSchema, context: ExecutorContext) {
     const publicIpv4 = await publicIp.v4()
     if (!context.projectName) {
         throw new Error('No projectName')
@@ -29,41 +26,32 @@ export default async function runExecutor(
             success: false,
         }
     }
-    const config = await readConfigFromEnvFile(
-        repoConfig.terraformStateType,
-        options.environment
-    )
+    const config = await readConfigFromEnvFile(repoConfig.terraformStateType, options.environment)
     if (!config) {
         console.warn('Skipped apply, no terragrunt file for environment')
         return {
             success: true,
         }
     }
-    const {
-        resourceGroupName,
-        terraformStorageAccount,
-        keyVaultName,
-        terragruntConfigFile,
-    } = config
+    const { resourceGroupName, terraformStorageAccount, keyVaultName, terragruntConfigFile } =
+        config
 
     const kvOptions = options.addIpToKeyVaults || []
     const storageOptions = options.addIpToStorage || []
-    const {
-        keyVaultsToRemoveFirewallRules,
-        storageAccountsToRemoveFirewallRules,
-    } = await addFirewallRules({
-        resourceGroupName,
-        addIpToKeyVaults: options.addIpToDefaultKeyVault
-            ? [keyVaultName, ...kvOptions]
-            : kvOptions,
-        addIpToStorageAccounts:
-            options.addIpToDefaultStorage && terraformStorageAccount
-                ? [terraformStorageAccount, ...storageOptions]
-                : storageOptions,
-        publicIpv4,
-        terragruntConfigFile,
-        projectRoot,
-    })
+    const { keyVaultsToRemoveFirewallRules, storageAccountsToRemoveFirewallRules } =
+        await addFirewallRules({
+            resourceGroupName,
+            addIpToKeyVaults: options.addIpToDefaultKeyVault
+                ? [keyVaultName, ...kvOptions]
+                : kvOptions,
+            addIpToStorageAccounts:
+                options.addIpToDefaultStorage && terraformStorageAccount
+                    ? [terraformStorageAccount, ...storageOptions]
+                    : storageOptions,
+            publicIpv4,
+            terragruntConfigFile,
+            projectRoot,
+        })
 
     try {
         const terragruntCliArgs = createTerragruntCliArgs([
@@ -88,14 +76,9 @@ export default async function runExecutor(
             retryDelay: options.firewallRetryDelay,
         })
 
-        console.log(
-            `${projectRoot}> ${getEscapedCommand(
-                `terragrunt`,
-                terragruntStateArgs
-            )}`
-        )
+        console.log(`${projectRoot}> ${getEscapedCommand(`terragrunt`, terragruntStateArgs)}`)
         await execa('terragrunt', terragruntStateArgs, {
-            stdio: [process.stdin, process.stdout, 'pipe'],
+            stdio: [process.stdin, 'pipe', 'pipe'],
             cwd: projectRoot,
         })
     } finally {
