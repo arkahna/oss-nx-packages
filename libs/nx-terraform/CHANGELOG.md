@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.34.1
+
+### Patch Changes
+
+- [#13](https://github.com/arkahna/oss-nx-packages/pull/13) [`f5550c8`](https://github.com/arkahna/oss-nx-packages/commit/f5550c80ee7d349e35fb2c3f3db7734d54cfebcf) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Fixed issue where stdout wouldn't always be visible
+
 ## 0.34.0
 
 ### Minor Changes
