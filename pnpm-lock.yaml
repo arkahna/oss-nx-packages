@@ -89,7 +89,7 @@ importers:
       public-ip: ^4.0.4
       uuid-by-string: ^3.0.6
     dependencies:
-      '@arkahna/nx-workspace': link:../nx-workspace
+      '@arkahna/nx-workspace': link:../../dist/libs/nx-workspace
       execa: 5.1.1
       front-matter: 4.0.2
       node-fetch: 2.6.7
@@ -99,6 +99,7 @@ importers:
       '@azure/arm-resources': 5.0.1
       '@azure/identity': 2.1.0
       '@azure/logger': 1.0.3
+    publishDirectory: ../../dist/libs/nx-terraform
 
   libs/nx-workspace:
     specifiers:
@@ -107,6 +108,7 @@ importers:
     dependencies:
       execa: 5.1.1
       node-fetch: 3.2.6
+    publishDirectory: ../../dist/libs/nx-workspace
 
 packages:
 
