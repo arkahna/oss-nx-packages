@@ -32,19 +32,17 @@ export async function initEnvironmentWorkspaceWithFirewallRuleRetry({
         ...(migrateState ? ['-migrate-state'] : []),
     ]
 
-    console.log(
-        `${projectRoot}> ${getEscapedCommand(`terragrunt`, terragruntArgs)}`
-    )
+    console.log(`${projectRoot}> ${getEscapedCommand(`terragrunt`, terragruntArgs)}`)
 
     return await retryOnFirewallError(
         () =>
             execa('terragrunt', terragruntArgs, {
-                stdio: [process.stdin, process.stdout, 'pipe'],
+                stdio: [process.stdin, 'pipe', 'pipe'],
                 cwd: projectRoot,
             }),
         {
             retryAttempts,
             retryDelay,
-        }
+        },
     )
 }
