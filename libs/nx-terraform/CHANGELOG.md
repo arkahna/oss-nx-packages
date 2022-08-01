@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.34.2
+
+### Patch Changes
+
+- [#15](https://github.com/arkahna/oss-nx-packages/pull/15) [`2922674`](https://github.com/arkahna/oss-nx-packages/commit/2922674b2b9506067c5857000dca280938e76fe4) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Fixed issue where add-project-environment was erroring due to missing vnet
+
 ## 0.34.1
 
 ### Patch Changes
