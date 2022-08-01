@@ -19,8 +19,6 @@ function addFiles(
     {
         keyVaultName,
         resourceGroupName,
-        vnetName,
-        subnetName,
         tenantId,
         subscriptionId,
         terraformStorageAccount,
@@ -43,8 +41,6 @@ function addFiles(
         location: resourceLocation,
         resourceGroupName,
         keyVaultName,
-        vnetName,
-        subnetName,
     }
 
     generateFiles(
