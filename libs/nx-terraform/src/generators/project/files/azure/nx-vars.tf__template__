@@ -31,8 +31,8 @@ variable "storage_account_name" {
 }
 
 variable "storage_container_name" {
-    description = "The TF State Storage Container for the environment."
-    type        = string
+  description = "The TF State Storage Container for the environment."
+  type        = string
 }
 
 variable "resource_prefix" {
