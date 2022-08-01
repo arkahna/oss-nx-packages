@@ -1,11 +1,7 @@
 import { RepoSettings } from './read-repo-settings'
 import { EnvConfig } from './readConfigFromEnvFile'
 
-export function getTfEnvVars(
-    projectName: string,
-    envConfig: EnvConfig,
-    repoConfig: RepoSettings
-) {
+export function getTfEnvVars(projectName: string, envConfig: EnvConfig, repoConfig: RepoSettings) {
     return [
         `workload_code=${repoConfig.azureWorkloadCode || ''}`,
         `subscription_id=${envConfig.subscriptionId || ''}`,
@@ -13,13 +9,9 @@ export function getTfEnvVars(
         `storage_account_name=${envConfig.terraformStorageAccount || ''}`,
         `storage_container_name=${envConfig.terraformStorageContainer || ''}`,
         `resource_location=${envConfig.resourceLocation || ''}`,
-        `resource_location_short=${getShortResourceLocation(
-            envConfig.resourceLocation
-        )}`,
+        `resource_location_short=${getShortResourceLocation(envConfig.resourceLocation)}`,
         `resource_group_name=${envConfig.resourceGroupName || ''}`,
         `keyvault_name=${envConfig.keyVaultName || ''}`,
-        `vnet_name=${envConfig.vnetName || ''}`,
-        `subnet_name=${envConfig.subnetName || ''}`,
         `environment_tag=${envConfig.environment || ''}`,
         `owner_tag=${repoConfig.owner || ''}`,
         `author_tag=${repoConfig.author || ''}`,

@@ -45,16 +45,6 @@ variable "keyvault_name" {
   type        = string
 }
 
-variable "vnet_name" {
-  description = "The default vnet for the environment."
-  type        = string
-}
-
-variable "subnet_name" {
-  description = "The default subnet for the environment."
-  type        = string
-}
-
 variable "owner_tag" {
   description = "The tags to apply to resources."
   type        = string
