@@ -1,5 +1,13 @@
 # @arkahna/nx-terraform
 
+## 0.34.3
+
+### Patch Changes
+
+- [#17](https://github.com/arkahna/oss-nx-packages/pull/17) [`6ffe24c`](https://github.com/arkahna/oss-nx-packages/commit/6ffe24cb5d113c2cab1ef8b8611d07c06a9042b6) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Fixed lint issue on generated project
+
+* [#19](https://github.com/arkahna/oss-nx-packages/pull/19) [`64653d7`](https://github.com/arkahna/oss-nx-packages/commit/64653d7acd53badfc9d2a8ccc9b485301e402fe5) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Fixed issue with azure cli auth
+
 ## 0.34.2
 
 ### Patch Changes
