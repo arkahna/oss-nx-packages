@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.34.4
+
+### Patch Changes
+
+- [#20](https://github.com/arkahna/oss-nx-packages/pull/20) [`e8970f8`](https://github.com/arkahna/oss-nx-packages/commit/e8970f8efa203ba2736ea26c0de512f4692c7d45) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Further fixes to output handling
+
 ## 0.34.3
 
 ### Patch Changes
