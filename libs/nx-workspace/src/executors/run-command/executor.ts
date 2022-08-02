@@ -5,7 +5,7 @@ export default async function buildExecutor(options: { command: string; cwd?: st
 
     await execa.command(options.command, {
         cwd: options.cwd,
-        stdio: [process.stdin, 'pipe', 'pipe'],
+        stdio: 'inherit',
     })
 
     return { success: true }

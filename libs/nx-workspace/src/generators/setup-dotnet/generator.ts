@@ -14,7 +14,7 @@ import { SetupDotnetGeneratorSchema } from './schema'
 export default async function (
     tree: Tree,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _options: SetupDotnetGeneratorSchema
+    _options: SetupDotnetGeneratorSchema,
 ) {
     addCsEditorConfig(tree)
 
@@ -42,7 +42,7 @@ export default async function (
     updateJson(tree, '.vscode/extensions.json', (value) => {
         value.recommendations.push(
             'ms-dotnettools.csharp',
-            'fernandoescolar.vscode-solution-explorer'
+            'fernandoescolar.vscode-solution-explorer',
         )
         return value
     })
@@ -61,7 +61,7 @@ export default async function (
             '@nx-dotnet/core': 'latest',
             '@nx-dotnet/dotnet': 'latest',
             '@nx-dotnet/utils': 'latest',
-        }
+        },
     )
     await formatFiles(tree)
 
@@ -69,7 +69,7 @@ export default async function (
         installPackagesTask(tree)
 
         // Create SLN file
-        await execa('dotnet', ['new', 'sln'])
+        await execa('dotnet', ['new', 'sln'], { stdio: 'inherit' })
     }
 }
 

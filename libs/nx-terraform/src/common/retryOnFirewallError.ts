@@ -7,8 +7,8 @@ export async function retryOnFirewallError<T>(
         retryAttempts: number
         /** Retry delay in seconds */
         retryDelay: number
-    }
-) {
+    },
+): Promise<T> {
     let attempts = 0
     let success = false
     do {
@@ -21,9 +21,7 @@ export async function retryOnFirewallError<T>(
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             if (err?.message?.includes('AuthorizationFailure')) {
-                console.log(
-                    'Failed to init due to firewall rule not applied yet, retrying...'
-                )
+                console.log('Failed to init due to firewall rule not applied yet, retrying...')
                 // Firewall issue
                 continue
             }
@@ -34,7 +32,7 @@ export async function retryOnFirewallError<T>(
 
     if (!success) {
         throw new Error(
-            'Firewall issue, retry attempts exhausted. Try increasing attempts or timeout'
+            'Firewall issue, retry attempts exhausted. Try increasing attempts or timeout',
         )
     }
 }

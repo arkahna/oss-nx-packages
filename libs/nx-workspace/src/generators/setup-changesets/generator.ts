@@ -1,9 +1,4 @@
-import {
-    addDependenciesToPackageJson,
-    installPackagesTask,
-    Tree,
-    updateJson,
-} from '@nrwl/devkit'
+import { addDependenciesToPackageJson, installPackagesTask, Tree, updateJson } from '@nrwl/devkit'
 import execa from 'execa'
 import { readFile, writeFile } from 'fs/promises'
 import path from 'path'
@@ -33,33 +28,24 @@ export default async function (tree: Tree, options: SetupPNPMGeneratorSchema) {
             '@changesets/git':
                 'https://pkg.csb.dev/changesets/changesets/commit/0a652ea1/@changesets/git',
             '@changesets/changelog-github': 'latest',
-        }
+        },
     )
 
     return async () => {
         installPackagesTask(tree)
 
-        await execa('pnpm', ['changeset', 'init'])
-        const { stdout: originUrl } = await execa('git', [
-            'remote',
-            'get-url',
-            'origin',
-        ])
+        await execa('pnpm', ['changeset', 'init'], { stdio: 'inherit' })
+        const { stdout: originUrl } = await execa('git', ['remote', 'get-url', 'origin'], {
+            stdio: 'inherit',
+        })
         const repo = originUrl.match(/([^:/]*\/[^:/]*)\.git/)?.[1]
         if (!repo) {
-            throw new Error(
-                'Cannot figure out repo name from origin url ' + originUrl
-            )
+            throw new Error('Cannot figure out repo name from origin url ' + originUrl)
         }
 
-        const changesetsConfig = path.resolve(
-            tree.root,
-            '.changeset/config.json'
-        )
+        const changesetsConfig = path.resolve(tree.root, '.changeset/config.json')
         const changesetsConfigContents = await readFile(changesetsConfig)
-        const changesetsConfigJson = JSON.parse(
-            changesetsConfigContents.toString()
-        )
+        const changesetsConfigJson = JSON.parse(changesetsConfigContents.toString())
         changesetsConfigJson.baseBranch = 'main'
         changesetsConfigJson.changelog = [
             '@changesets/changelog-github',
@@ -67,10 +53,7 @@ export default async function (tree: Tree, options: SetupPNPMGeneratorSchema) {
                 repo: repo,
             },
         ]
-        await writeFile(
-            changesetsConfig,
-            JSON.stringify(changesetsConfigJson, null, 4)
-        )
+        await writeFile(changesetsConfig, JSON.stringify(changesetsConfigJson, null, 4))
     }
 }
 function createReleaseActionWorkflow(tree: Tree) {
@@ -131,6 +114,6 @@ jobs:
               env:
                   GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
                   NODE_AUTH_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-`
+`,
     )
 }

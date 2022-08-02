@@ -34,10 +34,11 @@ export async function initEnvironmentWorkspaceWithFirewallRuleRetry({
 
     console.log(`${projectRoot}> ${getEscapedCommand(`terragrunt`, terragruntArgs)}`)
 
-    return await retryOnFirewallError(
-        () =>
-            execa('terragrunt', terragruntArgs, {
-                stdio: [process.stdin, 'pipe', 'pipe'],
+    // We can't inherit stdio here, as the retry function needs to see the output
+    const { all } = await retryOnFirewallError(
+        async () =>
+            await execa('terragrunt', terragruntArgs, {
+                all: true,
                 cwd: projectRoot,
             }),
         {
@@ -45,4 +46,5 @@ export async function initEnvironmentWorkspaceWithFirewallRuleRetry({
             retryDelay,
         },
     )
+    console.log(all)
 }
