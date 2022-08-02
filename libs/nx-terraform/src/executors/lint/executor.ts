@@ -20,25 +20,25 @@ export default async function runExecutor(options: LintExecutorSchema, context: 
         'terragrunt',
         ['init', '--terragrunt-config', 'vars/local/terragrunt.hcl', '-reconfigure'],
         {
-            stdio: [process.stdin, 'pipe', 'pipe'],
+            stdio: 'inherit',
             cwd: projectRoot,
             env: {},
         },
     )
 
     await execa('terraform', ['fmt', '-check'], {
-        stdio: [process.stdin, 'pipe', 'pipe'],
+        stdio: 'inherit',
         cwd: projectRoot,
     })
 
     await execa('terraform', ['validate'], {
-        stdio: [process.stdin, 'pipe', 'pipe'],
+        stdio: 'inherit',
         cwd: projectRoot,
     })
 
     if (options.tfsec) {
         await execa('tfsec', [projectRoot], {
-            stdio: [process.stdin, 'pipe', 'pipe'],
+            stdio: 'inherit',
             env: {},
         })
     }

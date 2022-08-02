@@ -25,13 +25,11 @@ export async function addFirewallRules({
     for (const storageAccount of addIpToStorageAccounts) {
         let storageAccountName = storageAccount
         if (storageAccountName.includes('azurerm_storage_account')) {
-            console.log(
-                `Finding resource for tf resource ${storageAccountName}`
-            )
+            console.log(`Finding resource for tf resource ${storageAccountName}`)
             const result = await getTfResourceName(
                 terragruntConfigFile,
                 storageAccountName,
-                projectRoot
+                projectRoot,
             )
             if (!result) {
                 continue
@@ -44,18 +42,22 @@ export async function addFirewallRules({
         try {
             console.log(`Adding firewall rule to ${storageAccountName}`)
             storageAccountsToRemoveFirewallRules.push(storageAccountName)
-            await execa('az', [
-                'storage',
-                'account',
-                'network-rule',
-                'add',
-                '-g',
-                resourceGroupName,
-                '--account-name',
-                storageAccountName,
-                '--ip-address',
-                publicIpv4,
-            ])
+            await execa(
+                'az',
+                [
+                    'storage',
+                    'account',
+                    'network-rule',
+                    'add',
+                    '-g',
+                    resourceGroupName,
+                    '--account-name',
+                    storageAccountName,
+                    '--ip-address',
+                    publicIpv4,
+                ],
+                { stdio: 'inherit' },
+            )
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             console.error('Failed to add network rule to storage', err)
@@ -65,11 +67,7 @@ export async function addFirewallRules({
     for (const keyVault of addIpToKeyVaults) {
         let keyVaultName = keyVault
         if (keyVaultName.includes('azurerm_key_vault')) {
-            const result = await getTfResourceName(
-                terragruntConfigFile,
-                keyVaultName,
-                projectRoot
-            )
+            const result = await getTfResourceName(terragruntConfigFile, keyVaultName, projectRoot)
             if (!result) {
                 continue
             }
@@ -80,15 +78,19 @@ export async function addFirewallRules({
         try {
             console.log(`Adding firewall rule to ${keyVaultName}`)
             keyVaultsToRemoveFirewallRules.push(keyVaultName)
-            await execa('az', [
-                'keyvault',
-                'network-rule',
-                'add',
-                '--name',
-                keyVaultName,
-                '--ip-address',
-                publicIpv4,
-            ])
+            await execa(
+                'az',
+                [
+                    'keyvault',
+                    'network-rule',
+                    'add',
+                    '--name',
+                    keyVaultName,
+                    '--ip-address',
+                    publicIpv4,
+                ],
+                { stdio: 'inherit' },
+            )
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             console.error('Failed to add network rule to keyvault', err)

@@ -77,7 +77,7 @@ export default async function runExecutor(options: PlanExecutorSchema, context: 
 
         console.log(`${projectRoot}> ${getEscapedCommand(`terragrunt`, terragruntArguments)}`)
         await execa('terragrunt', terragruntArguments, {
-            stdio: [process.stdin, 'pipe', 'pipe'],
+            stdio: 'inherit',
             cwd: projectRoot,
         })
     } finally {
