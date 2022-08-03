@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.34.5
+
+### Patch Changes
+
+- Removed output from cli commands adding / removing firewall rules, it's noisy
+
 ## 0.34.4
 
 ### Patch Changes
