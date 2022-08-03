@@ -42,22 +42,18 @@ export async function addFirewallRules({
         try {
             console.log(`Adding firewall rule to ${storageAccountName}`)
             storageAccountsToRemoveFirewallRules.push(storageAccountName)
-            await execa(
-                'az',
-                [
-                    'storage',
-                    'account',
-                    'network-rule',
-                    'add',
-                    '-g',
-                    resourceGroupName,
-                    '--account-name',
-                    storageAccountName,
-                    '--ip-address',
-                    publicIpv4,
-                ],
-                { stdio: 'inherit' },
-            )
+            await execa('az', [
+                'storage',
+                'account',
+                'network-rule',
+                'add',
+                '-g',
+                resourceGroupName,
+                '--account-name',
+                storageAccountName,
+                '--ip-address',
+                publicIpv4,
+            ])
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             console.error('Failed to add network rule to storage', err)
@@ -78,19 +74,15 @@ export async function addFirewallRules({
         try {
             console.log(`Adding firewall rule to ${keyVaultName}`)
             keyVaultsToRemoveFirewallRules.push(keyVaultName)
-            await execa(
-                'az',
-                [
-                    'keyvault',
-                    'network-rule',
-                    'add',
-                    '--name',
-                    keyVaultName,
-                    '--ip-address',
-                    publicIpv4,
-                ],
-                { stdio: 'inherit' },
-            )
+            await execa('az', [
+                'keyvault',
+                'network-rule',
+                'add',
+                '--name',
+                keyVaultName,
+                '--ip-address',
+                publicIpv4,
+            ])
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             console.error('Failed to add network rule to keyvault', err)

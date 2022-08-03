@@ -15,19 +15,15 @@ export async function removeFirewallRules({
     const ipWithCdir = `${publicIpv4}/32`
     for (const keyVaultName of removeIpFromKeyVaults) {
         try {
-            await execa(
-                'az',
-                [
-                    'keyvault',
-                    'network-rule',
-                    'remove',
-                    '--name',
-                    keyVaultName,
-                    '--ip-address',
-                    ipWithCdir,
-                ],
-                { stdio: 'inherit' },
-            )
+            await execa('az', [
+                'keyvault',
+                'network-rule',
+                'remove',
+                '--name',
+                keyVaultName,
+                '--ip-address',
+                ipWithCdir,
+            ])
         } catch (err) {
             console.error('Failed to remove network rule from keyvault', err)
         }
@@ -35,22 +31,18 @@ export async function removeFirewallRules({
 
     for (const storageAccount of removeIpFromStorageAccounts) {
         try {
-            await execa(
-                'az',
-                [
-                    'storage',
-                    'account',
-                    'network-rule',
-                    'remove',
-                    '-g',
-                    resourceGroupName,
-                    '--account-name',
-                    storageAccount,
-                    '--ip-address',
-                    publicIpv4,
-                ],
-                { stdio: 'inherit' },
-            )
+            await execa('az', [
+                'storage',
+                'account',
+                'network-rule',
+                'remove',
+                '-g',
+                resourceGroupName,
+                '--account-name',
+                storageAccount,
+                '--ip-address',
+                publicIpv4,
+            ])
         } catch (err) {
             console.error(
                 `Failed to remove network rule from storage account ${storageAccount}`,
