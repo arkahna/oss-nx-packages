@@ -1,5 +1,13 @@
 # @arkahna/nx-terraform
 
+## 0.34.7
+
+### Patch Changes
+
+- [`bfcc0b0`](https://github.com/arkahna/oss-nx-packages/commit/bfcc0b0a0b118d5a29dcb58fdfa077dfd1c7f1e6) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Fixed var's not being passed through on apply
+
+* [`fc7f766`](https://github.com/arkahna/oss-nx-packages/commit/fc7f766a035e51bc90a08e4f6479f28e3182fb35) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Fixed another bug in the output executor
+
 ## 0.34.6
 
 ### Patch Changes
