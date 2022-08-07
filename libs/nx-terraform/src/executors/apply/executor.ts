@@ -58,7 +58,7 @@ export default async function runExecutor(options: ApplyExecutorSchema, context:
         })
 
     const terragruntCliArgs = createTerragruntCliArgs([
-        ...(options.variables || []),
+        ...(options.var || []),
         ...getTfEnvVars(projectName, config, repoConfig),
     ])
     const terragruntArguments = [

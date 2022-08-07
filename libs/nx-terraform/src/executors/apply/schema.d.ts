@@ -4,7 +4,7 @@ export interface ApplyExecutorSchema {
     addIpToDefaultStorage: boolean
     addIpToKeyVaults?: string[]
     addIpToStorage?: string[]
-    variables?: string[]
+    var?: string[]
     firewallRetryAttempts: number
     firewallRetryDelay: number
     tfTarget?: string
