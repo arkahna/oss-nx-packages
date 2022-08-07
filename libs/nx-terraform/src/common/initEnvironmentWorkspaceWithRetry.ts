@@ -11,6 +11,7 @@ export async function initEnvironmentWorkspaceWithFirewallRuleRetry({
     migrateState,
     retryAttempts,
     retryDelay,
+    quiet,
 }: {
     terragruntConfigFile: string
     terragruntCliArgs: string[]
@@ -21,6 +22,8 @@ export async function initEnvironmentWorkspaceWithFirewallRuleRetry({
     retryAttempts: number
     /** Retry delay, in seconds */
     retryDelay: number
+
+    quiet?: boolean
 }) {
     const terragruntArgs = [
         'init',
@@ -32,7 +35,9 @@ export async function initEnvironmentWorkspaceWithFirewallRuleRetry({
         ...(migrateState ? ['-migrate-state'] : []),
     ]
 
-    console.log(`${projectRoot}> ${getEscapedCommand(`terragrunt`, terragruntArgs)}`)
+    if (!quiet) {
+        console.log(`${projectRoot}> ${getEscapedCommand(`terragrunt`, terragruntArgs)}`)
+    }
 
     // We can't inherit stdio here, as the retry function needs to see the output
     const { all } = await retryOnFirewallError(
@@ -46,5 +51,7 @@ export async function initEnvironmentWorkspaceWithFirewallRuleRetry({
             retryDelay,
         },
     )
-    console.log(all)
+    if (!quiet) {
+        console.log(all)
+    }
 }

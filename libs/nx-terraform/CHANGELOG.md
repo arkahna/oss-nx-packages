@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.34.6
+
+### Patch Changes
+
+- Fixed output executor logging, it should only log the output
+
 ## 0.34.5
 
 ### Patch Changes

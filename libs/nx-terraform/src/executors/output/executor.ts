@@ -1,6 +1,5 @@
 import { ExecutorContext } from '@nrwl/devkit'
 import execa from 'execa'
-import { getEscapedCommand } from 'execa/lib/command'
 import publicIp from 'public-ip'
 import { addFirewallRules } from '../../common/addFirewallRules'
 import { createTerragruntCliArgs } from '../../common/createTerragruntCliArgs'
@@ -59,6 +58,7 @@ export default async function runExecutor(options: OutputExecutorSchema, context
             projectRoot,
             retryAttempts: options.firewallRetryAttempts,
             retryDelay: options.firewallRetryDelay,
+            quiet: true,
         })
 
         const terragruntOutputArgs = [
@@ -69,9 +69,7 @@ export default async function runExecutor(options: OutputExecutorSchema, context
             ...(options.json ? ['-json'] : []),
         ]
 
-        console.log(`${projectRoot}> ${getEscapedCommand(`terragrunt`, terragruntOutputArgs)}`)
         await execa('terragrunt', terragruntOutputArgs, {
-            stdio: 'inherit',
             cwd: projectRoot,
         })
     } finally {
