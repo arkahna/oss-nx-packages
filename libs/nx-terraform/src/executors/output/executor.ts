@@ -71,6 +71,7 @@ export default async function runExecutor(options: OutputExecutorSchema, context
 
         await execa('terragrunt', terragruntOutputArgs, {
             cwd: projectRoot,
+            stdio: 'inherit',
         })
     } finally {
         await removeFirewallRules({
