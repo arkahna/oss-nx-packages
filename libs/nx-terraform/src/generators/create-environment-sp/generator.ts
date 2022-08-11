@@ -27,11 +27,13 @@ export default async function (
     --name ${servicePrincipalName} \
     --sdk-auth`)
 
-        console.log(`> az role assignment create \
+        if (repoSettings.terraformStateType === 'azure-storage') {
+            console.log(`> az role assignment create \
     --role "Storage Blob Data Contributor" \
     --assignee ${servicePrincipalName} \
     --scope "${containerScope}"
     `)
+        }
     }
 
     const newAttributes = {
@@ -71,23 +73,25 @@ ${environmentConfig.environmentFileBody}
             },
         )
 
-        await execa(
-            'az',
-            [
-                'role',
-                'assignment',
-                'create',
-                '--role',
-                'Storage Blob Data Contributor',
-                '--assignee',
-                servicePrincipalName,
-                '--scope',
-                containerScope,
-            ],
-            {
-                stdio: 'inherit',
-            },
-        )
+        if (repoSettings.terraformStateType === 'azure-storage') {
+            await execa(
+                'az',
+                [
+                    'role',
+                    'assignment',
+                    'create',
+                    '--role',
+                    'Storage Blob Data Contributor',
+                    '--assignee',
+                    servicePrincipalName,
+                    '--scope',
+                    containerScope,
+                ],
+                {
+                    stdio: 'inherit',
+                },
+            )
+        }
 
         console.log(`🎉 Success 🎉`)
         console.log(
