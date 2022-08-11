@@ -1,5 +1,6 @@
 import { Tree } from '@nrwl/devkit'
 import execa from 'execa'
+import { getEscapedCommand } from 'execa/lib/command'
 import { isDryRun } from '../../common/isDryRun'
 import { readRepoSettings } from '../../common/read-repo-settings'
 import { readConfigFromEnvFile } from '../../common/readConfigFromEnvFile'
@@ -19,20 +20,38 @@ export default async function (
     const scopes = `/subscriptions/${environmentConfig.subscriptionId}/resourcegroups/${environmentConfig.resourceGroupName}`
     const containerScope = `/subscriptions/${environmentConfig.subscriptionId}/resourceGroups/${environmentConfig.resourceGroupName}/providers/Microsoft.Storage/storageAccounts/${environmentConfig.terraformStorageAccount}/blobServices/default/containers/${environmentConfig.terraformStorageContainer}`
 
+    const createServicePrincipalArgs = [
+        'ad',
+        'sp',
+        'create-for-rbac',
+        '--role',
+        options.role,
+        '--scopes',
+        scopes,
+        `--name`,
+        servicePrincipalName,
+        `--sdk-auth`,
+    ]
+
+    const storageContributorRoleAssignmentArgs = [
+        'role',
+        'assignment',
+        'create',
+        '--role',
+        'Storage Blob Data Contributor',
+        '--assignee',
+        servicePrincipalName,
+        '--scope',
+        containerScope,
+    ]
+
     if (isDryRun()) {
         console.log('Will run:')
 
-        console.log(`> az ad sp create-for-rbac --role ${options.role} \
-    --scopes ${scopes} \
-    --name ${servicePrincipalName} \
-    --sdk-auth`)
+        console.log(`> ${getEscapedCommand(`az`, createServicePrincipalArgs)}`)
 
         if (repoSettings.terraformStateType === 'azure-storage') {
-            console.log(`> az role assignment create \
-    --role "Storage Blob Data Contributor" \
-    --assignee ${servicePrincipalName} \
-    --scope "${containerScope}"
-    `)
+            console.log(`> ${getEscapedCommand(`az`, storageContributorRoleAssignmentArgs)}`)
         }
     }
 
@@ -54,43 +73,16 @@ ${environmentConfig.environmentFileBody}
     )
 
     return async () => {
-        await execa(
-            `az`,
-            [
-                'ad',
-                'sp',
-                'create-for-rbac',
-                '--role',
-                options.role,
-                '--scopes',
-                scopes,
-                `--name`,
-                servicePrincipalName,
-                `--sdk-auth`,
-            ],
-            {
-                stdio: 'inherit',
-            },
-        )
+        console.log(`> ${getEscapedCommand(`az`, createServicePrincipalArgs)}`)
+        await execa(`az`, createServicePrincipalArgs, {
+            stdio: 'inherit',
+        })
 
         if (repoSettings.terraformStateType === 'azure-storage') {
-            await execa(
-                'az',
-                [
-                    'role',
-                    'assignment',
-                    'create',
-                    '--role',
-                    'Storage Blob Data Contributor',
-                    '--assignee',
-                    servicePrincipalName,
-                    '--scope',
-                    containerScope,
-                ],
-                {
-                    stdio: 'inherit',
-                },
-            )
+            console.log(`> ${getEscapedCommand(`az`, storageContributorRoleAssignmentArgs)}`)
+            await execa('az', storageContributorRoleAssignmentArgs, {
+                stdio: 'inherit',
+            })
         }
 
         console.log(`🎉 Success 🎉`)
