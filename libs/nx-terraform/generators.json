@@ -28,6 +28,11 @@
             "schema": "./src/generators/create-azure-environment/schema.json",
             "description": "Creates an environment for an Azure workload"
         },
+        "create-environment-sp": {
+            "factory": "./src/generators/create-environment-sp/generator",
+            "schema": "./src/generators/create-environment-sp/schema.json",
+            "description": "Creates a service principal to use for Deployments to an environment"
+        },
         "add-firewall-exceptions": {
             "factory": "./src/generators/add-firewall-exceptions/generator",
             "schema": "./src/generators/add-firewall-exceptions/schema.json",

@@ -1,8 +1,4 @@
-import { workspaceRoot } from '@nrwl/devkit'
-import fm from 'front-matter'
-import * as fs from 'fs'
-import { readFile } from 'fs/promises'
-import * as path from 'path'
+import { readEnvironmentFile } from './readEnvironmentFile'
 import { TerraformStateType } from './tf-state-types'
 
 export type EnvConfig = Awaited<ReturnType<typeof readConfigFromEnvFile>>
@@ -13,20 +9,7 @@ export async function readConfigFromEnvFile(
 ) {
     const terragruntConfigFile = `vars/${environment}/terragrunt.hcl`
 
-    const environmentFile = path.join(workspaceRoot, `docs/environments/${environment}.md`)
-
-    if (!fs.existsSync(environmentFile)) {
-        throw new Error(`Missing environment documentation markdown file at ${environmentFile}`)
-    }
-    const environmentMarkdown = await readFile(environmentFile)
-    const frontMatter = fm(environmentMarkdown.toString())
-
-    if (!frontMatter.attributes || typeof frontMatter.attributes !== 'object') {
-        throw new Error(
-            `Missing front matter in environment documentation markdown file at ${environmentFile}`,
-        )
-    }
-    const attributes = frontMatter.attributes as Record<string, string | undefined>
+    const { attributes, environmentFile, body } = await readEnvironmentFile(environment)
 
     if (!attributes.subscription_id) {
         throw new Error(
@@ -85,5 +68,8 @@ export async function readConfigFromEnvFile(
         environmentAttributes: attributes,
         terragruntConfigFile,
         terraformCloudWorkspaceName: attributes.tf_workspace,
+        environmentFile,
+        attributes,
+        environmentFileBody: body,
     }
 }
