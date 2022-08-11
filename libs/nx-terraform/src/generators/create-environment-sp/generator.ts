@@ -16,7 +16,9 @@ export default async function (
         options.environmentName,
     )
 
-    const servicePrincipalName = `gh-actions-${repoSettings.azureResourcePrefix}-${options.environmentName}-sp`
+    const servicePrincipalName =
+        options.name ??
+        `gh-actions-${repoSettings.azureResourcePrefix}-${options.environmentName}-sp`
     const scopes = `/subscriptions/${environmentConfig.subscriptionId}/resourcegroups/${environmentConfig.resourceGroupName}`
     const containerScope = `/subscriptions/${environmentConfig.subscriptionId}/resourceGroups/${environmentConfig.resourceGroupName}/providers/Microsoft.Storage/storageAccounts/${environmentConfig.terraformStorageAccount}/blobServices/default/containers/${environmentConfig.terraformStorageContainer}`
 
