@@ -52,34 +52,6 @@ jobs:
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
 
-      - name: create deployment
-        id: create_deployment
-        uses: octokit/request-action@v2.1.0
-        with:
-          route: POST /repos/{owner}/{repository}/deployments
-          owner: ${{ github.repository_owner }}
-          repository: ${{ github.event.repository.name }}
-          ref: ${{ fromJson(steps.get_pull_request_ref.outputs.data).head.ref }}
-          environment: pr${{ github.event.issue.number }}
-          auto_merge: false
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-
-      - name: set deployment status to in progress
-        id: start_deployment
-        uses: octokit/request-action@v2.1.0
-        with:
-          route: POST /repos/{owner}/{repository}/deployments/{deployment}/statuses
-          owner: ${{ github.repository_owner }}
-          repository: ${{ github.event.repository.name }}
-          deployment: ${{ fromJson(steps.create_deployment.outputs.data).id }}
-          environment: pr${{ github.event.issue.number }}
-          log_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          state: in_progress
-          mediaType: '{"previews": ["flash", "ant-man"]}'
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-
       - name: pull the repo.
         uses: actions/checkout@v2
         with:
@@ -108,46 +80,7 @@ jobs:
 
       - name: Deploy pre-release
         run: |
-          yarn changeset pre enter pr${{ github.event.issue.number }} || true
-          yarn changeset version
+          yarn changeset version --snapshot pr${{ github.event.issue.number }}
           yarn release
-          git config user.name github-actions[bot]
-          git config user.email github-actions[bot]@users.noreply.github.com
-          git add .
-          git commit -m "Pushed pre-release"
-          git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: set test status to success
-        id: successful_test
-        uses: octokit/request-action@v2.x
-        with:
-          route: POST /repos/{owner}/{repository}/deployments/{deployment}/statuses
-          owner: ${{ github.repository_owner }}
-          repository: ${{ github.event.repository.name }}
-          deployment: ${{ fromJson(steps.create_deployment.outputs.data).id }}
-          environment: pr${{ github.event.issue.number }}
-          environment_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          log_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          mediaType: '{"previews": ["ant-man"]}'
-          state: success
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-
-      - name: set test status to failure
-        id: failed_test
-        uses: octokit/request-action@v2.x
-        if: failure()
-        with:
-          route: POST /repos/{owner}/{repository}/deployments/{deployment}/statuses
-          owner: ${{ github.repository_owner }}
-          repository: ${{ github.event.repository.name }}
-          deployment: ${{ fromJson(steps.create_deployment.outputs.data).id }}
-          environment: pr${{ github.event.issue.number }}
-          environment_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          log_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          mediaType: '{"previews": ["ant-man"]}'
-          state: failure
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
