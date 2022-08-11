@@ -24,7 +24,7 @@ jobs:
         id: check
         uses: khan/pull-request-comment-trigger@master
         with:
-          trigger: '!prerelease'
+          trigger: '/release-pr'
           reaction: rocket
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
@@ -85,14 +85,19 @@ jobs:
           persist-credentials: true
           repository: ${{ fromJson(steps.get_pull_request_ref.outputs.data).head.repo.full_name }}
 
-      - name: Setup Node.js 12.x
-        # https://github.com/actions/setup-node
+      - name: Setup Node.js 16.x
         uses: actions/setup-node@v2
         with:
-          node-version: 12.x
+          node-version: 16.x
 
-      - name: Install Dependencies
-        run: yarn
+      - uses: pnpm/action-setup@v2.1.0
+        with:
+          version: 7
+          run_install: true
+
+      - name: pnpm install
+        run: |
+          pnpm install --frozen-lockfile
 
       - name: Deploy pre-release
         run: |
