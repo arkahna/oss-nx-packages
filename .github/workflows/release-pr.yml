@@ -100,6 +100,13 @@ jobs:
         run: |
           pnpm install --frozen-lockfile
 
+      - name: Configure npm
+        run: |
+          echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
+          cat .npmrc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Deploy pre-release
         run: |
           yarn changeset pre enter pr${{ github.event.issue.number }} || true
@@ -112,8 +119,6 @@ jobs:
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: set test status to success
         id: successful_test
