@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.35.0
+
+### Minor Changes
+
+- [#24](https://github.com/arkahna/oss-nx-packages/pull/24) [`1456df1`](https://github.com/arkahna/oss-nx-packages/commit/1456df10f9082445fc3f512684081c92b1512d44) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Add new generator to create a service principal for deployment
+
 ## 0.34.7
 
 ### Patch Changes
