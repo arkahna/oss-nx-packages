@@ -1,6 +1,7 @@
 import { Tree } from '@nrwl/devkit'
 import execa from 'execa'
 import { getEscapedCommand } from 'execa/lib/command'
+import fs from 'node:fs'
 import { isDryRun } from '../../common/isDryRun'
 import { readRepoSettings } from '../../common/read-repo-settings'
 import { readConfigFromEnvFile } from '../../common/readConfigFromEnvFile'
@@ -35,6 +36,7 @@ export default async function (
         `--sdk-auth`,
     ]
 
+    const idPlaceholder = 'ID_ONCE_CREATED'
     const storageContributorRoleAssignmentArgs = [
         'role',
         'assignment',
@@ -42,7 +44,7 @@ export default async function (
         '--role',
         'Storage Blob Data Contributor',
         '--assignee',
-        servicePrincipalName,
+        idPlaceholder,
         '--scope',
         containerScope,
     ]
@@ -57,14 +59,31 @@ export default async function (
         }
     }
 
-    const newAttributes = {
-        ...environmentConfig.attributes,
-        github_service_principal: servicePrincipalName,
-    }
+    return async () => {
+        console.log(`> ${getEscapedCommand(`az`, createServicePrincipalArgs)}`)
+        await execa(`az`, createServicePrincipalArgs, {
+            stdio: 'inherit',
+        })
 
-    tree.write(
-        environmentConfig.environmentFile,
-        `---
+        const { stdout } = await execa(`az`, [
+            'ad',
+            'sp',
+            'list',
+            '--display-name',
+            servicePrincipalName,
+        ])
+        const servicePrincipalObjectId = JSON.parse(stdout)[0].id
+        console.log(`Service principal id: ${servicePrincipalObjectId}`)
+
+        const newAttributes = {
+            ...environmentConfig.attributes,
+            github_service_principal: servicePrincipalName,
+            github_service_principal_id: servicePrincipalObjectId,
+        }
+
+        fs.writeFileSync(
+            environmentConfig.environmentFile,
+            `---
 ${Object.keys(newAttributes)
     .map((key) => `${key}: ${newAttributes[key]}`)
     .join('\n')}
@@ -72,19 +91,19 @@ ${Object.keys(newAttributes)
 
 ${environmentConfig.environmentFileBody}
 `,
-    )
-
-    return async () => {
-        console.log(`> ${getEscapedCommand(`az`, createServicePrincipalArgs)}`)
-        await execa(`az`, createServicePrincipalArgs, {
-            stdio: 'inherit',
-        })
+        )
 
         if (repoSettings.terraformStateType === 'azure-storage') {
             console.log(`> ${getEscapedCommand(`az`, storageContributorRoleAssignmentArgs)}`)
-            await execa('az', storageContributorRoleAssignmentArgs, {
-                stdio: 'inherit',
-            })
+            await execa(
+                'az',
+                storageContributorRoleAssignmentArgs.map((arg) =>
+                    arg === idPlaceholder ? servicePrincipalObjectId : arg,
+                ),
+                {
+                    stdio: 'inherit',
+                },
+            )
         }
 
         console.log(`🎉 Success 🎉`)
