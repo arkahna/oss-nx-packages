@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.35.1
+
+### Patch Changes
+
+- [#27](https://github.com/arkahna/oss-nx-packages/pull/27) [`f459fb0`](https://github.com/arkahna/oss-nx-packages/commit/f459fb0b86a45b2b2ad7f128eba21b275872175f) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Fixed generate service principal role assignment
+
 ## 0.35.0
 
 ### Minor Changes
