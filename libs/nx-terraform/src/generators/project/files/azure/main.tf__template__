@@ -26,7 +26,8 @@ module "naming" {
   version = "0.2.0"
   prefix  = var.resource_prefix != "" ? [var.resource_prefix] : []
   suffix = [
-    var.environment_tag, var.workload_code
+    var.environment_tag,
+    var.workload_code
   ]
 }
 
