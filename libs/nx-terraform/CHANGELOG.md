@@ -1,5 +1,13 @@
 # @arkahna/nx-terraform
 
+## 0.36.0
+
+### Minor Changes
+
+- [#33](https://github.com/arkahna/oss-nx-packages/pull/33) [`9d5c86f`](https://github.com/arkahna/oss-nx-packages/commit/9d5c86fc0f3d907498fcf9274dc7932ea7d453d5) Thanks [@emlyn-arkahna](https://github.com/emlyn-arkahna)! - Update azure naming standard
+
+* [#35](https://github.com/arkahna/oss-nx-packages/pull/35) [`91321c0`](https://github.com/arkahna/oss-nx-packages/commit/91321c0e41b1be2f44e6a3769aa9bec29203a261) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Ensure correct tenant/sub when creating service principal
+
 ## 0.35.1
 
 ### Patch Changes
