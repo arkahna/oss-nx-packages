@@ -60,6 +60,18 @@ export default async function (
     }
 
     return async () => {
+        console.log('Ensuring logged in to correct tenant')
+        const { stdout: accountShowStdOut } = await execa(`az`, ['account', 'show'])
+        const accountShow = JSON.parse(accountShowStdOut)
+        if (accountShow.tenantId !== environmentConfig.tenantId) {
+            console.log(
+                'Current subscription belongs to wrong Tenant, select the correct subscription using:',
+            )
+            console.log(`> az account set --subscription ${environmentConfig.subscriptionId}`)
+
+            throw new Error('Tenant id does not match')
+        }
+
         console.log(`> ${getEscapedCommand(`az`, createServicePrincipalArgs)}`)
         await execa(`az`, createServicePrincipalArgs, {
             stdio: 'inherit',
