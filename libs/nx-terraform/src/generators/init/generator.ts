@@ -12,9 +12,7 @@ export default async function (tree: Tree, options: NxTerraformInitSchema) {
         value['[terraform-vars]'] = {
             'editor.defaultFormatter': 'hashicorp.terraform',
         }
-        value['terraform-ls.experimentalFeatures'] = {
-            validateOnSave: true,
-        }
+        value['terraform.experimentalFeatures.validateOnSave'] = true
 
         return value
     })
