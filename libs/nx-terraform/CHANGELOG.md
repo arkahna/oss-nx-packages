@@ -1,5 +1,15 @@
 # @arkahna/nx-terraform
 
+## 0.37.0
+
+### Minor Changes
+
+- [#36](https://github.com/arkahna/oss-nx-packages/pull/36) [`1546190`](https://github.com/arkahna/oss-nx-packages/commit/1546190f5e28d2ca7865bd669030a8a272512aa1) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Simplified tf init using the local environment
+
+### Patch Changes
+
+- [#36](https://github.com/arkahna/oss-nx-packages/pull/36) [`fd54743`](https://github.com/arkahna/oss-nx-packages/commit/fd547430d7e34e5573722507d4a24aa148545bac) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Fix updated vscode terraform plugin setting name
+
 ## 0.36.0
 
 ### Minor Changes
