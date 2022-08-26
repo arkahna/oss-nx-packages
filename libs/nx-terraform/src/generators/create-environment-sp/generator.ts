@@ -67,9 +67,7 @@ export default async function (
             console.log(
                 'Current subscription belongs to wrong Tenant, select the correct subscription using:',
             )
-            console.log(
-                `> az account set --subscription ${environmentConfig.subscriptionId} --tenant ${environmentConfig.tenantId}`,
-            )
+            console.log(`> az account set --subscription ${environmentConfig.subscriptionId}`)
 
             throw new Error('Tenant id does not match')
         }
