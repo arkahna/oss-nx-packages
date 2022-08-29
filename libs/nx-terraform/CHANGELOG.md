@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.37.2
+
+### Patch Changes
+
+- [#40](https://github.com/arkahna/oss-nx-packages/pull/40) [`7db77d1`](https://github.com/arkahna/oss-nx-packages/commit/7db77d162a509ea05e45a9b896e5fbdaaba42d38) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Restored allowing environment to be passed to init
+
 ## 0.37.1
 
 ### Patch Changes
