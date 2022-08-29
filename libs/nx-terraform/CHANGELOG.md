@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.37.1
+
+### Patch Changes
+
+- [#38](https://github.com/arkahna/oss-nx-packages/pull/38) [`df7cde3`](https://github.com/arkahna/oss-nx-packages/commit/df7cde31599808da42272d901ff74af259dead12) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Fixed additional prop being validated
+
 ## 0.37.0
 
 ### Minor Changes
