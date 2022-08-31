@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.38.0
+
+### Minor Changes
+
+- [#45](https://github.com/arkahna/oss-nx-packages/pull/45) [`2a3f034`](https://github.com/arkahna/oss-nx-packages/commit/2a3f034fb846582ef93461b13b7908a89d0e9084) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Validate correct subscription selected
+
 ## 0.37.2
 
 ### Patch Changes
