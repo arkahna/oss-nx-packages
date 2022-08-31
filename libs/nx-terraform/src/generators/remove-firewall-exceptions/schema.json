@@ -1,39 +1,39 @@
 {
     "$schema": "http://json-schema.org/schema",
     "cli": "nx",
-    "$id": "AddProjectEnvironment",
+    "$id": "RemoveProjectEnvironment",
     "title": "",
     "type": "object",
     "properties": {
         "environmentName": {
             "type": "string",
-            "description": "The name of the environment to add firewall exceptions.",
+            "description": "The name of the environment to remove firewall exceptions.",
             "alias": "e",
-            "x-prompt": "What is the name of the environment you want to add firewall exceptions for?"
+            "x-prompt": "What is the name of the environment you want to remove firewall exceptions for?"
         },
-        "addIpToDefaultKeyVault": {
+        "removeIpFromDefaultKeyVault": {
             "type": "boolean",
-            "description": "Adds a firewall exception for the current ip to the environment keyvault",
+            "description": "Removes a firewall exception for the current ip to the environment keyvault",
             "default": true
         },
-        "addIpToDefaultStorage": {
+        "removeIpFromDefaultStorage": {
             "type": "boolean",
-            "description": "Adds a firewall exception for the current ip to the environment keyvault",
+            "description": "Removes a firewall exception for the current ip to the environment keyvault",
             "default": true
         },
-        "addIpToKeyVaults": {
+        "removeIpFromKeyVaults": {
             "type": "array",
             "items": {
                 "type": "string"
             },
-            "description": "Adds a firewall exception for the current ip to specified keyvaults. Specify as a semicolon-delimited list of resource names, e.g. 'ark-dev-akv-system1;ark-dev-akv-system2'."
+            "description": "Removes a firewall exception for the current ip to specified keyvaults. Specify as a semicolon-delimited list of resource names, e.g. 'ark-dev-akv-system1;ark-dev-akv-system2'."
         },
-        "addIpToStorage": {
+        "removeIpFromStorage": {
             "type": "array",
             "items": {
                 "type": "string"
             },
-            "description": "Adds a firewall exception for the current ip to specified storage accounts. Specify as a semicolon-delimited list of resource names, e.g. 'arkdevsta001;arkdevsta001'."
+            "description": "Removes a firewall exception for the current ip to specified storage accounts. Specify as a semicolon-delimited list of resource names, e.g. 'arkdevsta001;arkdevsta001'."
         }
     },
     "required": [

@@ -1,7 +1,7 @@
-export interface NxTerraformAddFirewallExceptionsSchema {
+export interface NxTerraformRemoveFirewallExceptionsSchema {
     environmentName: string
-    addIpToDefaultKeyVault: boolean
-    addIpToDefaultStorage: boolean
-    addIpToKeyVaults?: string[]
-    addIpToStorage?: string[]
+    removeIpFromDefaultKeyVault: boolean
+    removeIpFromDefaultStorage: boolean
+    removeIpFromKeyVaults?: string[]
+    removeIpFromStorage?: string[]
 }
