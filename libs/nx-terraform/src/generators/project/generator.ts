@@ -78,6 +78,10 @@ export default async function (tree: Tree, options: NxTerraformGeneratorSchema) 
                 executor: '@arkahna/nx-terraform:apply',
                 options: {},
             },
+            destroy: {
+                executor: '@arkahna/nx-terraform:destroy',
+                options: {},
+            },
             state: {
                 executor: '@arkahna/nx-terraform:state',
                 options: {},

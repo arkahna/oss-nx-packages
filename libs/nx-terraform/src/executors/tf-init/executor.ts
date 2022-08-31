@@ -9,7 +9,6 @@ import { removeFirewallRules } from '../../common/removeFirewallRules'
 import { InitExecutorSchema } from './schema'
 
 export default async function runExecutor(options: InitExecutorSchema, context: ExecutorContext) {
-    const publicIpv4 = await publicIp.v4()
     if (!context.projectName) {
         throw new Error('No projectName')
     }
@@ -39,6 +38,7 @@ export default async function runExecutor(options: InitExecutorSchema, context: 
             retryDelay: 5,
         })
     } else {
+        const publicIpv4 = await publicIp.v4()
         const config = await readConfigFromEnvFile(
             repoConfig.terraformStateType,
             options.environment,

@@ -2,6 +2,7 @@ import { Tree } from '@nrwl/devkit'
 import execa from 'execa'
 import { getEscapedCommand } from 'execa/lib/command'
 import fs from 'node:fs'
+import { getCurrentAzAccount } from '../../common/getCurrentAzAccount'
 import { isDryRun } from '../../common/isDryRun'
 import { readRepoSettings } from '../../common/read-repo-settings'
 import { readConfigFromEnvFile } from '../../common/readConfigFromEnvFile'
@@ -61,8 +62,7 @@ export default async function (
 
     return async () => {
         console.log('Ensuring logged in to correct tenant')
-        const { stdout: accountShowStdOut } = await execa(`az`, ['account', 'show'])
-        const accountShow = JSON.parse(accountShowStdOut)
+        const accountShow = await getCurrentAzAccount()
         if (accountShow.tenantId !== environmentConfig.tenantId) {
             console.log(
                 'Current subscription belongs to wrong Tenant, select the correct subscription using:',

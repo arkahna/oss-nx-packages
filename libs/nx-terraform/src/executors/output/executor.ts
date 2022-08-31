@@ -3,6 +3,7 @@ import execa from 'execa'
 import publicIp from 'public-ip'
 import { addFirewallRules } from '../../common/addFirewallRules'
 import { createTerragruntCliArgs } from '../../common/createTerragruntCliArgs'
+import { getCurrentAzAccount } from '../../common/getCurrentAzAccount'
 import { getTfEnvVars } from '../../common/getEnvTfVars'
 import { initEnvironmentWorkspaceWithFirewallRuleRetry } from '../../common/initEnvironmentWorkspaceWithRetry'
 import { readRepoSettings } from '../../common/read-repo-settings'
@@ -32,7 +33,21 @@ export default async function runExecutor(options: OutputExecutorSchema, context
             success: true,
         }
     }
-    const { resourceGroupName, terraformStorageAccount, terragruntConfigFile } = config
+    const { resourceGroupName, terraformStorageAccount, terragruntConfigFile, subscriptionId } =
+        config
+
+    const currentAccount = await getCurrentAzAccount()
+
+    if (subscriptionId !== currentAccount.id) {
+        console.error(
+            'Error: subscriptionId does not match currently selected account, run the following to fix:',
+        )
+        console.info(`> az account set --subscription ${subscriptionId}`)
+
+        return {
+            success: false,
+        }
+    }
 
     const { keyVaultsToRemoveFirewallRules, storageAccountsToRemoveFirewallRules } =
         await addFirewallRules({

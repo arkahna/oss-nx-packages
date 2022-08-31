@@ -19,7 +19,7 @@
         },
         "environment": {
             "type": "string",
-            "description": "The environment to deploy, defaults to local",
+            "description": "The environment to init, defaults to local",
             "alias": "env"
         },
         "addIpToDefaultStorage": {
