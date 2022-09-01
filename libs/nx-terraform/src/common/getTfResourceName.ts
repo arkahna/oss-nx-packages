@@ -6,7 +6,7 @@ export async function getTfResourceName(
     projectRoot: string,
 ) {
     try {
-        const outputJson = await execa(
+        const outputHcl = await execa(
             'terragrunt',
             [
                 'state',
@@ -14,7 +14,7 @@ export async function getTfResourceName(
                 '--terragrunt-config',
                 terragruntConfigFile,
                 resourceAddress,
-                '-json',
+                '-no-color',
             ],
             {
                 stdio: [process.stdin, 'pipe', 'pipe'],
@@ -22,8 +22,12 @@ export async function getTfResourceName(
             },
         )
 
-        const output = JSON.parse(outputJson.stdout)
-        resourceAddress = output.name
+        const match = outputHcl.stdout.match(/.{4}name\s+=\s"([a-z]+)"/)
+        if (!match || !match[1]) {
+            throw 'could not find match in returned hcl'
+        }
+
+        resourceAddress = match[1]
         return resourceAddress
     } catch (err) {
         console.log('Failed to look up resource name', err)
