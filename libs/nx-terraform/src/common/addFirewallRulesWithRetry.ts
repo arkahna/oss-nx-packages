@@ -1,13 +1,15 @@
 import execa from 'execa'
-import { getTfResourceName } from './getTfResourceName'
+import { getTfResourceNameWithRetry } from './getTfResourceNameWithRetry'
 
-export async function addFirewallRules({
+export async function addFirewallRulesWithRetry({
     resourceGroupName,
     addIpToKeyVaults,
     addIpToStorageAccounts,
     publicIpv4,
     projectRoot,
     terragruntConfigFile,
+    retryAttempts,
+    retryDelay,
 }: {
     resourceGroupName: string
     addIpToKeyVaults: string[]
@@ -15,6 +17,9 @@ export async function addFirewallRules({
     publicIpv4: string
     projectRoot: string
     terragruntConfigFile: string
+    retryAttempts: number
+    /** Retry delay, in seconds */
+    retryDelay: number
 }): Promise<{
     keyVaultsToRemoveFirewallRules: string[]
     storageAccountsToRemoveFirewallRules: string[]
@@ -26,10 +31,12 @@ export async function addFirewallRules({
         let storageAccountName = storageAccount
         if (storageAccountName.includes('azurerm_storage_account')) {
             console.log(`Finding resource for tf resource ${storageAccountName}`)
-            const result = await getTfResourceName(
+            const result = await getTfResourceNameWithRetry(
                 terragruntConfigFile,
                 storageAccountName,
                 projectRoot,
+                retryAttempts,
+                retryDelay,
             )
             if (!result) {
                 continue
@@ -63,7 +70,13 @@ export async function addFirewallRules({
     for (const keyVault of addIpToKeyVaults) {
         let keyVaultName = keyVault
         if (keyVaultName.includes('azurerm_key_vault')) {
-            const result = await getTfResourceName(terragruntConfigFile, keyVaultName, projectRoot)
+            const result = await getTfResourceNameWithRetry(
+                terragruntConfigFile,
+                keyVaultName,
+                projectRoot,
+                retryAttempts,
+                retryDelay,
+            )
             if (!result) {
                 continue
             }

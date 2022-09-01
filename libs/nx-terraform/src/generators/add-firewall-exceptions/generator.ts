@@ -1,6 +1,6 @@
 import { Tree } from '@nrwl/devkit'
 import publicIp from 'public-ip'
-import { addFirewallRules } from '../../common/addFirewallRules'
+import { addFirewallRulesWithRetry } from '../../common/addFirewallRulesWithRetry'
 import { isDryRun } from '../../common/isDryRun'
 import { readRepoSettings } from '../../common/read-repo-settings'
 import { readConfigFromEnvFile } from '../../common/readConfigFromEnvFile'
@@ -32,7 +32,7 @@ export default async function (tree: Tree, options: NxTerraformAddFirewallExcept
 
         const kvOptions = options.addIpToKeyVaults || []
         const storageOptions = options.addIpToStorage || []
-        await addFirewallRules({
+        await addFirewallRulesWithRetry({
             resourceGroupName,
             addIpToKeyVaults: options.addIpToDefaultKeyVault
                 ? [keyVaultName, ...kvOptions]
@@ -45,6 +45,8 @@ export default async function (tree: Tree, options: NxTerraformAddFirewallExcept
             terragruntConfigFile,
             // This generator isn't tied to a project, so it doesn't support looking up tf resources
             projectRoot: process.cwd(),
+            retryAttempts: options.firewallRetryAttempts,
+            retryDelay: options.firewallRetryDelay,
         })
         console.log('🎉 Success 🎉')
     }
