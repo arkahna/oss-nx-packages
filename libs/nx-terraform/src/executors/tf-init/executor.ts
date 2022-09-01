@@ -44,7 +44,7 @@ export default async function runExecutor(options: InitExecutorSchema, context: 
             options.environment,
         )
         if (!config) {
-            console.warn('Skipped apply, no terragrunt file for environment')
+            console.warn('Skipped init, no terragrunt file for environment')
             return {
                 success: true,
             }

@@ -37,6 +37,11 @@
             "factory": "./src/generators/add-firewall-exceptions/generator",
             "schema": "./src/generators/add-firewall-exceptions/schema.json",
             "description": "Adds a firewall rule for the current IP to azure resources"
+        },
+        "remove-firewall-exceptions": {
+            "factory": "./src/generators/remove-firewall-exceptions/generator",
+            "schema": "./src/generators/remove-firewall-exceptions/schema.json",
+            "description": "Removes a firewall rule for the current IP from azure resources"
         }
     }
 }

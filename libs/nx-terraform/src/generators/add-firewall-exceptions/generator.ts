@@ -22,7 +22,7 @@ export default async function (tree: Tree, options: NxTerraformAddFirewallExcept
             options.environmentName,
         )
         if (!config) {
-            console.warn('Skipped apply, no terragrunt file for environment')
+            console.warn('Skipped adding firewall rules, no terragrunt file for environment')
             return {
                 success: true,
             }
