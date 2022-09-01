@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.38.1
+
+### Patch Changes
+
+- [#49](https://github.com/arkahna/oss-nx-packages/pull/49) [`4c5e59e`](https://github.com/arkahna/oss-nx-packages/commit/4c5e59eb38ae27cc510413d980dcbb89019b9e60) Thanks [@emlyn-arkahna](https://github.com/emlyn-arkahna)! - Fix storage account name matching
+
 ## 0.38.0
 
 ### Minor Changes
