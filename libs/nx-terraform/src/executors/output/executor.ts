@@ -1,7 +1,7 @@
 import { ExecutorContext } from '@nrwl/devkit'
 import execa from 'execa'
 import publicIp from 'public-ip'
-import { addFirewallRules } from '../../common/addFirewallRules'
+import { addFirewallRulesWithRetry } from '../../common/addFirewallRulesWithRetry'
 import { createTerragruntCliArgs } from '../../common/createTerragruntCliArgs'
 import { getCurrentAzAccount } from '../../common/getCurrentAzAccount'
 import { getTfEnvVars } from '../../common/getEnvTfVars'
@@ -50,7 +50,7 @@ export default async function runExecutor(options: OutputExecutorSchema, context
     }
 
     const { keyVaultsToRemoveFirewallRules, storageAccountsToRemoveFirewallRules } =
-        await addFirewallRules({
+        await addFirewallRulesWithRetry({
             resourceGroupName,
             addIpToKeyVaults: [],
             addIpToStorageAccounts:
@@ -60,6 +60,8 @@ export default async function runExecutor(options: OutputExecutorSchema, context
             publicIpv4,
             terragruntConfigFile,
             projectRoot,
+            retryAttempts: options.firewallRetryAttempts,
+            retryDelay: options.firewallRetryDelay,
         })
 
     try {

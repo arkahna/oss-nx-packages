@@ -4,4 +4,6 @@ export interface NxTerraformAddFirewallExceptionsSchema {
     addIpToDefaultStorage: boolean
     addIpToKeyVaults?: string[]
     addIpToStorage?: string[]
+    firewallRetryAttempts: number
+    firewallRetryDelay: number
 }

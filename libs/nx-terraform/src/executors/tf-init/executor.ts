@@ -1,6 +1,6 @@
 import { ExecutorContext } from '@nrwl/devkit'
 import publicIp from 'public-ip'
-import { addFirewallRules } from '../../common/addFirewallRules'
+import { addFirewallRulesWithRetry } from '../../common/addFirewallRulesWithRetry'
 import { ensureNoBackendFile } from '../../common/ensure-no-backend-file'
 import { initEnvironmentWorkspaceWithFirewallRuleRetry } from '../../common/initEnvironmentWorkspaceWithRetry'
 import { readRepoSettings } from '../../common/read-repo-settings'
@@ -52,7 +52,7 @@ export default async function runExecutor(options: InitExecutorSchema, context: 
         const { resourceGroupName, terraformStorageAccount, terragruntConfigFile } = config
 
         const { keyVaultsToRemoveFirewallRules, storageAccountsToRemoveFirewallRules } =
-            await addFirewallRules({
+            await addFirewallRulesWithRetry({
                 resourceGroupName,
                 addIpToKeyVaults: [],
                 addIpToStorageAccounts:
@@ -62,6 +62,8 @@ export default async function runExecutor(options: InitExecutorSchema, context: 
                 publicIpv4,
                 terragruntConfigFile,
                 projectRoot,
+                retryAttempts: options.firewallRetryAttempts,
+                retryDelay: options.firewallRetryDelay,
             })
 
         try {

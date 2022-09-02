@@ -34,9 +34,17 @@
                 "type": "string"
             },
             "description": "Adds a firewall exception for the current ip to specified storage accounts. Specify as a semicolon-delimited list of resource names, e.g. 'arkdevsta001;arkdevsta001'."
+        },
+        "firewallRetryAttempts": {
+            "type": "integer",
+            "description": "Number of times to retry adding the firewall exception for the current ip to the environment keyvault",
+            "default": 5
+        },
+        "firewallRetryDelay": {
+            "type": "integer",
+            "description": "Delay in seconds between firewall retry attempts",
+            "default": 5
         }
     },
-    "required": [
-        "environmentName"
-    ]
+    "required": ["environmentName"]
 }
