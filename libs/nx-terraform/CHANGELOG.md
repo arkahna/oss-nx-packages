@@ -1,5 +1,13 @@
 # @arkahna/nx-terraform
 
+## 0.39.0
+
+### Minor Changes
+
+- [#52](https://github.com/arkahna/oss-nx-packages/pull/52) [`bd45e9a`](https://github.com/arkahna/oss-nx-packages/commit/bd45e9a8e55d7eca828b2e346ae3446d8df707cc) Thanks [@emlyn-arkahna](https://github.com/emlyn-arkahna)! - Add retry when getting resource names from terraform
+
+* [#47](https://github.com/arkahna/oss-nx-packages/pull/47) [`7cca9ec`](https://github.com/arkahna/oss-nx-packages/commit/7cca9ecd67fe745b3fcf817ae76cf716575c6200) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Add remove firewall rule generator
+
 ## 0.38.1
 
 ### Patch Changes
