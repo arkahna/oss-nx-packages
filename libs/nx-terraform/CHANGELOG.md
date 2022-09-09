@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.39.1
+
+### Patch Changes
+
+- [#54](https://github.com/arkahna/oss-nx-packages/pull/54) [`4a53ecf`](https://github.com/arkahna/oss-nx-packages/commit/4a53ecf97b0de41a77bbc02d2c3bcdb26c1d0251) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Fixed location shortname
+
 ## 0.39.0
 
 ### Minor Changes
