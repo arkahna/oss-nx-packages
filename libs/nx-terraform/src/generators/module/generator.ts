@@ -4,6 +4,7 @@ import {
     generateFiles,
     names,
     offsetFromRoot,
+    readNxJson,
     Tree,
 } from '@nrwl/devkit'
 import * as path from 'path'
@@ -23,8 +24,11 @@ function normalizeOptions(options: NxTerraformGeneratorSchema): NormalizedSchema
     const projectDirectory = options.directory
         ? `${names(options.directory).fileName}/${name}`
         : name
+    const nxJson = readNxJson()
     const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-')
-    const projectRoot = `tfmodules/${projectDirectory}`
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const modulesDir = (nxJson.workspaceLayout as any)?.['nx-terraform']?.modulesDir
+    const projectRoot = `${modulesDir || 'terraform/modules'}/${projectDirectory}`
     const parsedTags = options.tags ? options.tags.split(',').map((s) => s.trim()) : []
 
     return {
