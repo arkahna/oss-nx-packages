@@ -14,17 +14,17 @@
   },
   "dependencies": {
     "@azure/arm-resources": "^5.0.1",
-    "@azure/identity": "^2.1.0",
+    "@azure/identity": "^3.0.0",
     "@azure/logger": "^1.0.3",
     "@swc/helpers": "~0.3.3",
-    "esbuild": "^0.14.48",
+    "esbuild": "^0.15.8",
     "esbuild-register": "^3.3.3",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^0.4.3",
-    "@changesets/cli": "^2.23.1",
-    "@changesets/git": "^1.3.2",
+    "@changesets/changelog-github": "^0.4.6",
+    "@changesets/cli": "^2.24.4",
+    "@changesets/git": "^1.4.1",
     "@nrwl/cli": "14.7.8",
     "@nrwl/devkit": "14.7.8",
     "@nrwl/eslint-plugin-nx": "14.7.8",
@@ -39,10 +39,10 @@
     "@swc/jest": "0.2.20",
     "@types/jest": "28.1.8",
     "@types/node": "16.11.7",
-    "@typescript-eslint/eslint-plugin": "5.33.1",
-    "@typescript-eslint/parser": "5.33.1",
-    "eslint": "~8.15.0",
-    "eslint-config-prettier": "8.1.0",
+    "@typescript-eslint/eslint-plugin": "5.38.0",
+    "@typescript-eslint/parser": "5.38.0",
+    "eslint": "~8.23.1",
+    "eslint-config-prettier": "8.5.0",
     "jest": "28.1.3",
     "jsonc-eslint-parser": "^2.1.0",
     "nx": "14.7.8",
@@ -50,7 +50,6 @@
     "ts-jest": "28.0.8",
     "ts-node": "10.9.1",
     "tslib": "^2.0.0",
-    "typescript": "4.7.4"
+    "typescript": "4.8.3"
   }
 }
-

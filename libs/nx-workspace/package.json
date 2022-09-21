@@ -5,8 +5,7 @@
     "generators": "./generators.json",
     "executors": "./executors.json",
     "dependencies": {
-        "execa": "^5",
-        "node-fetch": "^3.2.1"
+        "execa": "5.1.1"
     },
     "publishConfig": {
         "directory": "../../dist/libs/nx-workspace"

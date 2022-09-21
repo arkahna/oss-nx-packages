@@ -21,7 +21,7 @@
     },
     "optionalDependencies": {
         "@azure/arm-resources": "^5.0.0",
-        "@azure/identity": "^2.0.4",
+        "@azure/identity": "^3.0.0",
         "@azure/logger": "^1.0.3"
     },
     "nx-migrations": {
