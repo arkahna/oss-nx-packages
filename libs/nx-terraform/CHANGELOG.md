@@ -1,5 +1,15 @@
 # @arkahna/nx-terraform
 
+## 0.41.0
+
+### Minor Changes
+
+- [#61](https://github.com/arkahna/oss-nx-packages/pull/61) [`ce76a12`](https://github.com/arkahna/oss-nx-packages/commit/ce76a121c96255a609057a27b65e0e8e2582c2a9) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Added force-unlock executor to terraform projects
+
+- [#61](https://github.com/arkahna/oss-nx-packages/pull/61) [`ce76a12`](https://github.com/arkahna/oss-nx-packages/commit/ce76a121c96255a609057a27b65e0e8e2582c2a9) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Allowed specifying standalone NX terraform project
+
+- [#61](https://github.com/arkahna/oss-nx-packages/pull/61) [`ce76a12`](https://github.com/arkahna/oss-nx-packages/commit/ce76a121c96255a609057a27b65e0e8e2582c2a9) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Stopped updating tfprojects/README.md, doing this isn't idiomatic NX
+
 ## 0.40.0
 
 ### Minor Changes
