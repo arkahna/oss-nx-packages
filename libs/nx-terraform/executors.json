@@ -35,6 +35,11 @@
             "implementation": "./src/executors/lint/executor",
             "schema": "./src/executors/lint/schema.json",
             "description": "Run terraform format check and validation"
+        },
+        "force-unlock": {
+            "implementation": "./src/executors/force-unlock/executor",
+            "schema": "./src/executors/force-unlock/schema.json",
+            "description": "Run terraform force-unlock"
         }
     }
 }

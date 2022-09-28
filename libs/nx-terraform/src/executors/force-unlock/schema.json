@@ -1,22 +1,13 @@
 {
     "$schema": "http://json-schema.org/schema",
     "cli": "nx",
-    "title": "Terraform State executor",
-    "description": "Runs terragrunt state commands",
+    "title": "Terraform Force unlock executor",
+    "description": "Runs terragrunt force-unlock commands",
     "type": "object",
     "properties": {
-        "command": {
+        "lockId": {
             "type": "string",
-            "description": "The state command to run (list, show etc, run `terraform state help` for more info)",
-            "alias": "cmd"
-        },
-        "address": {
-            "type": "string",
-            "description": "The address of the resource",
-            "aliases": [
-                "r",
-                "p"
-            ]
+            "description": "The terraform lockId"
         },
         "environment": {
             "type": "string",
@@ -37,15 +28,9 @@
             "type": "integer",
             "description": "Delay in seconds between firewall retry attempts",
             "default": 5
-        },
-        "json": {
-            "type": "boolean",
-            "description": "Outputs the state in json format",
-            "default": false
         }
     },
     "required": [
-        "environment",
-        "command"
+        "environment"
     ]
 }

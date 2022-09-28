@@ -71,58 +71,54 @@ export default async function (tree: Tree, options: NxTerraformGeneratorSchema) 
     const { azureResourcePrefix, terraformCloudOrganization } = readRepoSettings()
 
     const normalizedOptions = normalizeOptions(options)
-    addProjectConfiguration(tree, normalizedOptions.projectName, {
-        root: normalizedOptions.projectRoot,
-        projectType: 'application',
-        sourceRoot: `${normalizedOptions.projectRoot}`,
-        targets: {
-            plan: {
-                executor: '@arkahna/nx-terraform:plan',
-                options: {},
+    addProjectConfiguration(
+        tree,
+        normalizedOptions.projectName,
+        {
+            root: normalizedOptions.projectRoot,
+            projectType: 'application',
+            sourceRoot: `${normalizedOptions.projectRoot}`,
+            targets: {
+                plan: {
+                    executor: '@arkahna/nx-terraform:plan',
+                    options: {},
+                },
+                apply: {
+                    executor: '@arkahna/nx-terraform:apply',
+                    options: {},
+                },
+                destroy: {
+                    executor: '@arkahna/nx-terraform:destroy',
+                    options: {},
+                },
+                state: {
+                    executor: '@arkahna/nx-terraform:state',
+                    options: {},
+                },
+                output: {
+                    executor: '@arkahna/nx-terraform:output',
+                    options: {},
+                },
+                tfinit: {
+                    executor: '@arkahna/nx-terraform:tf-init',
+                    options: {},
+                },
+                lint: {
+                    executor: '@arkahna/nx-terraform:lint',
+                    options: {},
+                },
+                'force-unlock': {
+                    executor: '@arkahna/nx-terraform:force-unlock',
+                    options: {},
+                },
             },
-            apply: {
-                executor: '@arkahna/nx-terraform:apply',
-                options: {},
-            },
-            destroy: {
-                executor: '@arkahna/nx-terraform:destroy',
-                options: {},
-            },
-            state: {
-                executor: '@arkahna/nx-terraform:state',
-                options: {},
-            },
-            output: {
-                executor: '@arkahna/nx-terraform:output',
-                options: {},
-            },
-            tfinit: {
-                executor: '@arkahna/nx-terraform:tf-init',
-                options: {},
-            },
-            lint: {
-                executor: '@arkahna/nx-terraform:lint',
-                options: {},
-            },
+            tags: normalizedOptions.parsedTags,
+            implicitDependencies: [],
+            ...{ azureWorkloadOverride: normalizedOptions.azureWorkloadOverride },
         },
-        tags: normalizedOptions.parsedTags,
-        implicitDependencies: [],
-        ...{ azureWorkloadOverride: normalizedOptions.azureWorkloadOverride },
-    })
-    addFiles(tree, terraformCloudOrganization, azureResourcePrefix, normalizedOptions)
-
-    const existingTfProjectsReadme =
-        tree.read('tfprojects/README.md')?.toString() ||
-        `# Terraform Projects
-
-The projects should be run in the following order:
-
-`
-    tree.write(
-        'tfprojects/README.md',
-        existingTfProjectsReadme +
-            `\n* [${normalizedOptions.projectName}](${normalizedOptions.projectRoot})`,
+        options.standalone,
     )
+    addFiles(tree, terraformCloudOrganization, azureResourcePrefix, normalizedOptions)
 
     tree.write(`${normalizedOptions.projectRoot}/.gitignore`, terraformProjectGitIgnore)
     await formatFiles(tree)

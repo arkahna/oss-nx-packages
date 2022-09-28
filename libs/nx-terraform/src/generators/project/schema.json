@@ -27,6 +27,9 @@
             "type": "string",
             "description": "A directory where the project is placed",
             "alias": "d"
+        },
+        "standalone": {
+            "type": "boolean"
         }
     },
     "required": [

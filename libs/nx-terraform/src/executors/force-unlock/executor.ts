@@ -71,13 +71,11 @@ export default async function runExecutor(options: StateExecutorSchema, context:
         ])
 
         const terragruntStateArgs = [
-            'state',
-            options.command,
+            'force-unlock',
+            options.lockId,
             '--terragrunt-config',
             terragruntConfigFile,
             ...terragruntCliArgs,
-            ...(options.address ? [options.address] : []),
-            ...(options.json ? ['-json'] : []),
         ]
 
         await initEnvironmentWorkspaceWithFirewallRuleRetry({
