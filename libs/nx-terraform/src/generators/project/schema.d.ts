@@ -3,4 +3,5 @@ export interface NxTerraformGeneratorSchema {
     azureWorkloadOverride?: string
     tags?: string
     directory?: string
+    standalone?: boolean
 }
