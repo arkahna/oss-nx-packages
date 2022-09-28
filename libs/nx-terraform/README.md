@@ -8,6 +8,19 @@ Produces the ability to setup a NX repo with Terraform with Terragrunt for Azure
 pnpm add @arkahna/nx-terraform
 ```
 
+## Configuration
+
+To customise where the projects are created, use
+
+```
+"workspaceLayout": {
+  "nx-terraform": {
+    "appsDir": "terraform/apps",
+    "modulesDir": "terraform/modules",
+  }
+}
+```
+
 ### Azure Support
 
 Then add the Azure specific dependencies:
