@@ -34,13 +34,8 @@ export default async function runExecutor(options: StateExecutorSchema, context:
             success: true,
         }
     }
-    const {
-        resourceGroupName,
-        terraformStorageAccount,
-        keyVaultName,
-        terragruntConfigFile,
-        subscriptionId,
-    } = config
+    const { resourceGroupName, terraformStorageAccount, terragruntConfigFile, subscriptionId } =
+        config
 
     const currentAccount = await getCurrentAzAccount()
 
@@ -55,18 +50,14 @@ export default async function runExecutor(options: StateExecutorSchema, context:
         }
     }
 
-    const kvOptions = options.addIpToKeyVaults || []
-    const storageOptions = options.addIpToStorage || []
     const { keyVaultsToRemoveFirewallRules, storageAccountsToRemoveFirewallRules } =
         await addFirewallRulesWithRetry({
             resourceGroupName,
-            addIpToKeyVaults: options.addIpToDefaultKeyVault
-                ? [keyVaultName, ...kvOptions]
-                : kvOptions,
+            addIpToKeyVaults: [],
             addIpToStorageAccounts:
                 options.addIpToDefaultStorage && terraformStorageAccount
-                    ? [terraformStorageAccount, ...storageOptions]
-                    : storageOptions,
+                    ? [terraformStorageAccount]
+                    : [],
             publicIpv4,
             terragruntConfigFile,
             projectRoot,
