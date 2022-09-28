@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.40.0
+
+### Minor Changes
+
+- [#58](https://github.com/arkahna/oss-nx-packages/pull/58) [`1b479ee`](https://github.com/arkahna/oss-nx-packages/commit/1b479ee64e3462e699171bd714828dab9cfcc72d) Thanks [@JakeGinnivan](https://github.com/JakeGinnivan)! - Changed default directory of modules and apps. See readme how to configure back to original
+
 ## 0.39.1
 
 ### Patch Changes
