@@ -23,29 +23,10 @@
             "description": "The environment to deploy",
             "alias": "env"
         },
-        "addIpToDefaultKeyVault": {
-            "type": "boolean",
-            "description": "Adds a firewall exception for the current ip to the environment keyvault",
-            "default": false
-        },
         "addIpToDefaultStorage": {
             "type": "boolean",
             "description": "Adds a firewall exception for the current ip to the environment keyvault",
             "default": true
-        },
-        "addIpToKeyVaults": {
-            "type": "array",
-            "items": {
-                "type": "string"
-            },
-            "description": "Adds a firewall exception for the current ip to specified keyvaults. Specify as a semicolon-delimited list of resource names, e.g. 'ark-dev-akv-system1;ark-dev-akv-system2'."
-        },
-        "addIpToStorage": {
-            "type": "array",
-            "items": {
-                "type": "string"
-            },
-            "description": "Adds a firewall exception for the current ip to specified storage accounts. Specify as a semicolon-delimited list of resource names, e.g. 'arkdevsta001;arkdevsta001'."
         },
         "firewallRetryAttempts": {
             "type": "integer",
