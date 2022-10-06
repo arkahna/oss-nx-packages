@@ -13,7 +13,6 @@ remote_state {
     storage_account_name = "<%= storageAccountName %>"
     container_name       = "<%= containerName %>"
     key                  = "<%= storageKey %>"
-    use_azuread_auth     = true
     use_oidc             = true
   }
 }
