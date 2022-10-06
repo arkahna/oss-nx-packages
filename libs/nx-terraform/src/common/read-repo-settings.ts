@@ -18,12 +18,12 @@ export function readRepoSettings() {
 
     if (!azureResourcePrefix) {
         throw new Error(
-            'azureResourcePrefix is not defined in root package.json, run pnpm nx g @arkahna/nx-terraform:tf-init'
+            'azureResourcePrefix is not defined in root package.json, run pnpm nx g @arkahna/nx-terraform:init'
         )
     }
     if (!['terraform-cloud', 'azure-storage'].includes(terraformStateType)) {
         throw new Error(
-            'terraformStateType is not defined in root package.json or is not one of terraform-cloud, azure-storage, run pnpm nx g @arkahna/nx-terraform:tf-init'
+            'terraformStateType is not defined in root package.json or is not one of terraform-cloud, azure-storage, run pnpm nx g @arkahna/nx-terraform:init'
         )
     }
 

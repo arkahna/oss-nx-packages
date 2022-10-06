@@ -41,7 +41,7 @@ This plugin has 2 levels of generators, the first level operates at the reposito
 
 ### Init
 
-Ensure you have run `pnpm exec nx g @arkahna/nx-terraform:tf-init` to setup the repo
+Ensure you have run `pnpm exec nx g @arkahna/nx-terraform:init` to setup the repo
 
 The plugin supports both terraform cloud and azure storage.
 
