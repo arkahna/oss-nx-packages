@@ -8,4 +8,5 @@ export interface ApplyExecutorSchema {
     firewallRetryAttempts: number
     firewallRetryDelay: number
     tfTarget?: string
+    autoApprove?: boolean
 }

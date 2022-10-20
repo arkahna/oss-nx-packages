@@ -55,7 +55,12 @@
         "tfTarget": {
             "type": "string",
             "description": "The target resource to deploy"
+        },
+        "autoApprove": {
+            "type": "boolean",
+            "description": "Run the Destroy action without user prompt for approval"
         }
+
     },
     "required": [
         "environment"
