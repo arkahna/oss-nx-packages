@@ -86,6 +86,7 @@ export default async function runExecutor(options: ApplyExecutorSchema, context:
         ...terragruntCliArgs,
         ...(options.tfTarget ? ['-target', options.tfTarget] : []),
         '-destroy',
+        ...(options.autoApprove ? ['-auto-approve', options.autoApprove] : []),
     ]
 
     try {
