@@ -17,9 +17,12 @@ To customise where the projects are created, use
   "nx-terraform": {
     "appsDir": "terraform/apps",
     "modulesDir": "terraform/modules",
+    "environmentsDir": "docs/environments"
   }
 }
 ```
+
+The environments dir also supports the {project} placeholder which enables project specific environments.
 
 ### Azure Support
 

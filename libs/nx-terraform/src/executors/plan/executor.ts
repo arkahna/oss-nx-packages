@@ -27,7 +27,11 @@ export default async function runExecutor(options: PlanExecutorSchema, context: 
             success: false,
         }
     }
-    const config = await readConfigFromEnvFile(repoConfig.terraformStateType, options.environment)
+    const config = await readConfigFromEnvFile(
+        repoConfig.terraformStateType,
+        options.environment,
+        context.projectName,
+    )
     if (!config) {
         console.warn('Skipped plan, no terragrunt file for environment')
         return {

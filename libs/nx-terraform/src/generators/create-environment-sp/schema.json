@@ -11,6 +11,10 @@
             "alias": "e",
             "x-prompt": "What is the name of the environment you want to add?"
         },
+        "project": {
+            "type": "string",
+            "description": "The name of the project the environment is associated with, used for project specific environments."
+        },
         "role": {
             "type": "string",
             "description": "The role of the service principal.",
