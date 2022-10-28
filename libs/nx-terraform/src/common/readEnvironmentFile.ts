@@ -3,9 +3,11 @@ import fm from 'front-matter'
 import * as fs from 'fs'
 import { readFile } from 'fs/promises'
 import * as path from 'path'
+import { getEnvironmentsDir } from '../generators/create-azure-environment/getEnvironmentsDir'
 
-export async function readEnvironmentFile(environment: string) {
-    const environmentFile = path.join(workspaceRoot, `docs/environments/${environment}.md`)
+export async function readEnvironmentFile(environment: string, projectName: string) {
+    const environmentsDir = getEnvironmentsDir(projectName)
+    const environmentFile = path.join(workspaceRoot, `${environmentsDir}/${environment}.md`)
 
     if (!fs.existsSync(environmentFile)) {
         throw new Error(`Missing environment documentation markdown file at ${environmentFile}`)

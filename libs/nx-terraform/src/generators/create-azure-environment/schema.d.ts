@@ -5,6 +5,8 @@ export interface NxTerraformAddEnvironmentSchema {
     tenantId: string
     location: string
 
+    project?: string
+
     tfStorageAccountName?: string
     containerName: string
     tfWorkspaceName?: string

@@ -10,6 +10,7 @@ import { ensureKeyvaultExists } from './ensureKeyvaultExists'
 import { ensureResourceGroupExists } from './ensureResourceGroupExists'
 import { ensureResourceNameDefaults } from './ensureResourceNameDefaults'
 import { ensureTfStorageAccountExists } from './ensureTfStorageAccountExists'
+import { getEnvironmentsDir } from './getEnvironmentsDir'
 import { NxTerraformAddEnvironmentSchema } from './schema'
 
 export default async function (tree: Tree, options: NxTerraformAddEnvironmentSchema) {
@@ -25,6 +26,8 @@ export default async function (tree: Tree, options: NxTerraformAddEnvironmentSch
     }
 
     ensureResourceNameDefaults(options, azureResourcePrefix, azureWorkloadCode)
+
+    const environmentsDir = getEnvironmentsDir(options.project) // 'docs/customers/{{project}}/environments'
 
     /* eslint-disable @typescript-eslint/no-non-null-assertion */
     const resourceGroupName = options.resourceGroupName!
@@ -42,7 +45,7 @@ tfstate_container: ${options.containerName}`
 tf_workspace_link: https://app.terraform.io/app/${terraformCloudOrganization}/workspaces/${tfWorkspaceName}`
 
     tree.write(
-        `docs/environments/${options.environmentName}.md`,
+        `${environmentsDir}/${options.environmentName}.md`,
         `---
 subscription_id: ${options.subscriptionId}
 tenant_id: ${options.tenantId}
