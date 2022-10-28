@@ -16,6 +16,7 @@ export default async function (
     const environmentConfig = await readConfigFromEnvFile(
         repoSettings.terraformStateType,
         options.environmentName,
+        options.project,
     )
 
     const servicePrincipalName =

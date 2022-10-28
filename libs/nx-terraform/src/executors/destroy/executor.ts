@@ -28,7 +28,11 @@ export default async function runExecutor(options: ApplyExecutorSchema, context:
         }
     }
 
-    const config = await readConfigFromEnvFile(repoConfig.terraformStateType, options.environment)
+    const config = await readConfigFromEnvFile(
+        repoConfig.terraformStateType,
+        options.environment,
+        context.projectName,
+    )
     if (!config) {
         console.warn('Skipped destroy, no terragrunt file for environment')
         return {

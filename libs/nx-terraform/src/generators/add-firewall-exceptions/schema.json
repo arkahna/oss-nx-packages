@@ -11,6 +11,10 @@
             "alias": "e",
             "x-prompt": "What is the name of the environment you want to add firewall exceptions for?"
         },
+        "project": {
+            "type": "string",
+            "description": "The name of the project the environment is associated with, used for project specific environments."
+        },
         "addIpToDefaultKeyVault": {
             "type": "boolean",
             "description": "Adds a firewall exception for the current ip to the environment keyvault",
@@ -46,5 +50,7 @@
             "default": 5
         }
     },
-    "required": ["environmentName"]
+    "required": [
+        "environmentName"
+    ]
 }

@@ -20,6 +20,7 @@ export default async function (tree: Tree, options: NxTerraformRemoveFirewallExc
         const config = await readConfigFromEnvFile(
             repoSettings.terraformStateType,
             options.environmentName,
+            options.project,
         )
         if (!config) {
             console.warn('Skipped removing firewall rules, no terragrunt file for environment')

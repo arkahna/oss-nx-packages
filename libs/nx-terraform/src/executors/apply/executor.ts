@@ -30,7 +30,11 @@ export default async function runExecutor(options: ApplyExecutorSchema, context:
 
     const repoConfig = readRepoSettings()
 
-    const config = await readConfigFromEnvFile(repoConfig.terraformStateType, options.environment)
+    const config = await readConfigFromEnvFile(
+        repoConfig.terraformStateType,
+        options.environment,
+        projectName,
+    )
 
     if (!config) {
         console.warn('Skipped apply, no terragrunt file for environment')

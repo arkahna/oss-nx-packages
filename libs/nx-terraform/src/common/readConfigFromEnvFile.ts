@@ -6,10 +6,11 @@ export type EnvConfig = Awaited<ReturnType<typeof readConfigFromEnvFile>>
 export async function readConfigFromEnvFile(
     terraformStateType: TerraformStateType,
     environment: string,
+    project: string,
 ) {
     const terragruntConfigFile = `vars/${environment}/terragrunt.hcl`
 
-    const { attributes, environmentFile, body } = await readEnvironmentFile(environment)
+    const { attributes, environmentFile, body } = await readEnvironmentFile(environment, project)
 
     if (!attributes.subscription_id) {
         throw new Error(

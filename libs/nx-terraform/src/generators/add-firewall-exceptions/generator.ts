@@ -6,7 +6,7 @@ import { readRepoSettings } from '../../common/read-repo-settings'
 import { readConfigFromEnvFile } from '../../common/readConfigFromEnvFile'
 import { NxTerraformAddFirewallExceptionsSchema } from './schema'
 
-export default async function (tree: Tree, options: NxTerraformAddFirewallExceptionsSchema) {
+export default async function (_tree: Tree, options: NxTerraformAddFirewallExceptionsSchema) {
     const repoSettings = readRepoSettings()
 
     if (isDryRun()) {
@@ -20,6 +20,7 @@ export default async function (tree: Tree, options: NxTerraformAddFirewallExcept
         const config = await readConfigFromEnvFile(
             repoSettings.terraformStateType,
             options.environmentName,
+            options.project,
         )
         if (!config) {
             console.warn('Skipped adding firewall rules, no terragrunt file for environment')

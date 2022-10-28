@@ -1,5 +1,6 @@
 export interface NxTerraformAddFirewallExceptionsSchema {
     environmentName: string
+    project?: string
     addIpToDefaultKeyVault: boolean
     addIpToDefaultStorage: boolean
     addIpToKeyVaults?: string[]

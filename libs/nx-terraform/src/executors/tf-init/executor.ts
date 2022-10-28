@@ -42,6 +42,7 @@ export default async function runExecutor(options: InitExecutorSchema, context: 
         const config = await readConfigFromEnvFile(
             repoConfig.terraformStateType,
             options.environment,
+            context.projectName,
         )
         if (!config) {
             console.warn('Skipped init, no terragrunt file for environment')

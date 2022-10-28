@@ -57,6 +57,7 @@ export default async function (tree: Tree, options: NxTerraformAddEnvironmentSch
     const environmentConfig = await readConfigFromEnvFile(
         repoSettings.terraformStateType,
         options.environmentName,
+        options.projectName,
     )
 
     const tfProjectName = `${options.projectName.replace(`-infra`, '')}.tfstate`
