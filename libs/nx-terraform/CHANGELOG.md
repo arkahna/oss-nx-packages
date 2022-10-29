@@ -1,5 +1,13 @@
 # @arkahna/nx-terraform
 
+## 0.42.0
+
+### Minor Changes
+
+- Implemented project specific environments ([#66](https://github.com/arkahna/oss-nx-packages/pull/66))
+
+- Add option to auto approve Destroy action ([#65](https://github.com/arkahna/oss-nx-packages/pull/65))
+
 ## 0.41.0
 
 ### Minor Changes
