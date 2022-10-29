@@ -1,4 +1,6 @@
 {
+    "version": 2,
+    "outputCapture": "direct-nodejs",
     "$schema": "http://json-schema.org/schema",
     "cli": "nx",
     "title": "Terraform Destroy executor",
@@ -60,9 +62,6 @@
             "type": "boolean",
             "description": "Run the Destroy action without user prompt for approval"
         }
-
     },
-    "required": [
-        "environment"
-    ]
+    "required": ["environment"]
 }

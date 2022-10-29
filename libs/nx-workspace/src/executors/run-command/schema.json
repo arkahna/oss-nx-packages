@@ -1,4 +1,6 @@
 {
+    "version": 2,
+    "outputCapture": "direct-nodejs",
     "$schema": "http://json-schema.org/schema",
     "type": "object",
     "cli": "nx",
@@ -12,7 +14,5 @@
             "description": "The working directory to run the command in"
         }
     },
-    "required": [
-        "command"
-    ]
+    "required": ["command"]
 }

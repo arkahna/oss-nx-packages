@@ -12,15 +12,15 @@
         "url": "https://github.com/arkahna/oss-nx-packages.git"
     },
     "dependencies": {
-        "@arkahna/nx-workspace": "0.3.1",
+        "@arkahna/nx-workspace": "workspace:0.3.1",
         "execa": "5.1.1",
         "front-matter": "^4.0.2",
         "node-fetch": "^2.6.7",
         "public-ip": "^4.0.4",
-        "uuid-by-string": "^3.0.6"
+        "uuid-by-string": "^3.0.7"
     },
     "optionalDependencies": {
-        "@azure/arm-resources": "^5.0.0",
+        "@azure/arm-resources": "^5.0.1",
         "@azure/identity": "^3.0.0",
         "@azure/logger": "^1.0.3"
     },

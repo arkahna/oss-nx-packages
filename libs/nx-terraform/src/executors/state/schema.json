@@ -1,4 +1,6 @@
 {
+    "version": 2,
+    "outputCapture": "direct-nodejs",
     "$schema": "http://json-schema.org/schema",
     "cli": "nx",
     "title": "Terraform State executor",
@@ -13,10 +15,7 @@
         "address": {
             "type": "string",
             "description": "The address of the resource",
-            "aliases": [
-                "r",
-                "p"
-            ]
+            "aliases": ["r", "p"]
         },
         "environment": {
             "type": "string",
@@ -44,8 +43,5 @@
             "default": false
         }
     },
-    "required": [
-        "environment",
-        "command"
-    ]
+    "required": ["environment", "command"]
 }

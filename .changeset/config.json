@@ -7,7 +7,7 @@
     "updateInternalDependencies": "patch",
     "ignore": [],
     "changelog": [
-        "@changesets/changelog-github",
+        "@svitejs/changesets-changelog-github-compact",
         {
             "repo": "arkahna/oss-nx-packages"
         }

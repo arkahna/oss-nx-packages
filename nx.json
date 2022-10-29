@@ -11,26 +11,28 @@
         "default": {
             "runner": "nx/tasks-runners/default",
             "options": {
-                "cacheableOperations": [
-                    "build",
-                    "lint",
-                    "test",
-                    "e2e"
-                ]
+                "cacheableOperations": ["build", "lint", "test", "e2e"]
             }
         }
     },
     "$schema": "./node_modules/nx/schemas/nx-schema.json",
     "targetDefaults": {
         "build": {
-            "dependsOn": [
-                "^build"
-            ]
+            "dependsOn": ["^build"],
+            "inputs": ["production", "^production"]
+        },
+        "lint": {
+            "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
         }
     },
     "pluginsConfig": {
         "@nrwl/js": {
             "analyzeSourceFiles": true
         }
+    },
+    "namedInputs": {
+        "default": ["{projectRoot}/**/*", "sharedGlobals"],
+        "sharedGlobals": [],
+        "production": ["default", "!{projectRoot}/.eslintrc.json"]
     }
 }
