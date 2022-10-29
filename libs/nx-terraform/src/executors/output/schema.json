@@ -1,4 +1,6 @@
 {
+    "version": 2,
+    "outputCapture": "direct-nodejs",
     "$schema": "http://json-schema.org/schema",
     "cli": "nx",
     "title": "Terraform output executor",
@@ -33,7 +35,5 @@
             "default": 5
         }
     },
-    "required": [
-        "environment"
-    ]
+    "required": ["environment"]
 }

@@ -1,4 +1,6 @@
 {
+    "version": 2,
+    "outputCapture": "direct-nodejs",
     "$schema": "http://json-schema.org/schema",
     "cli": "nx",
     "title": "Terraform Force unlock executor",
@@ -30,7 +32,5 @@
             "default": 5
         }
     },
-    "required": [
-        "environment"
-    ]
+    "required": ["environment"]
 }
