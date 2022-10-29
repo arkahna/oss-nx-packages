@@ -30,7 +30,7 @@ function normalizeOptions(options: NxTerraformGeneratorSchema): NormalizedSchema
     const nxJson = readNxJson()
     const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-')
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const modulesDir = (nxJson.workspaceLayout as any)?.['nx-terraform']?.appsDir
+    const modulesDir = (nxJson as any)?.nxTerraformLayout?.appsDir
     const projectRoot = `${modulesDir || 'terraform/apps'}/${projectDirectory}`
     const parsedTags = options.tags ? options.tags.split(',').map((s) => s.trim()) : []
 
