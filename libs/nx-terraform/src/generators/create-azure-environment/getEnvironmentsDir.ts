@@ -4,8 +4,7 @@ export function getEnvironmentsDir(projectName: string | undefined) {
     const nxJson = readNxJson()
     const environmentsDir =
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (nxJson.workspaceLayout as any)?.['nx-terraform']?.environmentsDirectory ||
-        'docs/environments'
+        (nxJson as any)?.nxTerraformLayout?.environmentsDirectory || 'docs/environments'
 
     if (projectName) {
         return environmentsDir.replace('{project}', projectName)

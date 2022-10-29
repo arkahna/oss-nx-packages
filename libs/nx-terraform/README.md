@@ -10,15 +10,13 @@ pnpm add @arkahna/nx-terraform
 
 ## Configuration
 
-To customise where the projects are created, use
+To customise where the projects are created, put the following in your `nx.json`
 
 ```
-"workspaceLayout": {
-  "nx-terraform": {
+"nxTerraformLayout": {
     "appsDir": "terraform/apps",
     "modulesDir": "terraform/modules",
     "environmentsDir": "docs/environments"
-  }
 }
 ```
 
