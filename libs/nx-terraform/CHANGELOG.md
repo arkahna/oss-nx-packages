@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.42.1
+
+### Patch Changes
+
+- Can't use workspace layout for customising the location of nx-terraform folders, that does not validate the nx schema ([#69](https://github.com/arkahna/oss-nx-packages/pull/69))
+
 ## 0.42.0
 
 ### Minor Changes
