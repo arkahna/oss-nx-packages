@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.42.4
+
+### Patch Changes
+
+- Increased firewallRetryAttempts to 12 (total 1 minute wait) as 25seconds often times out ([`ef115b5`](https://github.com/arkahna/oss-nx-packages/commit/ef115b50bdfcfd3bb14d15a0d7c76c9dd8607b86))
+
 ## 0.42.3
 
 ### Patch Changes
