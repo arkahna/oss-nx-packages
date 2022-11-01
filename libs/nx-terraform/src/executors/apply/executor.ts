@@ -1,6 +1,7 @@
 import { ExecutorContext } from '@nrwl/devkit'
 import execa from 'execa'
 import { getEscapedCommand } from 'execa/lib/command'
+import { existsSync } from 'fs'
 import publicIp from 'public-ip'
 import { addFirewallRulesWithRetry } from '../../common/addFirewallRulesWithRetry'
 import { createTerragruntCliArgs } from '../../common/createTerragruntCliArgs'
@@ -49,6 +50,13 @@ export default async function runExecutor(options: ApplyExecutorSchema, context:
         terragruntConfigFile,
         subscriptionId,
     } = config
+
+    if (!existsSync(terragruntConfigFile)) {
+        console.log('No terragrunt config file found, skipping apply')
+        return {
+            success: true,
+        }
+    }
 
     const currentAccount = await getCurrentAzAccount()
 
