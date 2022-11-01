@@ -32,7 +32,7 @@
         "firewallRetryAttempts": {
             "type": "integer",
             "description": "Number of times to retry adding the firewall exception for the current ip to the environment keyvault",
-            "default": 5
+            "default": 12
         },
         "firewallRetryDelay": {
             "type": "integer",
