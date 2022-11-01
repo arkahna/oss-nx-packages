@@ -51,8 +51,10 @@ export default async function runExecutor(options: ApplyExecutorSchema, context:
         subscriptionId,
     } = config
 
-    if (!existsSync(terragruntConfigFile)) {
-        console.log('No terragrunt config file found, skipping apply')
+    if (!existsSync(`${projectRoot}/${terragruntConfigFile}`)) {
+        console.log(
+            `No terragrunt config file found at ${projectRoot}/${terragruntConfigFile}, skipping apply`,
+        )
         return {
             success: true,
         }
