@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.42.3
+
+### Patch Changes
+
+- Fixed path issue from previous fix ([`a095606`](https://github.com/arkahna/oss-nx-packages/commit/a0956067696e266cbaf2321873f73d8e3db27d5a))
+
 ## 0.42.2
 
 ### Patch Changes
