@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.42.2
+
+### Patch Changes
+
+- Fixed apply erroring when an environment doesn't exist for a project ([`6999fa8`](https://github.com/arkahna/oss-nx-packages/commit/6999fa8f8cd0816d02d07e7521fa8f9c4b059969))
+
 ## 0.42.1
 
 ### Patch Changes
