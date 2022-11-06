@@ -10,5 +10,5 @@ export function getEnvironmentsDir(projectName: string | undefined) {
         return environmentsDir.replace('{project}', projectName)
     }
 
-    return projectName
+    return environmentsDir
 }

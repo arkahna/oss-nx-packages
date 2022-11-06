@@ -6,7 +6,7 @@ export type EnvConfig = Awaited<ReturnType<typeof readConfigFromEnvFile>>
 export async function readConfigFromEnvFile(
     terraformStateType: TerraformStateType,
     environment: string,
-    project: string,
+    project?: string,
 ) {
     const terragruntConfigFile = `vars/${environment}/terragrunt.hcl`
 
