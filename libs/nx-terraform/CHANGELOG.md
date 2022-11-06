@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.42.5
+
+### Patch Changes
+
+- Fixed issue with environment file location ([`7f94709`](https://github.com/arkahna/oss-nx-packages/commit/7f94709148e887a9b829e554613418736d2b8f02))
+
 ## 0.42.4
 
 ### Patch Changes
