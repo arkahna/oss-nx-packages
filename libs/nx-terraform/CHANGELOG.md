@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.42.6
+
+### Patch Changes
+
+- Fix issue where nx is unable to find environments directory configured in nx.json ([#75](https://github.com/arkahna/oss-nx-packages/pull/75))
+
 ## 0.42.5
 
 ### Patch Changes
