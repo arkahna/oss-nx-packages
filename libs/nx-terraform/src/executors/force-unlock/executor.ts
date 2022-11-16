@@ -27,17 +27,20 @@ export default async function runExecutor(options: StateExecutorSchema, context:
             success: false,
         }
     }
+
     const config = await readConfigFromEnvFile(
         repoConfig.terraformStateType,
         options.environment,
         context.projectName,
     )
+
     if (!config) {
         console.warn('Skipped state command, no terragrunt file for environment')
         return {
             success: true,
         }
     }
+
     const { resourceGroupName, terraformStorageAccount, terragruntConfigFile, subscriptionId } =
         config
 
@@ -73,13 +76,11 @@ export default async function runExecutor(options: StateExecutorSchema, context:
         const terragruntCliArgs = createTerragruntCliArgs([
             ...getTfEnvVars(context.projectName, config, repoConfig),
         ])
-
-        const terragruntStateArgs = [
+        const terragruntForceUnlockArgs = [
             'force-unlock',
             options.lockId,
             '--terragrunt-config',
             terragruntConfigFile,
-            ...terragruntCliArgs,
         ]
 
         await initEnvironmentWorkspaceWithFirewallRuleRetry({
@@ -90,8 +91,8 @@ export default async function runExecutor(options: StateExecutorSchema, context:
             retryDelay: options.firewallRetryDelay,
         })
 
-        console.log(`${projectRoot}> ${getEscapedCommand(`terragrunt`, terragruntStateArgs)}`)
-        await execa('terragrunt', terragruntStateArgs, {
+        console.log(`${projectRoot}> ${getEscapedCommand(`terragrunt`, terragruntForceUnlockArgs)}`)
+        await execa('terragrunt', terragruntForceUnlockArgs, {
             stdio: 'inherit',
             cwd: projectRoot,
         })
