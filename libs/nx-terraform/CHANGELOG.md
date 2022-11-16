@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.42.7
+
+### Patch Changes
+
+- Fix force-unlock passing too many args ([#78](https://github.com/arkahna/oss-nx-packages/pull/78))
+
 ## 0.42.6
 
 ### Patch Changes
