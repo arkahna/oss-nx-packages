@@ -21,7 +21,7 @@ export default async function (
 
     const servicePrincipalName =
         options.name ??
-        `gh-actions-${repoSettings.azureResourcePrefix}-${options.environmentName}-sp`
+        `gh-actions-${repoSettings.azureResourcePrefix}-${options.environmentName}-${repoSettings.azureWorkloadCode}-sp`
     const scopes = `/subscriptions/${environmentConfig.subscriptionId}/resourcegroups/${environmentConfig.resourceGroupName}`
     const containerScope = `/subscriptions/${environmentConfig.subscriptionId}/resourceGroups/${environmentConfig.resourceGroupName}/providers/Microsoft.Storage/storageAccounts/${environmentConfig.terraformStorageAccount}/blobServices/default/containers/${environmentConfig.terraformStorageContainer}`
 
@@ -62,16 +62,7 @@ export default async function (
     }
 
     return async () => {
-        console.log('Ensuring logged in to correct tenant')
-        const accountShow = await getCurrentAzAccount()
-        if (accountShow.tenantId !== environmentConfig.tenantId) {
-            console.log(
-                'Current subscription belongs to wrong Tenant, select the correct subscription using:',
-            )
-            console.log(`> az account set --subscription ${environmentConfig.subscriptionId}`)
-
-            throw new Error('Tenant id does not match')
-        }
+        await ensureLoggedIntoCorrectTenant(environmentConfig)
 
         console.log(`> ${getEscapedCommand(`az`, createServicePrincipalArgs)}`)
         await execa(`az`, createServicePrincipalArgs, {
@@ -123,5 +114,33 @@ ${environmentConfig.environmentFileBody}
         console.log(
             `🎉 Ensure you copy the credentials, the secret will not be stored in ${environmentConfig.environmentFile} 🎉`,
         )
+    }
+}
+async function ensureLoggedIntoCorrectTenant(environmentConfig: {
+    environment: string
+    subscriptionId: string
+    tenantId: string
+    resourceGroupName: string
+    resourceLocation: string
+    terraformStorageAccount: string
+    terraformStorageContainer: string
+    keyVaultName: string
+    environmentMarkdownFilePath: string
+    environmentAttributes: Record<string, string>
+    terragruntConfigFile: string
+    terraformCloudWorkspaceName: string
+    environmentFile: string
+    attributes: Record<string, string>
+    environmentFileBody: string
+}) {
+    console.log('Ensuring logged in to correct tenant')
+    const accountShow = await getCurrentAzAccount()
+    if (accountShow.tenantId !== environmentConfig.tenantId) {
+        console.log(
+            'Current subscription belongs to wrong Tenant, select the correct subscription using:',
+        )
+        console.log(`> az account set --subscription ${environmentConfig.subscriptionId}`)
+
+        throw new Error('Tenant id does not match')
     }
 }
