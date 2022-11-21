@@ -1,5 +1,5 @@
 locals {
-  prefixWithDash = "%{if var.resource_prefix != ""}%{else}${var.resource_prefix}-%{endif}"
+  prefixWithDash = "%{if var.resource_prefix == ""}%{else}${var.resource_prefix}-%{endif}"
 
   tags = merge({
     Environment = var.environment_tag
