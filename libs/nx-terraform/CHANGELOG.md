@@ -1,5 +1,13 @@
 # @arkahna/nx-terraform
 
+## 0.42.8
+
+### Patch Changes
+
+- Fixed naming error inside nx-locals ([#80](https://github.com/arkahna/oss-nx-packages/pull/80))
+
+- Fixed service principal naming ([#80](https://github.com/arkahna/oss-nx-packages/pull/80))
+
 ## 0.42.7
 
 ### Patch Changes
