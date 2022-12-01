@@ -55,6 +55,7 @@ export default async function runExecutor(options: OutputExecutorSchema, context
 
     const { keyVaultsToRemoveFirewallRules, storageAccountsToRemoveFirewallRules } =
         await addFirewallRulesWithRetry({
+            subscriptionId,
             resourceGroupName,
             addIpToKeyVaults: [],
             addIpToStorageAccounts:
@@ -96,6 +97,7 @@ export default async function runExecutor(options: OutputExecutorSchema, context
         })
     } finally {
         await removeFirewallRules({
+            subscriptionId,
             resourceGroupName,
             removeIpFromKeyVaults: keyVaultsToRemoveFirewallRules,
             removeIpFromStorageAccounts: storageAccountsToRemoveFirewallRules,

@@ -50,10 +50,12 @@ export default async function runExecutor(options: InitExecutorSchema, context: 
                 success: true,
             }
         }
-        const { resourceGroupName, terraformStorageAccount, terragruntConfigFile } = config
+        const { resourceGroupName, terraformStorageAccount, terragruntConfigFile, subscriptionId } =
+            config
 
         const { keyVaultsToRemoveFirewallRules, storageAccountsToRemoveFirewallRules } =
             await addFirewallRulesWithRetry({
+                subscriptionId,
                 resourceGroupName,
                 addIpToKeyVaults: [],
                 addIpToStorageAccounts:
@@ -80,6 +82,7 @@ export default async function runExecutor(options: InitExecutorSchema, context: 
             })
         } finally {
             await removeFirewallRules({
+                subscriptionId,
                 resourceGroupName,
                 removeIpFromKeyVaults: keyVaultsToRemoveFirewallRules,
                 removeIpFromStorageAccounts: storageAccountsToRemoveFirewallRules,

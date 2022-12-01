@@ -77,6 +77,7 @@ export default async function runExecutor(options: ApplyExecutorSchema, context:
     const storageOptions = options.addIpToStorage || []
     const { keyVaultsToRemoveFirewallRules, storageAccountsToRemoveFirewallRules } =
         await addFirewallRulesWithRetry({
+            subscriptionId,
             resourceGroupName,
             addIpToKeyVaults: options.addIpToDefaultKeyVault
                 ? [keyVaultName, ...kvOptions]
@@ -126,6 +127,7 @@ export default async function runExecutor(options: ApplyExecutorSchema, context:
     } finally {
         if (options.leaveFirewallExceptions !== true) {
             await removeFirewallRules({
+                subscriptionId,
                 resourceGroupName,
                 removeIpFromKeyVaults: keyVaultsToRemoveFirewallRules,
                 removeIpFromStorageAccounts: storageAccountsToRemoveFirewallRules,

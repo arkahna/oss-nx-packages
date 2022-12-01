@@ -3,6 +3,7 @@ import { getTfResourceNameWithRetry } from './getTfResourceNameWithRetry'
 
 export async function addFirewallRulesWithRetry({
     resourceGroupName,
+    subscriptionId,
     addIpToKeyVaults,
     addIpToStorageAccounts,
     publicIpv4,
@@ -12,6 +13,7 @@ export async function addFirewallRulesWithRetry({
     retryDelay,
 }: {
     resourceGroupName: string
+    subscriptionId: string
     addIpToKeyVaults: string[]
     addIpToStorageAccounts: string[]
     publicIpv4: string
@@ -54,7 +56,9 @@ export async function addFirewallRulesWithRetry({
                 'account',
                 'network-rule',
                 'add',
-                '-g',
+                '--subscription',
+                subscriptionId,
+                '--resource-group',
                 resourceGroupName,
                 '--account-name',
                 storageAccountName,
@@ -91,6 +95,8 @@ export async function addFirewallRulesWithRetry({
                 'keyvault',
                 'network-rule',
                 'add',
+                '--subscription',
+                subscriptionId,
                 '--name',
                 keyVaultName,
                 '--ip-address',

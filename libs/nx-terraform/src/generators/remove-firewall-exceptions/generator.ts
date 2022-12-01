@@ -28,11 +28,12 @@ export default async function (tree: Tree, options: NxTerraformRemoveFirewallExc
                 success: true,
             }
         }
-        const { resourceGroupName, terraformStorageAccount, keyVaultName } = config
+        const { resourceGroupName, terraformStorageAccount, keyVaultName, subscriptionId } = config
 
         const kvOptions = options.removeIpFromKeyVaults || []
         const storageOptions = options.removeIpFromStorage || []
         await removeFirewallRules({
+            subscriptionId,
             resourceGroupName,
             removeIpFromKeyVaults: options.removeIpFromDefaultKeyVault
                 ? [keyVaultName, ...kvOptions]

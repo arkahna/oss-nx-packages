@@ -5,7 +5,7 @@ import { readFile } from 'fs/promises'
 import * as path from 'path'
 import { getEnvironmentsDir } from '../generators/create-azure-environment/getEnvironmentsDir'
 
-export async function readEnvironmentFile(environment: string, projectName: string) {
+export async function readEnvironmentFile(environment: string, projectName?: string) {
     const environmentsDir = getEnvironmentsDir(projectName)
     const environmentFile = path.join(workspaceRoot, `${environmentsDir}/${environment}.md`)
 

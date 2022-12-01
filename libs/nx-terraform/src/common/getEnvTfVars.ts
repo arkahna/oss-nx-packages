@@ -19,6 +19,8 @@ export function getTfEnvVars(projectName: string, envConfig: EnvConfig, repoConf
         `project_name_tag=${projectName || ''}`,
         `cost_centre_tag=${repoConfig.azureCostCentre || ''}`,
         `resource_prefix=${repoConfig.azureResourcePrefix || ''}`,
+        `github_service_principal=${envConfig.github_service_principal || ''}`,
+        `github_service_principal_id=${envConfig.github_service_principal_id || ''}`,
     ]
 }
 function getShortResourceLocation(resourceLocation: string) {
@@ -90,9 +92,12 @@ function getShortResourceLocation(resourceLocation: string) {
     // Reverse cliNames key and values
     const cliNameLookup = Object.entries(cliNames)
         .map(([key, value]) => [value, key])
-        .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
+        .reduce<Record<string, string | undefined>>(
+            (acc, [key, value]) => ({ ...acc, [key]: value }),
+            {},
+        )
 
-    const short_names = {
+    const short_names: Record<string, string | undefined> = {
         'us-east': 'ue',
         'us-east-2': 'ue2',
         'us-central': 'uc',
@@ -157,5 +162,6 @@ function getShortResourceLocation(resourceLocation: string) {
         us: 'us', // United States
     }
 
-    return short_names[cliNameLookup[resourceLocation]] || resourceLocation
+    const cliNameResourceLocation = cliNameLookup[resourceLocation]
+    return (cliNameResourceLocation && short_names[cliNameResourceLocation]) || resourceLocation
 }
