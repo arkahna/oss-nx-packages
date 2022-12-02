@@ -1,5 +1,11 @@
 # @arkahna/nx-terraform
 
+## 0.42.9
+
+### Patch Changes
+
+- Pass github service principal through to terraform ([#83](https://github.com/arkahna/oss-nx-packages/pull/83))
+
 ## 0.42.8
 
 ### Patch Changes
