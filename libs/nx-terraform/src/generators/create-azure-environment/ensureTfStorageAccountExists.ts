@@ -1,5 +1,5 @@
 import { ResourceManagementClient } from '@azure/arm-resources'
-import uuid from 'uuid-by-string'
+import { ensureStorageAccountContributorRole } from '../../common/ensureStorageAccountContributorRole'
 
 export async function ensureTfStorageAccountExists(
     subscriptionId: string,
@@ -12,7 +12,7 @@ export async function ensureTfStorageAccountExists(
     currentPrincipal: string,
     tags: {
         [propertyName: string]: string
-    }
+    },
 ) {
     console.log(`Ensuring storage account ${storageAccountName} exists`)
     const storageAccountRequest = await rm.resources.beginCreateOrUpdate(
@@ -42,40 +42,29 @@ export async function ensureTfStorageAccountExists(
                     virtualNetworkRules: [],
                 },
             },
-        }
+        },
     )
     await storageAccountRequest.pollUntilDone()
 
-    console.log(
-        `Ensuring current user has storage contributor role on ${containerName}`
+    await ensureStorageAccountContributorRole(
+        containerName,
+        rm,
+        resourceGroupName,
+        storageAccountName,
+        environmentName,
+        currentPrincipal,
+        subscriptionId,
     )
-    const storageContributorRole = await rm.resources.beginCreateOrUpdate(
+
+    console.log(`Ensuring storage container ${containerName} exists`)
+    const storageAccountContainerRequest = await rm.resources.beginCreateOrUpdate(
         resourceGroupName,
         'Microsoft.Storage',
         '',
-        `storageAccounts/${storageAccountName}/providers/Microsoft.Authorization/roleAssignments`,
-        `${uuid(environmentName + storageAccountName + currentPrincipal)}`,
-        '2022-01-01-preview',
-        {
-            properties: {
-                // Storage Blob Data Contributor
-                roleDefinitionId: `/subscriptions/${subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/ba92f5b4-2d11-453d-a403-e96b0029c9fe`,
-                principalId: currentPrincipal,
-            },
-        }
+        `storageAccounts/${storageAccountName}/blobServices`,
+        `default/containers/${containerName}`,
+        '2021-08-01',
+        {},
     )
-    await storageContributorRole.pollUntilDone()
-
-    console.log(`Ensuring storage container ${containerName} exists`)
-    const storageAccountContainerRequest =
-        await rm.resources.beginCreateOrUpdate(
-            resourceGroupName,
-            'Microsoft.Storage',
-            '',
-            `storageAccounts/${storageAccountName}/blobServices`,
-            `default/containers/${containerName}`,
-            '2021-08-01',
-            {}
-        )
     await storageAccountContainerRequest.pollUntilDone()
 }

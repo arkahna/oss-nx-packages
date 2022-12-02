@@ -2,7 +2,7 @@ import { Tree } from '@nrwl/devkit'
 import execa from 'execa'
 import { getEscapedCommand } from 'execa/lib/command'
 import fs from 'node:fs'
-import { getCurrentAzAccount } from '../../common/getCurrentAzAccount'
+import { ensureLoggedIntoCorrectTenant } from '../../common/ensureLoggedIntoCorrectTenant'
 import { isDryRun } from '../../common/isDryRun'
 import { readRepoSettings } from '../../common/read-repo-settings'
 import { readConfigFromEnvFile } from '../../common/readConfigFromEnvFile'
@@ -24,6 +24,7 @@ export default async function (
         `gh-actions-${repoSettings.azureResourcePrefix}-${options.environmentName}-${repoSettings.azureWorkloadCode}-sp`
     const scopes = `/subscriptions/${environmentConfig.subscriptionId}/resourcegroups/${environmentConfig.resourceGroupName}`
     const containerScope = `/subscriptions/${environmentConfig.subscriptionId}/resourceGroups/${environmentConfig.resourceGroupName}/providers/Microsoft.Storage/storageAccounts/${environmentConfig.terraformStorageAccount}/blobServices/default/containers/${environmentConfig.terraformStorageContainer}`
+    const kvScope = `/subscriptions/${environmentConfig.subscriptionId}/resourceGroups/${environmentConfig.resourceGroupName}/providers/Microsoft.KeyVault/vaults/${environmentConfig.keyVaultName}`
 
     const createServicePrincipalArgs = [
         'ad',
@@ -48,6 +49,18 @@ export default async function (
         '--assignee',
         idPlaceholder,
         '--scope',
+        kvScope,
+    ]
+
+    const keyvaultRoleAssignmentArgs = [
+        'role',
+        'assignment',
+        'create',
+        '--role',
+        'Key Vault Secrets Officer',
+        '--assignee',
+        idPlaceholder,
+        '--scope',
         containerScope,
     ]
 
@@ -59,11 +72,12 @@ export default async function (
         if (repoSettings.terraformStateType === 'azure-storage') {
             console.log(`> ${getEscapedCommand(`az`, storageContributorRoleAssignmentArgs)}`)
         }
+
+        console.log(`> ${getEscapedCommand(`az`, keyvaultRoleAssignmentArgs)}`)
     }
 
     return async () => {
-        await ensureLoggedIntoCorrectTenant(environmentConfig)
-
+        await ensureLoggedIntoCorrectTenant(environmentConfig.tenantId)
         console.log(`> ${getEscapedCommand(`az`, createServicePrincipalArgs)}`)
         await execa(`az`, createServicePrincipalArgs, {
             stdio: 'inherit',
@@ -76,10 +90,10 @@ export default async function (
             '--display-name',
             servicePrincipalName,
         ])
-        const servicePrincipalObjectId = JSON.parse(stdout)[0].id
+        const servicePrincipalObjectId: string = JSON.parse(stdout)[0].id
         console.log(`Service principal id: ${servicePrincipalObjectId}`)
 
-        const newAttributes = {
+        const newAttributes: Record<string, string | undefined> = {
             ...environmentConfig.attributes,
             github_service_principal: servicePrincipalName,
             github_service_principal_id: servicePrincipalObjectId,
@@ -89,7 +103,7 @@ export default async function (
             environmentConfig.environmentFile,
             `---
 ${Object.keys(newAttributes)
-    .map((key) => `${key}: ${newAttributes[key]}`)
+    .map((key) => `${key}: ${newAttributes[key] || ''}`)
     .join('\n')}
 ---
 
@@ -110,37 +124,20 @@ ${environmentConfig.environmentFileBody}
             )
         }
 
+        console.log(`> ${getEscapedCommand(`az`, keyvaultRoleAssignmentArgs)}`)
+        await execa(
+            'az',
+            keyvaultRoleAssignmentArgs.map((arg) =>
+                arg === idPlaceholder ? servicePrincipalObjectId : arg,
+            ),
+            {
+                stdio: 'inherit',
+            },
+        )
+
         console.log(`🎉 Success 🎉`)
         console.log(
             `🎉 Ensure you copy the credentials, the secret will not be stored in ${environmentConfig.environmentFile} 🎉`,
         )
-    }
-}
-async function ensureLoggedIntoCorrectTenant(environmentConfig: {
-    environment: string
-    subscriptionId: string
-    tenantId: string
-    resourceGroupName: string
-    resourceLocation: string
-    terraformStorageAccount: string
-    terraformStorageContainer: string
-    keyVaultName: string
-    environmentMarkdownFilePath: string
-    environmentAttributes: Record<string, string>
-    terragruntConfigFile: string
-    terraformCloudWorkspaceName: string
-    environmentFile: string
-    attributes: Record<string, string>
-    environmentFileBody: string
-}) {
-    console.log('Ensuring logged in to correct tenant')
-    const accountShow = await getCurrentAzAccount()
-    if (accountShow.tenantId !== environmentConfig.tenantId) {
-        console.log(
-            'Current subscription belongs to wrong Tenant, select the correct subscription using:',
-        )
-        console.log(`> az account set --subscription ${environmentConfig.subscriptionId}`)
-
-        throw new Error('Tenant id does not match')
     }
 }

@@ -1,5 +1,5 @@
 import { ResourceManagementClient } from '@azure/arm-resources'
-import uuid from 'uuid-by-string'
+import { ensureSecretsOfficerRole } from '../../common/ensureSecretsOfficerRole'
 
 export async function ensureKeyvaultExists(
     rm: ResourceManagementClient,
@@ -43,21 +43,12 @@ export async function ensureKeyvaultExists(
     )
     await keyvaultRequest.pollUntilDone()
 
-    console.log(`Ensuring current user has secrets officier role on ${keyVaultName}`)
-    const storageContributorRole = await rm.resources.beginCreateOrUpdate(
+    await ensureSecretsOfficerRole(
+        keyVaultName,
+        rm,
         resourceGroupName,
-        'Microsoft.KeyVault',
-        '',
-        `vaults/${keyVaultName}/providers/Microsoft.Authorization/roleAssignments`,
-        `${uuid(environmentName + keyVaultName + currentPrincipal)}`,
-        '2022-01-01-preview',
-        {
-            properties: {
-                // Key Vault Secrets Officer
-                roleDefinitionId: `/subscriptions/${subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/b86a8fe4-44ce-4948-aee5-eccb2c155cd7`,
-                principalId: currentPrincipal,
-            },
-        },
+        environmentName,
+        currentPrincipal,
+        subscriptionId,
     )
-    await storageContributorRole.pollUntilDone()
 }

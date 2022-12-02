@@ -72,5 +72,7 @@ export async function readConfigFromEnvFile(
         environmentFile,
         attributes,
         environmentFileBody: body,
+        github_service_principal: attributes.github_service_principal,
+        github_service_principal_id: attributes.github_service_principal_id,
     }
 }

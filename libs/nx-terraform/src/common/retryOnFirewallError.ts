@@ -12,7 +12,6 @@ export async function retryOnFirewallError<T>(
     },
 ): Promise<T> {
     let attempts = 0
-    let success = false
     do {
         // Wait 5 seconds for firewall rules to propagate
         await new Promise((resolve) => setTimeout(resolve, retryDelay * 1000))
@@ -31,12 +30,7 @@ export async function retryOnFirewallError<T>(
             }
             throw err
         }
-        success = true
     } while (attempts < retryAttempts)
 
-    if (!success) {
-        throw new Error(
-            'Firewall issue, retry attempts exhausted. Try increasing attempts or timeout',
-        )
-    }
+    throw new Error('Firewall issue, retry attempts exhausted. Try increasing attempts or timeout')
 }

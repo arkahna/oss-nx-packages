@@ -2,11 +2,13 @@ import execa from 'execa'
 
 export async function removeFirewallRules({
     resourceGroupName,
+    subscriptionId,
     removeIpFromKeyVaults,
     removeIpFromStorageAccounts,
     publicIpv4,
 }: {
     resourceGroupName: string
+    subscriptionId: string
     removeIpFromKeyVaults: string[]
     removeIpFromStorageAccounts: string[]
     publicIpv4: string
@@ -19,6 +21,8 @@ export async function removeFirewallRules({
                 'keyvault',
                 'network-rule',
                 'remove',
+                '--subscription',
+                subscriptionId,
                 '--name',
                 keyVaultName,
                 '--ip-address',
@@ -36,7 +40,9 @@ export async function removeFirewallRules({
                 'account',
                 'network-rule',
                 'remove',
-                '-g',
+                '--subscription',
+                subscriptionId,
+                '--resource-group',
                 resourceGroupName,
                 '--account-name',
                 storageAccount,

@@ -28,13 +28,19 @@ export default async function (_tree: Tree, options: NxTerraformAddFirewallExcep
                 success: true,
             }
         }
-        const { resourceGroupName, terraformStorageAccount, keyVaultName, terragruntConfigFile } =
-            config
+        const {
+            resourceGroupName,
+            terraformStorageAccount,
+            keyVaultName,
+            terragruntConfigFile,
+            subscriptionId,
+        } = config
 
         const kvOptions = options.addIpToKeyVaults || []
         const storageOptions = options.addIpToStorage || []
         await addFirewallRulesWithRetry({
             resourceGroupName,
+            subscriptionId,
             addIpToKeyVaults: options.addIpToDefaultKeyVault
                 ? [keyVaultName, ...kvOptions]
                 : kvOptions,
