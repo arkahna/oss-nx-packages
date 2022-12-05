@@ -101,7 +101,29 @@ pnpm nx g \
   @arkahna/nx-terraform:add-project-environment \
   <projectname> \
   --environment <environmentname>
+```
 
+### create-environment-sp
+
+Creates a service principal for GitHub actions to use.
+
+Need to be logged in as an application administrator role.
+
+This generator will do the following:
+
+- Create a service principal
+- Grant the service principal the desired role on the environment resource group
+- Grant the service principal permissions to write to the terraform state store (if using Azure storage for state)
+- Grant the service principal permissions to read/write secrets in the environment KeyVault
+- Add the Application.ReadWrite.Owner permission to the service principal
+- Print the links and command line args to grant admin consent to the service principal (enabling Service Principal to Create and Maintain App Registrations)
+
+#### Usage
+
+```
+pnpm nx g \
+  @arkahna/nx-terraform:create-environment-sp \
+  --environment <environmentname>
 ```
 
 ## Executors
@@ -115,3 +137,7 @@ If you are running apply multiple times locally, run with `--leaveFirewallExcept
 ### Lint
 
 Needs tfsec installed, or set tfsec command to false. See https://github.com/aquasecurity/tfsec#installation
+
+## Concepts
+
+![Concepts](./docs/concepts.drawio.png)

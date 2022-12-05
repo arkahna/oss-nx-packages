@@ -19,7 +19,6 @@ export function getTfEnvVars(projectName: string, envConfig: EnvConfig, repoConf
         `project_name_tag=${projectName || ''}`,
         `cost_centre_tag=${repoConfig.azureCostCentre || ''}`,
         `resource_prefix=${repoConfig.azureResourcePrefix || ''}`,
-        `github_service_principal=${envConfig.github_service_principal || ''}`,
         `github_service_principal_id=${envConfig.github_service_principal_id || ''}`,
     ]
 }

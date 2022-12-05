@@ -40,6 +40,7 @@ export default async function (
     ]
 
     const idPlaceholder = 'ID_ONCE_CREATED'
+    const appIdPlaceholder = 'APP_ID_ONCE_CREATED'
     const storageContributorRoleAssignmentArgs = [
         'role',
         'assignment',
@@ -64,6 +65,21 @@ export default async function (
         kvScope,
     ]
 
+    const assignApplicationWritePermissions = [
+        'ad',
+        'app',
+        'permission',
+        'add',
+        '--id',
+        appIdPlaceholder,
+        '--api',
+        // Graph
+        '00000002-0000-0000-c000-000000000000',
+        '--api-permissions',
+        // Application.ReadWrite.OwnedBy
+        '824c81eb-e3f8-4ee6-8f6d-de7f50d565b7=Role',
+    ]
+
     if (isDryRun()) {
         console.log('Will run:')
 
@@ -74,6 +90,8 @@ export default async function (
         }
 
         console.log(`> ${getEscapedCommand(`az`, keyvaultRoleAssignmentArgs)}`)
+
+        console.log(`> ${getEscapedCommand(`az`, assignApplicationWritePermissions)}`)
     }
 
     return async () => {
@@ -83,20 +101,34 @@ export default async function (
             stdio: 'inherit',
         })
 
-        const { stdout } = await execa(`az`, [
+        const { stdout: stdoutAdList } = await execa(`az`, [
             'ad',
             'sp',
             'list',
             '--display-name',
             servicePrincipalName,
         ])
-        const servicePrincipalObjectId: string = JSON.parse(stdout)[0].id
+        const servicePrincipalObjectId: string = JSON.parse(stdoutAdList)[0].id
         console.log(`Service principal id: ${servicePrincipalObjectId}`)
+
+        const { stdout: stdoutAppList } = await execa(`az`, [
+            'ad',
+            'app',
+            'list',
+            '--display-name',
+            servicePrincipalName,
+        ])
+        const appObjectId: string = JSON.parse(stdoutAppList)[0].id
+        const appClientId: string = JSON.parse(stdoutAppList)[0].appId
+        console.log(`Service principal app object id: ${appObjectId}`)
+        console.log(`Service principal app client id: ${appClientId}`)
 
         const newAttributes: Record<string, string | undefined> = {
             ...environmentConfig.attributes,
-            github_service_principal: servicePrincipalName,
+            github_service_principal_name: servicePrincipalName,
             github_service_principal_id: servicePrincipalObjectId,
+            github_service_principal_app_object_id: appObjectId,
+            github_service_principal_app_client_id: appClientId,
         }
 
         fs.writeFileSync(
@@ -124,6 +156,7 @@ ${environmentConfig.environmentFileBody}
             )
         }
 
+        console.log()
         console.log(`> ${getEscapedCommand(`az`, keyvaultRoleAssignmentArgs)}`)
         await execa(
             'az',
@@ -133,6 +166,24 @@ ${environmentConfig.environmentFileBody}
             {
                 stdio: 'inherit',
             },
+        )
+
+        console.log(`> ${getEscapedCommand(`az`, assignApplicationWritePermissions)}`)
+        await execa(
+            'az',
+            assignApplicationWritePermissions.map((arg) =>
+                arg === appIdPlaceholder ? appObjectId : arg,
+            ),
+            {
+                stdio: 'inherit',
+            },
+        )
+
+        console.log(
+            `Application link: https://portal.azure.com/?feature.msaljs=false#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/${appClientId}/isMSAApp~/false`,
+        )
+        console.log(
+            `Consent link: https://login.microsoftonline.com/${environmentConfig.tenantId}/adminconsent?client_id=${appClientId}`,
         )
 
         console.log(`🎉 Success 🎉`)
