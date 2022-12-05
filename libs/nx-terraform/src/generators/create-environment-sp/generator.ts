@@ -49,7 +49,7 @@ export default async function (
         '--assignee',
         idPlaceholder,
         '--scope',
-        kvScope,
+        containerScope,
     ]
 
     const keyvaultRoleAssignmentArgs = [
@@ -61,7 +61,7 @@ export default async function (
         '--assignee',
         idPlaceholder,
         '--scope',
-        containerScope,
+        kvScope,
     ]
 
     if (isDryRun()) {

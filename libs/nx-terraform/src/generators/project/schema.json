@@ -29,7 +29,8 @@
             "alias": "d"
         },
         "standalone": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": true
         }
     },
     "required": [

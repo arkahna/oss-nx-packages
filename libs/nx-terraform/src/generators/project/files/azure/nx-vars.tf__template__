@@ -80,11 +80,6 @@ variable "cost_centre_tag" {
   type        = string
 }
 
-variable "cost_centre_tag" {
-  description = "The cost centre of the environment."
-  type        = string
-}
-
 variable "github_service_principal" {
   description = "The name of the github service principal which deploys this environment (if configured through NX)."
   type        = string
