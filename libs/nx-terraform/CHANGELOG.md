@@ -1,5 +1,15 @@
 # @arkahna/nx-terraform
 
+## 0.43.0
+
+### Minor Changes
+
+- Improvements to service principal creation ([#90](https://github.com/arkahna/oss-nx-packages/pull/90))
+
+### Patch Changes
+
+- Fixed issue with wrong role being assigned to wrong resource ([#87](https://github.com/arkahna/oss-nx-packages/pull/87))
+
 ## 0.42.9
 
 ### Patch Changes
