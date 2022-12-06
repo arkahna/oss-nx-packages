@@ -74,10 +74,10 @@ export default async function (
         appIdPlaceholder,
         '--api',
         // Graph
-        '00000002-0000-0000-c000-000000000000',
+        '00000003-0000-0000-c000-000000000000',
         '--api-permissions',
         // Application.ReadWrite.OwnedBy
-        '824c81eb-e3f8-4ee6-8f6d-de7f50d565b7=Role',
+        '18a4783c-866b-4cc7-a460-3d5e5662c884=Role',
     ]
 
     if (isDryRun()) {

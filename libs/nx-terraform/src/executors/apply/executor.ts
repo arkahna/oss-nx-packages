@@ -123,6 +123,9 @@ export default async function runExecutor(options: ApplyExecutorSchema, context:
         await execa('terragrunt', terragruntArguments, {
             stdio: 'inherit',
             cwd: projectRoot,
+            env: {
+                ...process.env,
+            },
         })
     } finally {
         if (options.leaveFirewallExceptions !== true) {
