@@ -10,5 +10,19 @@
     ],
     "[terraform]": {
         "editor.defaultFormatter": "hashicorp.terraform"
-    }
+    },
+    "hediet.vscode-drawio.theme": "Kennedy",
+    "hediet.vscode-drawio.customFonts": [
+        "Calibri"
+    ],
+    "hediet.vscode-drawio.defaultVertexStyle": {
+        "fontFamily": "Calibri",
+        "fillColor": "#dae8fc",
+        "strokeColor": "#6c8ebf",
+        "strokeWidth": "1",
+        "labelBackgroundColor": "none"
+    },
+    "hediet.vscode-drawio.defaultEdgeStyle": {
+        "edgeStyle": "orthogonalEdgeStyle;"
+    },
 }

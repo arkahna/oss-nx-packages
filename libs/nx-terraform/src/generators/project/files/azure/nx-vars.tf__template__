@@ -81,7 +81,7 @@ variable "cost_centre_tag" {
 }
 
 variable "github_service_principal" {
-  description = "The name of the github service principal which deploys this environment (if configured through NX)."
+  description = "The id of the github service principal which deploys this environment (if configured through NX)."
   type        = string
   nullable    = true
 }
